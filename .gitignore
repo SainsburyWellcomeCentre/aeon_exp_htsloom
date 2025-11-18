@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+
+# C#
+*.vs
+*.tmp
+
+# Bonsai
+**/.bonsai/*
+!**/.bonsai/Bonsai.config
+src/obj/
+src/bin/
+src/Aeon.log
+src/AEON-HtsLoom.log
