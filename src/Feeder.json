@@ -1,0 +1,22 @@
+{
+  "$defs": {
+    "FeederCommand": {
+      "enum": [
+        "DeliverPellet",
+        "ResetFeeder"
+      ],
+      "title": "FeederCommand",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "command": {
+      "$ref": "#/$defs/FeederCommand",
+      "default": "DeliverPellet",
+      "description": "The command to send to the feeder device.",
+      "title": "Command"
+    }
+  },
+  "title": "CreateFeederCommand",
+  "type": "object"
+}
