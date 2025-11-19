@@ -1,16 +1,20 @@
-# yaml-language-server: $schema=Rig.json
+# yaml-language-server: $schema=HtsLoom.json#/$defs/Rig
+
 lightCycle:
   commandSocket: '>tcp://172.24.158.103:4304'
   eventSocket: '>tcp://172.24.158.103:4303'
   roomName: AEON4
   configFileName: lightcycle.config
+
 nest:
     Nest:
         portName: COM7
         filterWindow: 40
         weightBaselineRefactoryPeriod: 5
+  
 clockSynchronizer:
   portName: COM5
+
 cameraSynchronizer:
   portName: COM6
   triggers:
@@ -18,6 +22,7 @@ cameraSynchronizer:
         frequency: 50 
     Trigger1: 
         frequency: 100
+
 activityCenter:
   threshold: 10
   regions:
@@ -30,6 +35,7 @@ activityCenter:
         -   x: 490
             y: 769
   camera: CameraTop
+
 cameras:
     CameraTop:
         serialNumber: "23101736"
@@ -149,26 +155,30 @@ cameras:
         exposureTime: 10000
         gain: 4
         trigger: Trigger0
+
     CameraEast:
         serialNumber: "23106241"
         binning: 1
-        exposureTime: 10000
+        exposureTime: 3000
         gain: 4
         trigger: Trigger0
+        
     CameraSouth:
         serialNumber: "23106227"
         binning: 1
-        exposureTime: 10000
+        exposureTime: 3000
         gain: 4
         trigger: Trigger0
+
     CameraWest:
         serialNumber: "23100956"
         binning: 1
         exposureTime: 10000
         gain: 4
         trigger: Trigger0
+
     CameraLightMonitor:
-        serialNumber: "23100956"
+        serialNumber: "23032826"
         binning: 4
         exposureTime: 1000
         gain: 4
@@ -180,12 +190,14 @@ cameras:
         exposureTime: 5000
         gain: 4
         trigger: Trigger1
+    
     CameraPatch2:
         serialNumber: "23032811"
         binning: 2
         exposureTime: 5000
         gain: 4
         trigger: Trigger1
+    
     CameraPatch3:
         serialNumber: "23032823"
         binning: 2
@@ -193,17 +205,21 @@ cameras:
         gain: 4
         trigger: Trigger1
         cameraTracking: 
+
 feeders:
+
     Feeder1:
         portName: COM3
         pelletDeliveryRetryCount: 2
         pelletDeliveryTimeout: 1
         wheelRadius: -4
+
     Feeder2:
         portName: COM4
         pelletDeliveryRetryCount: 2
         pelletDeliveryTimeout: 1
         wheelRadius: -4
+
     Feeder3:
         portName: COM16
         pelletDeliveryRetryCount: 2
