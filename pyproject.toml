@@ -1,5 +1,5 @@
 [project]
-name = "swc-aeon-rigs-foragingABC"
+name = "swc-aeon-rigs-HtsLoom"
 version = "0.0.1"
 requires-python = ">=3.11"
 description = "A environment for interfacing with acquired data from project PhieldsExperiments."

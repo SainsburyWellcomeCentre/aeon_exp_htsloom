@@ -794,7 +794,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "swc-aeon-rigs-foragingabc"
+name = "swc-aeon-rigs-HtsLoom"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [
