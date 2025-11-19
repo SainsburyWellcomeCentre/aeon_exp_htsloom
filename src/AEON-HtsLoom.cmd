@@ -1,0 +1,1 @@
+powershell -ep Bypass -c "& C:\ProjectAeonABC\SainsburyWellcomeCentre\aeon_exp_HtsLoom\.bonsai\Bonsai.exe C:\ProjectAeonABC\SainsburyWellcomeCentre\aeon_exp_htsloom\src\AEON-HtsLoom.bonsai --no-editor *>&1 | tee -a C:\ProjectAeonABC\SainsburyWellcomeCentre\aeon_exp_htsloom\src\AEON-HtsLoom.log"
