@@ -2214,44 +2214,6 @@ Item3 as BaselinedWeight)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="cv:MaskPolygon">
-                            <cv:Regions>
-                              <cv:ArrayOfPoint>
-                                <cv:Point>
-                                  <cv:X>1263</cv:X>
-                                  <cv:Y>486</cv:Y>
-                                </cv:Point>
-                                <cv:Point>
-                                  <cv:X>1333</cv:X>
-                                  <cv:Y>486</cv:Y>
-                                </cv:Point>
-                                <cv:Point>
-                                  <cv:X>1339</cv:X>
-                                  <cv:Y>589</cv:Y>
-                                </cv:Point>
-                                <cv:Point>
-                                  <cv:X>1267</cv:X>
-                                  <cv:Y>581</cv:Y>
-                                </cv:Point>
-                              </cv:ArrayOfPoint>
-                              <cv:ArrayOfPoint>
-                                <cv:Point>
-                                  <cv:X>1245</cv:X>
-                                  <cv:Y>487</cv:Y>
-                                </cv:Point>
-                                <cv:Point>
-                                  <cv:X>1258</cv:X>
-                                  <cv:Y>486</cv:Y>
-                                </cv:Point>
-                                <cv:Point>
-                                  <cv:X>1259</cv:X>
-                                  <cv:Y>585</cv:Y>
-                                </cv:Point>
-                                <cv:Point>
-                                  <cv:X>1249</cv:X>
-                                  <cv:Y>587</cv:Y>
-                                </cv:Point>
-                              </cv:ArrayOfPoint>
-                            </cv:Regions>
                             <cv:MaskType>ToZero</cv:MaskType>
                             <cv:FillValue>
                               <cv:Val0>255</cv:Val0>
