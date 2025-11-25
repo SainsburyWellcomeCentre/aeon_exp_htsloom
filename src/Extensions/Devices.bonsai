@@ -1495,7 +1495,10 @@ Item2.Seconds as Seconds)</scr:Expression>
                           <Name>RigConfiguration</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>Nest</Selector>
+                          <Selector>Nests</Selector>
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionCondition">
+                          <scr:Expression>it != null</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
@@ -1795,8 +1798,9 @@ Item3 as BaselinedWeight)</scr:Expression>
                         <Edge From="1" To="2" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
                         <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2069,7 +2073,7 @@ Item3 as BaselinedWeight)</scr:Expression>
                     <Name>Source1</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value.CameraTracking</Selector>
+                    <Selector>Value.Tracking</Selector>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Expression>it!=null</scr:Expression>
@@ -2147,10 +2151,10 @@ Item3 as BaselinedWeight)</scr:Expression>
                     <Name>TrackingCameraSettings</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value.CameraTracking</Selector>
+                    <Selector>Value.Tracking</Selector>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>BlobTracking</Selector>
+                    <Selector>RegionTracking</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Merge" />
@@ -2274,7 +2278,7 @@ Item3 as BaselinedWeight)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="cv:Threshold">
-                            <cv:ThresholdValue>130</cv:ThresholdValue>
+                            <cv:ThresholdValue>100</cv:ThresholdValue>
                             <cv:MaxValue>255</cv:MaxValue>
                             <cv:ThresholdType>BinaryInv</cv:ThresholdType>
                           </Combinator>
@@ -2409,161 +2413,163 @@ Item3 as BaselinedWeight)</scr:Expression>
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>ActivityCenter</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="rx:Defer">
-              <Name>ActivityCenter</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RigConfiguration</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ActivityCenter</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:AsyncSubject">
-                    <Name>ActivityCenterSettings</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>FrameEvents</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Key.Item1</Selector>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>ActivityCenterSettings</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Camera</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:WithLatestFrom" />
-                        </Expression>
-                        <Expression xsi:type="Equal" />
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="4" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:AsyncSubject">
-                    <Name>CameraFrames</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>CameraFrames</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>ActivityCenterSettings</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Regions</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p8:PointArrayConverter" />
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="Regions" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>ActivityCenterSettings</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Threshold</Selector>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="ThresholdValue" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Aeon.Vision:ActivityTracking.bonsai">
-                    <Regions>
-                      <ArrayOfPoint>
-                        <Point>
-                          <X>490</X>
-                          <Y>535</Y>
-                        </Point>
-                        <Point>
-                          <X>818</X>
-                          <Y>535</Y>
-                        </Point>
-                        <Point>
-                          <X>818</X>
-                          <Y>769</Y>
-                        </Point>
-                        <Point>
-                          <X>490</X>
-                          <Y>769</Y>
-                        </Point>
-                      </ArrayOfPoint>
-                    </Regions>
-                    <ThresholdValue>10</ThresholdValue>
-                    <TrackingEvents>ActivityCenter</TrackingEvents>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="17" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="17" Label="Source2" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source3" />
-                  <Edge From="17" To="18" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Name" DisplayName="TrackingEvents" />
-            </Expression>
-            <Expression xsi:type="rx:PublishSubject">
-              <Name>ActivityCenter</Name>
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="2" Label="Source1" />
-            <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
-          </Edges>
-        </Workflow>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>ActivityCenter</Name>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="rx:Defer">
+                <Name>ActivityCenter</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>RigConfiguration</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>ActivityCenter</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Take">
+                        <rx:Count>1</rx:Count>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:AsyncSubject">
+                      <Name>ActivityCenterSettings</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>FrameEvents</Name>
+                    </Expression>
+                    <Expression xsi:type="rx:Condition">
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Key.Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>ActivityCenterSettings</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Camera</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:WithLatestFrom" />
+                          </Expression>
+                          <Expression xsi:type="Equal" />
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="4" Label="Source1" />
+                          <Edge From="2" To="3" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                          <Edge From="5" To="6" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Take">
+                        <rx:Count>1</rx:Count>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:AsyncSubject">
+                      <Name>CameraFrames</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>CameraFrames</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>ActivityCenterSettings</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Regions</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="p8:PointArrayConverter" />
+                    </Expression>
+                    <Expression xsi:type="PropertyMapping">
+                      <PropertyMappings>
+                        <Property Name="Regions" />
+                      </PropertyMappings>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>ActivityCenterSettings</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Threshold</Selector>
+                    </Expression>
+                    <Expression xsi:type="PropertyMapping">
+                      <PropertyMappings>
+                        <Property Name="ThresholdValue" />
+                      </PropertyMappings>
+                    </Expression>
+                    <Expression xsi:type="IncludeWorkflow" Path="Aeon.Vision:ActivityTracking.bonsai">
+                      <Regions>
+                        <ArrayOfPoint>
+                          <Point>
+                            <X>490</X>
+                            <Y>535</Y>
+                          </Point>
+                          <Point>
+                            <X>818</X>
+                            <Y>535</Y>
+                          </Point>
+                          <Point>
+                            <X>818</X>
+                            <Y>769</Y>
+                          </Point>
+                          <Point>
+                            <X>490</X>
+                            <Y>769</Y>
+                          </Point>
+                        </ArrayOfPoint>
+                      </Regions>
+                      <ThresholdValue>10</ThresholdValue>
+                      <TrackingEvents>ActivityCenter</TrackingEvents>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source1" />
+                    <Edge From="8" To="9" Label="Source1" />
+                    <Edge From="9" To="17" Label="Source1" />
+                    <Edge From="10" To="11" Label="Source1" />
+                    <Edge From="11" To="12" Label="Source1" />
+                    <Edge From="12" To="13" Label="Source1" />
+                    <Edge From="13" To="17" Label="Source2" />
+                    <Edge From="14" To="15" Label="Source1" />
+                    <Edge From="15" To="16" Label="Source1" />
+                    <Edge From="16" To="17" Label="Source3" />
+                    <Edge From="17" To="18" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Expression>
+              <Expression xsi:type="ExternalizedMapping">
+                <Property Name="Name" DisplayName="TrackingEvents" />
+              </Expression>
+              <Expression xsi:type="rx:PublishSubject">
+                <Name>ActivityCenter</Name>
+              </Expression>
+              <Expression xsi:type="WorkflowOutput" />
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="2" Label="Source1" />
+              <Edge From="1" To="2" Label="Source2" />
+              <Edge From="2" To="3" Label="Source1" />
+            </Edges>
+          </Workflow>
+        </Builder>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Weight</Name>
@@ -2573,7 +2579,10 @@ Item3 as BaselinedWeight)</scr:Expression>
               <Name>RigConfiguration</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Nest</Selector>
+              <Selector>Nests</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionCondition">
+              <scr:Expression>it != null</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
@@ -2828,61 +2837,69 @@ Item1.Value as CurrentWeight,
               <Name>PercentWeightLoss</Name>
               <rx:BufferSize xsi:nil="true" />
             </Expression>
-            <Expression xsi:type="aeon:CreateGroup">
-              <Name>NestBaseline</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>ActivityCenter</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>ActivityCondition</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Value</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" DisplayName="BaselineActivityThreshold" />
-                        </Expression>
-                        <Expression xsi:type="GreaterThan">
-                          <Operand xsi:type="DoubleProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Interval" DisplayName="BaselineRefractoryPeriod" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:GateInterval">
-                      <rx:Interval>PT5S</rx:Interval>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="3" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
-                  <Edge From="3" To="4" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Annotation">
+              <Name>TODO: NeedToBeReimplemented</Name>
+              <Text><![CDATA[]]></Text>
             </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>NestBaselineEvent</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="aeon:CreateGroup">
+                <Name>NestBaseline</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>ActivityCenter</Name>
+                    </Expression>
+                    <Expression xsi:type="rx:Condition">
+                      <Name>ActivityCondition</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Value</Selector>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="Value" DisplayName="BaselineActivityThreshold" />
+                          </Expression>
+                          <Expression xsi:type="GreaterThan">
+                            <Operand xsi:type="DoubleProperty">
+                              <Value>1</Value>
+                            </Operand>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="3" Label="Source1" />
+                          <Edge From="2" To="3" Label="Source2" />
+                          <Edge From="3" To="4" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="ExternalizedMapping">
+                      <Property Name="Interval" DisplayName="BaselineRefractoryPeriod" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:GateInterval">
+                        <rx:Interval>PT5S</rx:Interval>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="1" To="3" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source2" />
+                    <Edge From="3" To="4" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MulticastSubject">
+                <Name>NestBaselineEvent</Name>
+              </Builder>
             </Expression>
           </Nodes>
           <Edges>
@@ -2890,11 +2907,13 @@ Item1.Value as CurrentWeight,
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="3" To="6" Label="Source1" />
-            <Edge From="3" To="8" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="4" To="7" Label="Source1" />
+            <Edge From="4" To="10" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="10" To="11" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3599,7 +3618,7 @@ Item1.Value as CurrentWeight,
                     <Name>Source1</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value.CameraTracking</Selector>
+                    <Selector>Value.Tracking</Selector>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Expression>it!=null</scr:Expression>

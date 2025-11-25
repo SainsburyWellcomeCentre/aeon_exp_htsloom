@@ -9,211 +9,7 @@ namespace HtsLoom
 {
     #pragma warning disable // Disable all warnings
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class ActivityCenter
-    {
-    
-        private int _threshold;
-    
-        private System.Collections.Generic.List<System.Collections.Generic.List<Point>> _regions;
-    
-        private CameraName _camera;
-    
-        public ActivityCenter()
-        {
-            _threshold = 100;
-            _regions = new System.Collections.Generic.List<System.Collections.Generic.List<Point>>();
-        }
-    
-        protected ActivityCenter(ActivityCenter other)
-        {
-            _threshold = other._threshold;
-            _regions = other._regions;
-            _camera = other._camera;
-        }
-    
-        /// <summary>
-        /// Threshold for the blob tracking.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("threshold")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="threshold")]
-        [System.ComponentModel.DescriptionAttribute("Threshold for the blob tracking.")]
-        public int Threshold
-        {
-            get
-            {
-                return _threshold;
-            }
-            set
-            {
-                _threshold = value;
-            }
-        }
-    
-        /// <summary>
-        /// Region for the tracking.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("regions", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regions")]
-        [System.ComponentModel.DescriptionAttribute("Region for the tracking.")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<Point>> Regions
-        {
-            get
-            {
-                return _regions;
-            }
-            set
-            {
-                _regions = value;
-            }
-        }
-    
-        /// <summary>
-        /// Activity center camera
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("camera", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="camera")]
-        [System.ComponentModel.DescriptionAttribute("Activity center camera")]
-        public CameraName Camera
-        {
-            get
-            {
-                return _camera;
-            }
-            set
-            {
-                _camera = value;
-            }
-        }
-    
-        public System.IObservable<ActivityCenter> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ActivityCenter(this)));
-        }
-    
-        public System.IObservable<ActivityCenter> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new ActivityCenter(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Threshold = " + _threshold + ", ");
-            stringBuilder.Append("Regions = " + _regions + ", ");
-            stringBuilder.Append("Camera = " + _camera);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    [Bonsai.CombinatorAttribute(MethodName="Generate")]
-    public partial class ActivityTracking
-    {
-    
-        private int _threshold;
-    
-        private System.Collections.Generic.List<System.Collections.Generic.List<Point>> _regions;
-    
-        public ActivityTracking()
-        {
-            _threshold = 100;
-            _regions = new System.Collections.Generic.List<System.Collections.Generic.List<Point>>();
-        }
-    
-        protected ActivityTracking(ActivityTracking other)
-        {
-            _threshold = other._threshold;
-            _regions = other._regions;
-        }
-    
-        /// <summary>
-        /// Threshold for the blob tracking.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("threshold")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="threshold")]
-        [System.ComponentModel.DescriptionAttribute("Threshold for the blob tracking.")]
-        public int Threshold
-        {
-            get
-            {
-                return _threshold;
-            }
-            set
-            {
-                _threshold = value;
-            }
-        }
-    
-        /// <summary>
-        /// Region for the tracking.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("regions", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regions")]
-        [System.ComponentModel.DescriptionAttribute("Region for the tracking.")]
-        public System.Collections.Generic.List<System.Collections.Generic.List<Point>> Regions
-        {
-            get
-            {
-                return _regions;
-            }
-            set
-            {
-                _regions = value;
-            }
-        }
-    
-        public System.IObservable<ActivityTracking> Generate()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ActivityTracking(this)));
-        }
-    
-        public System.IObservable<ActivityTracking> Generate<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new ActivityTracking(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("Threshold = " + _threshold + ", ");
-            stringBuilder.Append("Regions = " + _regions);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Camera
@@ -229,7 +25,7 @@ namespace HtsLoom
     
         private TriggerName _trigger;
     
-        private Tracking _cameraTracking;
+        private Tracking _tracking;
     
         public Camera()
         {
@@ -246,7 +42,7 @@ namespace HtsLoom
             _gain = other._gain;
             _binning = other._binning;
             _trigger = other._trigger;
-            _cameraTracking = other._cameraTracking;
+            _tracking = other._tracking;
         }
     
         /// <summary>
@@ -343,18 +139,18 @@ namespace HtsLoom
         /// Tracking Parameters.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("cameraTracking")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="cameraTracking")]
+        [Newtonsoft.Json.JsonPropertyAttribute("tracking")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="tracking")]
         [System.ComponentModel.DescriptionAttribute("Tracking Parameters.")]
-        public Tracking CameraTracking
+        public Tracking Tracking
         {
             get
             {
-                return _cameraTracking;
+                return _tracking;
             }
             set
             {
-                _cameraTracking = value;
+                _tracking = value;
             }
         }
     
@@ -375,7 +171,7 @@ namespace HtsLoom
             stringBuilder.Append("Gain = " + _gain + ", ");
             stringBuilder.Append("Binning = " + _binning + ", ");
             stringBuilder.Append("Trigger = " + _trigger + ", ");
-            stringBuilder.Append("CameraTracking = " + _cameraTracking);
+            stringBuilder.Append("Tracking = " + _tracking);
             return true;
         }
     
@@ -394,7 +190,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CameraController
@@ -480,7 +276,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CameraControllerTrigger
@@ -547,7 +343,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CameraName
     {
@@ -606,7 +402,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Experiment
@@ -736,7 +532,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum FeederName
     {
@@ -767,7 +563,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpTimestampGeneratorGen3
@@ -833,7 +629,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LightCycle
@@ -971,7 +767,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Point
@@ -1061,7 +857,170 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    /// <summary>
+    /// A polygon is defined by list of points connected linearly in sequence
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("A polygon is defined by list of points connected linearly in sequence")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Polygon
+    {
+    
+        private System.Collections.Generic.List<Point> _points;
+    
+        public Polygon()
+        {
+            _points = new System.Collections.Generic.List<Point>();
+        }
+    
+        protected Polygon(Polygon other)
+        {
+            _points = other._points;
+        }
+    
+        /// <summary>
+        /// Points to make the polygon
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("points")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="points")]
+        [System.ComponentModel.DescriptionAttribute("Points to make the polygon")]
+        public System.Collections.Generic.List<Point> Points
+        {
+            get
+            {
+                return _points;
+            }
+            set
+            {
+                _points = value;
+            }
+        }
+    
+        public System.IObservable<Polygon> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Polygon(this)));
+        }
+    
+        public System.IObservable<Polygon> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Polygon(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Points = " + _points);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class RegionsTrackingParameters
+    {
+    
+        private int _threshold;
+    
+        private System.Collections.Generic.List<Polygon> _regions;
+    
+        public RegionsTrackingParameters()
+        {
+            _threshold = 100;
+            _regions = new System.Collections.Generic.List<Polygon>();
+        }
+    
+        protected RegionsTrackingParameters(RegionsTrackingParameters other)
+        {
+            _threshold = other._threshold;
+            _regions = other._regions;
+        }
+    
+        /// <summary>
+        /// Threshold for the blob tracking.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("threshold")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="threshold")]
+        [System.ComponentModel.DescriptionAttribute("Threshold for the blob tracking.")]
+        public int Threshold
+        {
+            get
+            {
+                return _threshold;
+            }
+            set
+            {
+                _threshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// Regions for the tracking.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("regions", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regions")]
+        [System.ComponentModel.DescriptionAttribute("Regions for the tracking.")]
+        public System.Collections.Generic.List<Polygon> Regions
+        {
+            get
+            {
+                return _regions;
+            }
+            set
+            {
+                _regions = value;
+            }
+        }
+    
+        public System.IObservable<RegionsTrackingParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RegionsTrackingParameters(this)));
+        }
+    
+        public System.IObservable<RegionsTrackingParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new RegionsTrackingParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Threshold = " + _threshold + ", ");
+            stringBuilder.Append("Regions = " + _regions);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Rig
@@ -1075,9 +1034,7 @@ namespace HtsLoom
     
         private System.Collections.Generic.Dictionary<FeederName, UndergroundFeeder> _feeders;
     
-        private System.Collections.Generic.Dictionary<string, WeightScale> _nest;
-    
-        private ActivityCenter _activityCenter;
+        private System.Collections.Generic.Dictionary<string, WeightScale> _nests;
     
         private LightCycle _lightCycle;
     
@@ -1087,8 +1044,6 @@ namespace HtsLoom
             _cameraSynchronizer = new CameraController();
             _cameras = new System.Collections.Generic.Dictionary<CameraName, Camera>();
             _feeders = new System.Collections.Generic.Dictionary<FeederName, UndergroundFeeder>();
-            _nest = new System.Collections.Generic.Dictionary<string, WeightScale>();
-            _activityCenter = new ActivityCenter();
             _lightCycle = new LightCycle();
         }
     
@@ -1098,8 +1053,7 @@ namespace HtsLoom
             _cameraSynchronizer = other._cameraSynchronizer;
             _cameras = other._cameras;
             _feeders = other._feeders;
-            _nest = other._nest;
-            _activityCenter = other._activityCenter;
+            _nests = other._nests;
             _lightCycle = other._lightCycle;
         }
     
@@ -1167,37 +1121,18 @@ namespace HtsLoom
         /// Weight scale parameters.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("nest", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="nest")]
+        [Newtonsoft.Json.JsonPropertyAttribute("nests")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="nests")]
         [System.ComponentModel.DescriptionAttribute("Weight scale parameters.")]
-        public System.Collections.Generic.Dictionary<string, WeightScale> Nest
+        public System.Collections.Generic.Dictionary<string, WeightScale> Nests
         {
             get
             {
-                return _nest;
+                return _nests;
             }
             set
             {
-                _nest = value;
-            }
-        }
-    
-        /// <summary>
-        /// Activity in the center of the arena.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("activityCenter", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="activityCenter")]
-        [System.ComponentModel.DescriptionAttribute("Activity in the center of the arena.")]
-        public ActivityCenter ActivityCenter
-        {
-            get
-            {
-                return _activityCenter;
-            }
-            set
-            {
-                _activityCenter = value;
+                _nests = value;
             }
         }
     
@@ -1236,8 +1171,7 @@ namespace HtsLoom
             stringBuilder.Append("CameraSynchronizer = " + _cameraSynchronizer + ", ");
             stringBuilder.Append("Cameras = " + _cameras + ", ");
             stringBuilder.Append("Feeders = " + _feeders + ", ");
-            stringBuilder.Append("Nest = " + _nest + ", ");
-            stringBuilder.Append("ActivityCenter = " + _activityCenter + ", ");
+            stringBuilder.Append("Nests = " + _nests + ", ");
             stringBuilder.Append("LightCycle = " + _lightCycle);
             return true;
         }
@@ -1257,40 +1191,40 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Tracking
     {
     
-        private System.Collections.Generic.Dictionary<string, ActivityTracking> _blobTracking;
+        private System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> _regionTracking;
     
         public Tracking()
         {
-            _blobTracking = new System.Collections.Generic.Dictionary<string, ActivityTracking>();
+            _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
         }
     
         protected Tracking(Tracking other)
         {
-            _blobTracking = other._blobTracking;
+            _regionTracking = other._regionTracking;
         }
     
         /// <summary>
         /// The subject tracking in the arena.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("blobTracking", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="blobTracking")]
+        [Newtonsoft.Json.JsonPropertyAttribute("regionTracking", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regionTracking")]
         [System.ComponentModel.DescriptionAttribute("The subject tracking in the arena.")]
-        public System.Collections.Generic.Dictionary<string, ActivityTracking> BlobTracking
+        public System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> RegionTracking
         {
             get
             {
-                return _blobTracking;
+                return _regionTracking;
             }
             set
             {
-                _blobTracking = value;
+                _regionTracking = value;
             }
         }
     
@@ -1306,7 +1240,7 @@ namespace HtsLoom
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("BlobTracking = " + _blobTracking);
+            stringBuilder.Append("RegionTracking = " + _regionTracking);
             return true;
         }
     
@@ -1325,7 +1259,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum TriggerName
     {
@@ -1340,7 +1274,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UndergroundFeeder
@@ -1475,7 +1409,7 @@ namespace HtsLoom
     }
 
 
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WeightScale
@@ -1591,7 +1525,7 @@ namespace HtsLoom
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into JSON strings.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [Bonsai.CombinatorAttribute()]
@@ -1604,16 +1538,6 @@ namespace HtsLoom
         {
             var formatting = Formatting;
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value, formatting));
-        }
-
-        public System.IObservable<string> Process(System.IObservable<ActivityCenter> source)
-        {
-            return Process<ActivityCenter>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<ActivityTracking> source)
-        {
-            return Process<ActivityTracking>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Camera> source)
@@ -1649,6 +1573,16 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<Point> source)
         {
             return Process<Point>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Polygon> source)
+        {
+            return Process<Polygon>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RegionsTrackingParameters> source)
+        {
+            return Process<RegionsTrackingParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Rig> source)
@@ -1676,12 +1610,10 @@ namespace HtsLoom
     /// <summary>
     /// Deserializes a sequence of JSON strings into data model objects.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActivityCenter>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActivityTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Camera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
@@ -1689,6 +1621,8 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RegionsTrackingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Tracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UndergroundFeeder>))]
@@ -1698,7 +1632,7 @@ namespace HtsLoom
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<ActivityCenter>();
+            Type = new Bonsai.Expressions.TypeMapping<Camera>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
@@ -1724,7 +1658,7 @@ namespace HtsLoom
     /// <summary>
     /// Serializes a sequence of data model objects into YAML strings.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Serializes a sequence of data model objects into YAML strings.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [Bonsai.CombinatorAttribute()]
@@ -1740,16 +1674,6 @@ namespace HtsLoom
                       .Build();
                 return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
             });
-        }
-
-        public System.IObservable<string> Process(System.IObservable<ActivityCenter> source)
-        {
-            return Process<ActivityCenter>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<ActivityTracking> source)
-        {
-            return Process<ActivityTracking>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Camera> source)
@@ -1787,6 +1711,16 @@ namespace HtsLoom
             return Process<Point>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Polygon> source)
+        {
+            return Process<Polygon>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<RegionsTrackingParameters> source)
+        {
+            return Process<RegionsTrackingParameters>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Rig> source)
         {
             return Process<Rig>(source);
@@ -1812,12 +1746,10 @@ namespace HtsLoom
     /// <summary>
     /// Deserializes a sequence of YAML strings into data model objects.
     /// </summary>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.1.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActivityCenter>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ActivityTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Camera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
@@ -1825,6 +1757,8 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RegionsTrackingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Tracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UndergroundFeeder>))]
@@ -1834,7 +1768,7 @@ namespace HtsLoom
     
         public DeserializeFromYaml()
         {
-            Type = new Bonsai.Expressions.TypeMapping<ActivityCenter>();
+            Type = new Bonsai.Expressions.TypeMapping<Camera>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }

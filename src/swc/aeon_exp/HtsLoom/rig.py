@@ -6,10 +6,6 @@ from swc.aeon_rigs.foraging import UndergroundFeeder
 from swc.aeon_rigs.harp import HarpTimestampGeneratorGen3, HarpCameraControllerGen2
 from pydantic import Field 
 
-class Point(BaseSchema):
-    x: int = Field(default=0, description="The X coordinate of the point")
-    y: int = Field(default=0, description="The Y coordinate of the point")
-
 class CameraName(StrEnum):
     NORTH = "CameraNorth"
     SOUTH = "CameraSouth"
@@ -50,36 +46,44 @@ class WeightScale(Device):
     port_name: str = Field(examples=["COM"], description="The name of the device serial port.")
     filter_window: int =Field(default=40, description="Sliding window size of the weight linear regression filter.")
     weight_baseline_refactory_period : float = Field(default=5, description="The time between consecutive weight baseline when subject in center of arena in seconds.")
-
-class ActivityTracking(BaseSchema):
-    threshold : int = Field(default=100, description="Threshold for the blob tracking.")
-    regions: List[List[Point]] = Field(description="Region for the tracking.")
+    
+class Point(BaseSchema):
+    x: int = Field(default=0, description="The X coordinate of the point")
+    y: int = Field(default=0, description="The Y coordinate of the point")
 
 class InArena(BaseSchema):
     center: Point = Field(description="The centerPoint of the arena in camera coordinates.")
     radius: int = Field(description="The radius of the arena in image coordinates.")
 
+class Polygon(BaseSchema):
+    """A polygon is defined by list of points connected linearly in sequence"""
+    points: List[Point] = Field(default=[Point(x=0,y=0)], description="Points to make the polygon")
+
+class RegionsTrackingParameters(BaseSchema):
+    threshold : int = Field(default=100, description="Threshold for the blob tracking.")
+    regions: List[Polygon] = Field(description="Regions for the tracking.")
+
 class Tracking(BaseSchema):
-    blob_tracking : Dict[str, ActivityTracking] = Field(description="The subject tracking in the arena.") 
+    regionTracking : Dict[str, RegionsTrackingParameters] = Field(description="The subject tracking in the arena.") 
 
 class Camera(SpinnakerCamera):
     trigger: TriggerName = Field(default=TriggerName.TRIGGER0, description="The name of the trigger.")
-    camera_tracking: Tracking | None =  Field(default=None, description="Tracking Parameters.")
+    tracking: Tracking | None =  Field(default=None, description="Tracking Parameters.")
 
-class ActivityCenter(ActivityTracking):
-    camera: CameraName = Field(description="Activity center camera")
+# class ActivityCenter(BlobTrackingParameters):
+#     camera: CameraName = Field(description="Activity center camera")
 
 class LightCycle(BaseSchema):
-    commandSocket: str = Field(default=">tcp://localhost:4304", description="Specifies the endpoint to send commands to the Light Server.")
-    eventSocket: str = Field(default=">tcp://localhost:4303",description="Specifies the endpoint to send commands to the Light Server.")
-    roomName: str = Field(default="Aeon3", description="The name of the room to monitor and control.")
-    configFileName: str = Field(default="lightcycle.config", description="The name of the CSV file describing the light model, where each row represents one whole minute and the red, cold white and warm white, light levels set for that minute.")
+    command_socket: str = Field(default=">tcp://localhost:4304", description="Specifies the endpoint to send commands to the Light Server.")
+    event_socket: str = Field(default=">tcp://localhost:4303",description="Specifies the endpoint to send commands to the Light Server.")
+    room_name: str = Field(default="Aeon3", description="The name of the room to monitor and control.")
+    config_file_name: str = Field(default="lightcycle.config", description="The name of the CSV file describing the light model, where each row represents one whole minute and the red, cold white and warm white, light levels set for that minute.")
 
 class Rig(BaseSchema):
     clock_synchronizer: HarpTimestampGeneratorGen3
     camera_synchronizer: CameraController
     cameras: Dict[CameraName, Camera]
     feeders: Dict[FeederName,UndergroundFeeder]
-    nest: Dict[str, WeightScale] = Field(description="Weight scale parameters.")
-    activityCenter: ActivityCenter = Field(description="Activity in the center of the arena.")
-    lightCycle: LightCycle = Field(description="LightCycle components for the arena.")
+    nests: Dict[str, WeightScale] = Field(default=None,description="Weight scale parameters.")
+    # activity_center: ActivityCenter = Field(description="Activity in the center of the arena.")
+    light_cycle: LightCycle = Field(description="LightCycle components for the arena.")

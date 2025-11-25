@@ -6,7 +6,7 @@ lightCycle:
   roomName: AEON4
   configFileName: lightcycle.config
 
-nest:
+nests:
     Nest:
         portName: COM7
         filterWindow: 40
@@ -22,20 +22,6 @@ cameraSynchronizer:
         frequency: 50 
     Trigger1: 
         frequency: 100
-
-activityCenter:
-  threshold: 10
-  regions:
-    -   -   x: 490
-            y: 535
-        -   x: 818 
-            y: 535
-        -   x: 818
-            y: 769
-        -   x: 490
-            y: 769
-  camera: CameraTop
-
 cameras:
     CameraTop:
         serialNumber: "23101736"
@@ -43,105 +29,108 @@ cameras:
         exposureTime: 5000
         gain: 0
         trigger: Trigger0
-        cameraTracking:
-            blobTracking:
-                Arena:
-                 threshold: 100
-                 regions:
-                   -    -   x: 1232
-                            y: 482
-                        -   x: 1235
-                            y: 591
-                        -   x: 1253
-                            y: 595
-                        -   x: 1220
-                            y: 724
-                        -   x: 1180
-                            y: 809
-                        -   x: 1126
-                            y: 886
-                        -   x: 1059
-                            y: 953
-                        -   x: 982
-                            y: 1007
-                        -   x: 896
-                            y: 1046
-                        -   x: 805
-                            y: 1071
-                        -   x: 711
-                            y: 1079
-                        -   x: 616
-                            y: 1071
-                        -   x: 525
-                            y: 1046
-                        -   x: 439                
-                            y: 1007
-                        -   x: 362
-                            y: 953
-                        -   x: 295
-                            y: 886
-                        -   x: 241
-                            y: 809
-                        -   x: 201
-                            y: 724
-                        -   x: 176
-                            y: 633
-                        -   x: 168
-                            y: 540
-                        -   x: 176
-                            y: 446
-                        -   x: 201
-                            y: 355
-                        -   x: 241
-                            y: 270
-                        -   x: 295
-                            y: 193
-                        -   x: 362
-                            y: 126
-                        -   x: 439
-                            y: 72
-                        -   x: 525
-                            y: 33
-                        -   x: 616
-                            y: 8
-                        -   x: 710
-                            y: 0
-                        -   x: 805
-                            y: 8
-                        -   x: 896
-                            y: 33
-                        -   x: 982
-                            y: 72
-                        -   x: 1059
-                            y: 126
-                        -   x: 1126
-                            y: 193
-                        -   x: 1180
-                            y: 270
-                        -   x: 1220
-                            y: 355
-                        -   x: 1251
-                            y: 478
-                Nest:
-                    threshold: 130
-                    regions:
-                      - -   x: 1263
-                            y: 486
-                        -   x: 1333
-                            y: 486
-                        -   x: 1339
-                            y: 589
-                        -   x: 1267
-                            y: 581
-                      - -   x: 1245
-                            y: 487
-                        -   x: 1258
-                            y: 486
-                        -   x: 1259
-                            y: 585
-                        -   x: 1249
-                            y: 587
-    
+        tracking: 
+           regionTracking:
+             Arena:
+                threshold: 100
+                regions:
+                -   points:
+                    -   x: 1232
+                        y: 482
+                    -   x: 1235
+                        y: 591
+                    -   x: 1253
+                        y: 595
+                    -   x: 1220
+                        y: 724
+                    -   x: 1180
+                        y: 809
+                    -   x: 1126
+                        y: 886
+                    -   x: 1059
+                        y: 953
+                    -   x: 982
+                        y: 1007
+                    -   x: 896
+                        y: 1046
+                    -   x: 805
+                        y: 1071
+                    -   x: 711
+                        y: 1079
+                    -   x: 616
+                        y: 1071
+                    -   x: 525
+                        y: 1046
+                    -   x: 439                
+                        y: 1007
+                    -   x: 362
+                        y: 953
+                    -   x: 295
+                        y: 886
+                    -   x: 241
+                        y: 809
+                    -   x: 201
+                        y: 724
+                    -   x: 176
+                        y: 633
+                    -   x: 168
+                        y: 540
+                    -   x: 176
+                        y: 446
+                    -   x: 201
+                        y: 355
+                    -   x: 241
+                        y: 270
+                    -   x: 295
+                        y: 193
+                    -   x: 362
+                        y: 126
+                    -   x: 439
+                        y: 72
+                    -   x: 525
+                        y: 33
+                    -   x: 616
+                        y: 8
+                    -   x: 710
+                        y: 0
+                    -   x: 805
+                        y: 8
+                    -   x: 896
+                        y: 33
+                    -   x: 982
+                        y: 72
+                    -   x: 1059
+                        y: 126
+                    -   x: 1126
+                        y: 193
+                    -   x: 1180
+                        y: 270
+                    -   x: 1220
+                        y: 355
+                    -   x: 1251
+                        y: 478
+             Nest:
+                threshold: 100
+                regions:
+                - points:
+                    -   x: 1263
+                        y: 486
+                    -   x: 1333
+                        y: 486
+                    -   x: 1339
+                        y: 589
+                    -   x: 1267
+                        y: 581
+                - points:
+                    -   x: 1245
+                        y: 487
+                    -   x: 1258
+                        y: 486
+                    -   x: 1259
+                        y: 585
+                    -   x: 1249
+                        y: 587          
+     
     CameraNest:
         serialNumber: "23106287"
         binning: 2
@@ -152,9 +141,23 @@ cameras:
     CameraNorth:
         serialNumber: "23106245"
         binning: 1
-        exposureTime: 10000
+        exposureTime: 3000
         gain: 4
         trigger: Trigger0
+        tracking: 
+            regionTracking:
+              North: 
+                threshold: 100
+                regions:
+                  - points:
+                    -   x: 0
+                        y: 0
+                    -   x: 1400
+                        y: 0
+                    -   x: 1400
+                        y: 1070
+                    -   x: 0
+                        y: 1070
 
     CameraEast:
         serialNumber: "23106241"
@@ -182,7 +185,7 @@ cameras:
         binning: 4
         exposureTime: 1000
         gain: 4
-        trigger: Trigger0
+        trigger: Trigger1
 
     CameraPatch1:
         serialNumber: "23101737"
@@ -204,7 +207,6 @@ cameras:
         exposureTime: 5000
         gain: 4
         trigger: Trigger1
-        cameraTracking: 
 
 feeders:
 

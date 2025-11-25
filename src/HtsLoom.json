@@ -1,63 +1,5 @@
 {
   "$defs": {
-    "ActivityCenter": {
-      "properties": {
-        "threshold": {
-          "default": 100,
-          "description": "Threshold for the blob tracking.",
-          "title": "Threshold",
-          "type": "integer"
-        },
-        "regions": {
-          "description": "Region for the tracking.",
-          "items": {
-            "items": {
-              "$ref": "#/$defs/Point"
-            },
-            "type": "array"
-          },
-          "title": "Regions",
-          "type": "array"
-        },
-        "camera": {
-          "$ref": "#/$defs/CameraName",
-          "description": "Activity center camera",
-          "title": "Camera"
-        }
-      },
-      "required": [
-        "regions",
-        "camera"
-      ],
-      "title": "ActivityCenter",
-      "type": "object"
-    },
-    "ActivityTracking": {
-      "properties": {
-        "threshold": {
-          "default": 100,
-          "description": "Threshold for the blob tracking.",
-          "title": "Threshold",
-          "type": "integer"
-        },
-        "regions": {
-          "description": "Region for the tracking.",
-          "items": {
-            "items": {
-              "$ref": "#/$defs/Point"
-            },
-            "type": "array"
-          },
-          "title": "Regions",
-          "type": "array"
-        }
-      },
-      "required": [
-        "regions"
-      ],
-      "title": "ActivityTracking",
-      "type": "object"
-    },
     "Camera": {
       "properties": {
         "serialNumber": {
@@ -95,8 +37,8 @@
           "description": "The name of the trigger.",
           "title": "Trigger"
         },
-        "cameraTracking": {
-          "oneOf": [
+        "tracking": {
+          "anyOf": [
             {
               "$ref": "#/$defs/Tracking"
             },
@@ -106,7 +48,7 @@
           ],
           "default": null,
           "description": "Tracking Parameters.",
-          "title": "CameraTracking"
+          "title": "Tracking"
         }
       },
       "required": [
@@ -238,25 +180,25 @@
         "commandSocket": {
           "default": ">tcp://localhost:4304",
           "description": "Specifies the endpoint to send commands to the Light Server.",
-          "title": "Commandsocket",
+          "title": "CommandSocket",
           "type": "string"
         },
         "eventSocket": {
           "default": ">tcp://localhost:4303",
           "description": "Specifies the endpoint to send commands to the Light Server.",
-          "title": "Eventsocket",
+          "title": "EventSocket",
           "type": "string"
         },
         "roomName": {
           "default": "Aeon3",
           "description": "The name of the room to monitor and control.",
-          "title": "Roomname",
+          "title": "RoomName",
           "type": "string"
         },
         "configFileName": {
           "default": "lightcycle.config",
           "description": "The name of the CSV file describing the light model, where each row represents one whole minute and the red, cold white and warm white, light levels set for that minute.",
-          "title": "Configfilename",
+          "title": "ConfigFileName",
           "type": "string"
         }
       },
@@ -279,6 +221,50 @@
         }
       },
       "title": "Point",
+      "type": "object"
+    },
+    "Polygon": {
+      "description": "A polygon is defined by list of points connected linearly in sequence",
+      "properties": {
+        "points": {
+          "default": [
+            {
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "description": "Points to make the polygon",
+          "items": {
+            "$ref": "#/$defs/Point"
+          },
+          "title": "Points",
+          "type": "array"
+        }
+      },
+      "title": "Polygon",
+      "type": "object"
+    },
+    "RegionsTrackingParameters": {
+      "properties": {
+        "threshold": {
+          "default": 100,
+          "description": "Threshold for the blob tracking.",
+          "title": "Threshold",
+          "type": "integer"
+        },
+        "regions": {
+          "description": "Regions for the tracking.",
+          "items": {
+            "$ref": "#/$defs/Polygon"
+          },
+          "title": "Regions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "regions"
+      ],
+      "title": "RegionsTrackingParameters",
       "type": "object"
     },
     "Rig": {
@@ -311,23 +297,18 @@
           "title": "Feeders",
           "type": "object"
         },
-        "nest": {
+        "nests": {
           "additionalProperties": {
             "$ref": "#/$defs/WeightScale"
           },
+          "default": null,
           "description": "Weight scale parameters.",
-          "title": "Nest",
+          "title": "Nests",
           "type": "object"
-        },
-        "activityCenter": {
-          "$ref": "#/$defs/ActivityCenter",
-          "description": "Activity in the center of the arena.",
-          "title": "Activitycenter"
         },
         "lightCycle": {
           "$ref": "#/$defs/LightCycle",
-          "description": "LightCycle components for the arena.",
-          "title": "Lightcycle"
+          "description": "LightCycle components for the arena."
         }
       },
       "required": [
@@ -335,8 +316,6 @@
         "cameraSynchronizer",
         "cameras",
         "feeders",
-        "nest",
-        "activityCenter",
         "lightCycle"
       ],
       "title": "Rig",
@@ -344,17 +323,17 @@
     },
     "Tracking": {
       "properties": {
-        "blobTracking": {
+        "regionTracking": {
           "additionalProperties": {
-            "$ref": "#/$defs/ActivityTracking"
+            "$ref": "#/$defs/RegionsTrackingParameters"
           },
           "description": "The subject tracking in the arena.",
-          "title": "BlobTracking",
+          "title": "Regiontracking",
           "type": "object"
         }
       },
       "required": [
-        "blobTracking"
+        "regionTracking"
       ],
       "title": "Tracking",
       "type": "object"
