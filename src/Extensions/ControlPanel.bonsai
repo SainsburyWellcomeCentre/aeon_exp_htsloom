@@ -1354,9 +1354,7 @@ LossWeightPercent: {2}</Format>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:Font>Microsoft Sans Serif, 12pt, style=Bold</gui:Font>
-              <gui:Text>Timestamp: 11/17/2025 10:21:21
-Weight: 29.22659
-LossWeightPercent: 146.1329</gui:Text>
+              <gui:Text></gui:Text>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
@@ -1988,7 +1986,7 @@ LossWeightPercent: 146.1329</gui:Text>
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="7" To="9" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="18" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
