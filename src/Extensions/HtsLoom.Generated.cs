@@ -12,6 +12,66 @@ namespace HtsLoom
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class BlobTracking : Tracking
+    {
+    
+        private System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> _regionTracking;
+    
+        public BlobTracking()
+        {
+            _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
+        }
+    
+        protected BlobTracking(BlobTracking other) : 
+                base(other)
+        {
+            _regionTracking = other._regionTracking;
+        }
+    
+        /// <summary>
+        /// The subject tracking in the arena.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("regionTracking", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regionTracking")]
+        [System.ComponentModel.DescriptionAttribute("The subject tracking in the arena.")]
+        public System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> RegionTracking
+        {
+            get
+            {
+                return _regionTracking;
+            }
+            set
+            {
+                _regionTracking = value;
+            }
+        }
+    
+        public System.IObservable<BlobTracking> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlobTracking(this)));
+        }
+    
+        public System.IObservable<BlobTracking> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BlobTracking(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("RegionTracking = " + _regionTracking);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Camera
     {
     
@@ -632,6 +692,113 @@ namespace HtsLoom
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class HeadTailTracking : Tracking
+    {
+    
+        private System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> _regionTracking;
+    
+        private int _velocityThreshold;
+    
+        private int _bufferLength;
+    
+        public HeadTailTracking()
+        {
+            _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
+            _velocityThreshold = 10;
+            _bufferLength = 10;
+        }
+    
+        protected HeadTailTracking(HeadTailTracking other) : 
+                base(other)
+        {
+            _regionTracking = other._regionTracking;
+            _velocityThreshold = other._velocityThreshold;
+            _bufferLength = other._bufferLength;
+        }
+    
+        /// <summary>
+        /// The subject tracking in the arena.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("regionTracking", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regionTracking")]
+        [System.ComponentModel.DescriptionAttribute("The subject tracking in the arena.")]
+        public System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> RegionTracking
+        {
+            get
+            {
+                return _regionTracking;
+            }
+            set
+            {
+                _regionTracking = value;
+            }
+        }
+    
+        /// <summary>
+        /// Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("velocityThreshold")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="velocityThreshold")]
+        [System.ComponentModel.DescriptionAttribute("Velocity threshold, in pixels, used to infer direction of travel and therefore th" +
+            "e head of the subject")]
+        public int VelocityThreshold
+        {
+            get
+            {
+                return _velocityThreshold;
+            }
+            set
+            {
+                _velocityThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// The length of the buffer history, in frames, on which to compute velocity
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("bufferLength")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bufferLength")]
+        [System.ComponentModel.DescriptionAttribute("The length of the buffer history, in frames, on which to compute velocity")]
+        public int BufferLength
+        {
+            get
+            {
+                return _bufferLength;
+            }
+            set
+            {
+                _bufferLength = value;
+            }
+        }
+    
+        public System.IObservable<HeadTailTracking> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HeadTailTracking(this)));
+        }
+    
+        public System.IObservable<HeadTailTracking> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new HeadTailTracking(this));
+        }
+    
+        protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            if (base.PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(", ");
+            }
+            stringBuilder.Append("RegionTracking = " + _regionTracking + ", ");
+            stringBuilder.Append("VelocityThreshold = " + _velocityThreshold + ", ");
+            stringBuilder.Append("BufferLength = " + _bufferLength);
+            return true;
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LightCycle
     {
     
@@ -1192,40 +1359,21 @@ namespace HtsLoom
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonInheritanceConverter), "trackingType")]
+    [YamlDiscriminator("trackingType")]
+    [JsonInheritanceAttribute("BlobTracking", typeof(BlobTracking))]
+    [JsonInheritanceAttribute("HeadTailTracking", typeof(HeadTailTracking))]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Tracking
     {
     
-        private System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> _regionTracking;
-    
         public Tracking()
         {
-            _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
         }
     
         protected Tracking(Tracking other)
         {
-            _regionTracking = other._regionTracking;
-        }
-    
-        /// <summary>
-        /// The subject tracking in the arena.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("regionTracking", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regionTracking")]
-        [System.ComponentModel.DescriptionAttribute("The subject tracking in the arena.")]
-        public System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> RegionTracking
-        {
-            get
-            {
-                return _regionTracking;
-            }
-            set
-            {
-                _regionTracking = value;
-            }
         }
     
         public System.IObservable<Tracking> Generate()
@@ -1240,8 +1388,7 @@ namespace HtsLoom
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("RegionTracking = " + _regionTracking);
-            return true;
+            return false;
         }
     
         public override string ToString()
@@ -1522,6 +1669,184 @@ namespace HtsLoom
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
+    internal class JsonInheritanceAttribute : System.Attribute
+    {
+        public JsonInheritanceAttribute(string key, System.Type type)
+        {
+            Key = key;
+            Type = type;
+        }
+
+        public string Key { get; private set; }
+
+        public System.Type Type { get; private set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    public class JsonInheritanceConverter : Newtonsoft.Json.JsonConverter
+    {
+        internal static readonly string DefaultDiscriminatorName = "discriminator";
+
+        private readonly string _discriminatorName;
+
+        [System.ThreadStatic]
+        private static bool _isReading;
+
+        [System.ThreadStatic]
+        private static bool _isWriting;
+
+        public JsonInheritanceConverter()
+        {
+            _discriminatorName = DefaultDiscriminatorName;
+        }
+
+        public JsonInheritanceConverter(string discriminatorName)
+        {
+            _discriminatorName = discriminatorName;
+        }
+
+        public string DiscriminatorName { get { return _discriminatorName; } }
+
+        public override void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            try
+            {
+                _isWriting = true;
+
+                var jObject = Newtonsoft.Json.Linq.JObject.FromObject(value, serializer);
+                jObject.AddFirst(new Newtonsoft.Json.Linq.JProperty(_discriminatorName, GetSubtypeDiscriminator(value.GetType())));
+                writer.WriteToken(jObject.CreateReader());
+            }
+            finally
+            {
+                _isWriting = false;
+            }
+        }
+
+        public override bool CanWrite
+        {
+            get
+            {
+                if (_isWriting)
+                {
+                    _isWriting = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanRead
+        {
+            get
+            {
+                if (_isReading)
+                {
+                    _isReading = false;
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public override bool CanConvert(System.Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)
+        {
+            var jObject = serializer.Deserialize<Newtonsoft.Json.Linq.JObject>(reader);
+            if (jObject == null)
+                return null;
+
+            var discriminatorValue = jObject.GetValue(_discriminatorName);
+            var discriminator = discriminatorValue != null ? Newtonsoft.Json.Linq.Extensions.Value<string>(discriminatorValue) : null;
+            var subtype = GetObjectSubtype(objectType, discriminator);
+
+            var objectContract = serializer.ContractResolver.ResolveContract(subtype) as Newtonsoft.Json.Serialization.JsonObjectContract;
+            if (objectContract == null || System.Linq.Enumerable.All(objectContract.Properties, p => p.PropertyName != _discriminatorName))
+            {
+                jObject.Remove(_discriminatorName);
+            }
+
+            try
+            {
+                _isReading = true;
+                return serializer.Deserialize(jObject.CreateReader(), subtype);
+            }
+            finally
+            {
+                _isReading = false;
+            }
+        }
+
+        private System.Type GetObjectSubtype(System.Type objectType, string discriminator)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Key == discriminator)
+                    return attribute.Type;
+            }
+
+            return objectType;
+        }
+
+        private string GetSubtypeDiscriminator(System.Type objectType)
+        {
+            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
+            {
+                if (attribute.Type == objectType)
+                    return attribute.Key;
+            }
+
+            return objectType.Name;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DefaultPropertyAttribute("Type")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Combinator)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlobTracking>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
+    public partial class MatchTracking : Bonsai.Expressions.SingleArgumentExpressionBuilder
+    {
+    
+        public Bonsai.Expressions.TypeMapping Type { get; set; }
+
+        public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
+        {
+            var typeMapping = Type;
+            var returnType = typeMapping != null ? typeMapping.GetType().GetGenericArguments()[0] : typeof(Tracking);
+            return System.Linq.Expressions.Expression.Call(
+                typeof(MatchTracking),
+                "Process",
+                new System.Type[] { returnType },
+                System.Linq.Enumerable.Single(arguments));
+        }
+
+    
+        private static System.IObservable<TResult> Process<TResult>(System.IObservable<Tracking> source)
+            where TResult : Tracking
+        {
+            return System.Reactive.Linq.Observable.Create<TResult>(observer =>
+            {
+                var sourceObserver = System.Reactive.Observer.Create<Tracking>(
+                    value =>
+                    {
+                        var match = value as TResult;
+                        if (match != null) observer.OnNext(match);
+                    },
+                    observer.OnError,
+                    observer.OnCompleted);
+                return System.ObservableExtensions.SubscribeSafe(source, sourceObserver);
+            });
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -1538,6 +1863,11 @@ namespace HtsLoom
         {
             var formatting = Formatting;
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value, formatting));
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlobTracking> source)
+        {
+            return Process<BlobTracking>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Camera> source)
@@ -1563,6 +1893,11 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<HarpTimestampGeneratorGen3> source)
         {
             return Process<HarpTimestampGeneratorGen3>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HeadTailTracking> source)
+        {
+            return Process<HeadTailTracking>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<LightCycle> source)
@@ -1614,11 +1949,13 @@ namespace HtsLoom
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlobTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Camera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
@@ -1632,7 +1969,7 @@ namespace HtsLoom
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<Camera>();
+            Type = new Bonsai.Expressions.TypeMapping<BlobTracking>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
@@ -1655,6 +1992,116 @@ namespace HtsLoom
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.AttributeUsageAttribute((System.AttributeTargets.Class | System.AttributeTargets.Interface))]
+    public class YamlDiscriminatorAttribute : System.Attribute
+    {
+    
+        public YamlDiscriminatorAttribute(string discriminator)
+        {
+            Discriminator = discriminator;
+        }
+
+        public string Discriminator { get; private set; }
+
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    public class YamlDiscriminatorTypeInspector : YamlDotNet.Serialization.TypeInspectors.ReflectionTypeInspector
+    {
+    
+        readonly YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor;
+
+        public YamlDiscriminatorTypeInspector(YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor)
+        {
+            if (innerTypeDescriptor == null)
+            {
+                throw new System.ArgumentNullException("innerTypeDescriptor");
+            }
+
+            this.innerTypeDescriptor = innerTypeDescriptor;
+        }
+
+        public override System.Collections.Generic.IEnumerable<YamlDotNet.Serialization.IPropertyDescriptor> GetProperties(System.Type type, object container)
+        {
+            var innerProperties = innerTypeDescriptor.GetProperties(type, container);
+
+            var discriminatorAttribute = (YamlDiscriminatorAttribute)System.Attribute.GetCustomAttribute(type, typeof(YamlDiscriminatorAttribute));
+            var inheritanceAttributes = (JsonInheritanceAttribute[])System.Attribute.GetCustomAttributes(type, typeof(JsonInheritanceAttribute));
+            var typeMatch = System.Array.Find(inheritanceAttributes, attribute => attribute.Type == type);
+            if (discriminatorAttribute != null && typeMatch != null)
+            {
+                return System.Linq.Enumerable.Concat(new[]
+                {
+                    new DiscriminatorPropertyDescriptor(discriminatorAttribute.Discriminator, typeMatch.Key)
+                }, innerProperties);
+            }
+
+            return innerProperties;
+        }
+
+        class DiscriminatorPropertyDescriptor : YamlDotNet.Serialization.IPropertyDescriptor
+        {
+            readonly string key;
+
+            public DiscriminatorPropertyDescriptor(string discriminator, string value)
+            {
+                ScalarStyle = YamlDotNet.Core.ScalarStyle.Plain;
+                Name = discriminator;
+                key = value;
+            }
+
+            public string Name { get; private set; }
+
+            public bool Required
+            {
+                get { return true; }
+            }
+
+            public bool CanWrite
+            {
+                get { return true; }
+            }
+
+            public System.Type Type
+            {
+                get { return typeof(string); }
+            }
+
+            public System.Type TypeOverride { get; set; }
+
+            public System.Type ConverterType
+            {
+                get { return null; }
+            }
+
+            public bool AllowNulls
+            {
+                get { return false; }
+            }
+
+            public int Order { get; set; }
+
+            public YamlDotNet.Core.ScalarStyle ScalarStyle { get; set; }
+
+            public T GetCustomAttribute<T>() where T : System.Attribute
+            {
+                return null;
+            }
+
+            public YamlDotNet.Serialization.IObjectDescriptor Read(object target)
+            {
+                return new YamlDotNet.Serialization.ObjectDescriptor(key, Type, Type, ScalarStyle);
+            }
+
+            public void Write(object target, object value)
+            {
+            }
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into YAML strings.
     /// </summary>
@@ -1670,10 +2117,16 @@ namespace HtsLoom
             return System.Reactive.Linq.Observable.Defer(() =>
             {
                 var serializer = new YamlDotNet.Serialization.SerializerBuilder()
+                    .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
                       .WithTypeConverter(new YamlDotNet.Serialization.Converters.DateTimeOffsetConverter())
                       .Build();
                 return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
             });
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BlobTracking> source)
+        {
+            return Process<BlobTracking>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Camera> source)
@@ -1699,6 +2152,11 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<HarpTimestampGeneratorGen3> source)
         {
             return Process<HarpTimestampGeneratorGen3>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<HeadTailTracking> source)
+        {
+            return Process<HeadTailTracking>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<LightCycle> source)
@@ -1750,11 +2208,13 @@ namespace HtsLoom
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BlobTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Camera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
@@ -1768,7 +2228,7 @@ namespace HtsLoom
     
         public DeserializeFromYaml()
         {
-            Type = new Bonsai.Expressions.TypeMapping<Camera>();
+            Type = new Bonsai.Expressions.TypeMapping<BlobTracking>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
@@ -1784,11 +2244,27 @@ namespace HtsLoom
                 System.Linq.Enumerable.Single(arguments));
         }
 
+        private static void AddTypeDiscriminator<T>(YamlDotNet.Serialization.BufferedDeserialization.ITypeDiscriminatingNodeDeserializerOptions o)
+        {
+            var baseType = typeof(T);
+            var discriminator = System.Reflection.CustomAttributeExtensions.GetCustomAttribute<YamlDiscriminatorAttribute>(baseType).Discriminator;
+            var typeMapping = System.Linq.Enumerable.ToDictionary(
+                System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(baseType),
+                attr => attr.Key,
+                attr => attr.Type);
+            o.AddKeyValueTypeDiscriminator<T>(discriminator, typeMapping);
+        }
+
         private static System.IObservable<T> Process<T>(System.IObservable<string> source)
         {
             return System.Reactive.Linq.Observable.Defer(() =>
             {
                 var serializer = new YamlDotNet.Serialization.DeserializerBuilder()
+                    .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
+                    .WithTypeDiscriminatingNodeDeserializer(o =>
+                    {
+                        AddTypeDiscriminator<Tracking>(o);
+                    })
                       .WithTypeConverter(new YamlDotNet.Serialization.Converters.DateTimeOffsetConverter())
                       .Build();
                 return System.Reactive.Linq.Observable.Select(source, value =>

@@ -1,10 +1,11 @@
 from enum import StrEnum
-from typing import Dict, List, Optional, Union
+from typing import Literal, Dict, List, Optional, Union
+from typing_extensions import Annotated, TypeAliasType
 from swc.aeon_rigs.base import BaseSchema, Device
 from swc.aeon_rigs.video import SpinnakerCamera
 from swc.aeon_rigs.foraging import UndergroundFeeder
 from swc.aeon_rigs.harp import HarpTimestampGeneratorGen3, HarpCameraControllerGen2
-from pydantic import Field 
+from pydantic import Field
 
 class CameraName(StrEnum):
     NORTH = "CameraNorth"
@@ -38,15 +39,15 @@ class CameraControllerTrigger(BaseSchema):
         default=50,
         description="The frequency of the camera TTL trigger.",
     )
-       
+
 class CameraController(HarpCameraControllerGen2):
-    triggers: Dict[TriggerName,CameraControllerTrigger] 
+    triggers: Dict[TriggerName,CameraControllerTrigger]
 
 class WeightScale(Device):
     port_name: str = Field(examples=["COM"], description="The name of the device serial port.")
     filter_window: int =Field(default=40, description="Sliding window size of the weight linear regression filter.")
     weight_baseline_refactory_period : float = Field(default=5, description="The time between consecutive weight baseline when subject in center of arena in seconds.")
-    
+
 class Point(BaseSchema):
     x: int = Field(default=0, description="The X coordinate of the point")
     y: int = Field(default=0, description="The Y coordinate of the point")
@@ -63,12 +64,21 @@ class RegionsTrackingParameters(BaseSchema):
     threshold : int = Field(default=100, description="Threshold for the blob tracking.")
     regions: List[Polygon] = Field(description="Regions for the tracking.")
 
-class Tracking(BaseSchema):
-    regionTracking : Dict[str, RegionsTrackingParameters] = Field(description="The subject tracking in the arena.") 
+class BlobTracking(BaseSchema):
+    tracking_type: Literal["BlobTracking"] = "BlobTracking"
+    regionTracking : Dict[str, RegionsTrackingParameters] = Field(description="The subject tracking in the arena.")
+
+class HeadTailTracking(BlobTracking):
+    tracking_type: Literal["HeadTailTracking"] = "HeadTailTracking"
+    velocity_threshold : int = Field(default = 10, description = "Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject") # TODO: Update to generic (mm) vs camera (pixels) units
+    buffer_length : int = Field(default = 10, description = "The length of the buffer history, in frames, on which to compute velocity")
+
+Tracking = TypeAliasType ('Tracking', Annotated[Union[HeadTailTracking, BlobTracking], Field(discriminator="tracking_type")])
 
 class Camera(SpinnakerCamera):
     trigger: TriggerName = Field(default=TriggerName.TRIGGER0, description="The name of the trigger.")
-    tracking: Tracking | None =  Field(default=None, description="Tracking Parameters.")
+    # tracking:  Annotated[Union[HeadTailTracking, Tracking], Field(discriminator="tracking_type")] | None = 
+    tracking: Tracking | None =  Field(default=None, description="Tracking Parameters.") 
 
 # class ActivityCenter(BlobTrackingParameters):
 #     camera: CameraName = Field(description="Activity center camera")
@@ -87,3 +97,4 @@ class Rig(BaseSchema):
     nests: Dict[str, WeightScale] = Field(default=None,description="Weight scale parameters.")
     # activity_center: ActivityCenter = Field(description="Activity in the center of the arena.")
     light_cycle: LightCycle = Field(description="LightCycle components for the arena.")
+    # head_tail_parameters: Dict[CameraName, HeadTailParameters] = Field(default = None, description="HeadTail parameters per camera")
