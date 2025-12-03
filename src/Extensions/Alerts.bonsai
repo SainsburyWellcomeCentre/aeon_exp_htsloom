@@ -488,7 +488,7 @@ Item4 as FeederId
                           <Name>ActiveSubject</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>Tracking</Name>
+                          <Name>TrackingEvents</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Merge" />
@@ -527,7 +527,7 @@ Item4 as FeederId
                           <Name>AlertLogs</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>Tracking</Name>
+                          <Name>TrackingEvents</Name>
                         </Expression>
                         <Expression xsi:type="rx:SelectMany">
                           <Workflow>
@@ -1546,7 +1546,7 @@ Item1.Value.ChunkData.FrameID as FrameID)</scr:Expression>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Take">
-                                  <rx:Count>6</rx:Count>
+                                  <rx:Count>3</rx:Count>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="rx:CreateObservable">
