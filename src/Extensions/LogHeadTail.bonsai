@@ -107,7 +107,7 @@
               <Combinator xsi:type="rx:Merge" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:IndexedHeadtTailFormatHarp">
+              <Combinator xsi:type="p1:IndexedHeadTailFormatHarp">
                 <p1:Address>201</p1:Address>
               </Combinator>
             </Expression>
