@@ -2189,7 +2189,7 @@ LossWeightPercent: 63.11837</gui:Text>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\IdenticalKeysBlobCamera.bonsai" />
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\EqualTuple2.bonsai" />
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
@@ -2369,7 +2369,7 @@ LossWeightPercent: 63.11837</gui:Text>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:WithLatestFrom" />
                               </Expression>
-                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\IdenticalKeysBlobCamera.bonsai" />
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\EqualTuple2.bonsai" />
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
                             <Edges>

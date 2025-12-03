@@ -3,6 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
+  <Description>Compare Item by Ietem each 2 elements from a g2 given touples</Description>
   <Workflow>
     <Nodes>
       <Expression xsi:type="WorkflowInput">
