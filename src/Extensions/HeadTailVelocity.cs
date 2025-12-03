@@ -15,8 +15,7 @@ using OpenCV.Net;
 public class HeadTailVelocity
 {
     public double VelocityThreshold { get; set; }
-    Point2f oldHead = new Point2f();
-    Point2f oldTail = new Point2f();
+  
 
     
     double  Norm(Point2f value)
@@ -29,6 +28,8 @@ public class HeadTailVelocity
     }
     public IObservable<HeadTail> Process(IObservable<Tuple<Tuple<Point2f, Point2f>, IList<Point2f>>> source)
     {
+        Point2f oldHead = new Point2f();
+        Point2f oldTail = new Point2f();
         return source.Select(value => 
         {
             Point2f head, tail;
