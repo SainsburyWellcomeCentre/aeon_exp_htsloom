@@ -1,0 +1,229 @@
+# yaml-language-server: $schema=HtsLoom.json#/$defs/Rig
+
+lightCycle:
+  commandSocket: '>tcp://172.24.158.103:4304'
+  eventSocket: '>tcp://172.24.158.103:4303'
+  roomName: AEON4
+  configFileName: lightcycle.config
+
+nests:
+    Nest:
+        portName: COM7
+        filterWindow: 40
+        weightBaselineRefactoryPeriod: 5
+  
+clockSynchronizer:
+  portName: COM5
+
+cameraSynchronizer:
+  portName: COM6
+  triggers:
+    Trigger0:
+        frequency: 50 
+    Trigger1: 
+        frequency: 100
+cameras:
+    CameraTop:
+        serialNumber: "23101736"
+        binning: 1
+        exposureTime: 5000
+        gain: 0
+        trigger: Trigger0
+        tracking: 
+           regionTracking:
+             Arena:
+                threshold: 100
+                regions:
+                -   points:
+                    -   x: 1232
+                        y: 482
+                    -   x: 1235
+                        y: 591
+                    -   x: 1253
+                        y: 595
+                    -   x: 1220
+                        y: 724
+                    -   x: 1180
+                        y: 809
+                    -   x: 1126
+                        y: 886
+                    -   x: 1059
+                        y: 953
+                    -   x: 982
+                        y: 1007
+                    -   x: 896
+                        y: 1046
+                    -   x: 805
+                        y: 1071
+                    -   x: 711
+                        y: 1079
+                    -   x: 616
+                        y: 1071
+                    -   x: 525
+                        y: 1046
+                    -   x: 439                
+                        y: 1007
+                    -   x: 362
+                        y: 953
+                    -   x: 295
+                        y: 886
+                    -   x: 241
+                        y: 809
+                    -   x: 201
+                        y: 724
+                    -   x: 176
+                        y: 633
+                    -   x: 168
+                        y: 540
+                    -   x: 176
+                        y: 446
+                    -   x: 201
+                        y: 355
+                    -   x: 241
+                        y: 270
+                    -   x: 295
+                        y: 193
+                    -   x: 362
+                        y: 126
+                    -   x: 439
+                        y: 72
+                    -   x: 525
+                        y: 33
+                    -   x: 616
+                        y: 8
+                    -   x: 710
+                        y: 0
+                    -   x: 805
+                        y: 8
+                    -   x: 896
+                        y: 33
+                    -   x: 982
+                        y: 72
+                    -   x: 1059
+                        y: 126
+                    -   x: 1126
+                        y: 193
+                    -   x: 1180
+                        y: 270
+                    -   x: 1220
+                        y: 355
+                    -   x: 1251
+                        y: 478
+             Nest:
+                threshold: 100
+                regions:
+                - points:
+                    -   x: 1263
+                        y: 486
+                    -   x: 1333
+                        y: 486
+                    -   x: 1339
+                        y: 589
+                    -   x: 1267
+                        y: 581
+                - points:
+                    -   x: 1245
+                        y: 487
+                    -   x: 1258
+                        y: 486
+                    -   x: 1259
+                        y: 585
+                    -   x: 1249
+                        y: 587          
+     
+    CameraNest:
+        serialNumber: "23106287"
+        binning: 2
+        exposureTime: 10000
+        gain: 4
+        trigger: Trigger0
+ 
+    CameraNorth:
+        serialNumber: "23106245"
+        binning: 1
+        exposureTime: 3000
+        gain: 4
+        trigger: Trigger0
+        tracking: 
+            regionTracking:
+              North: 
+                threshold: 100
+                regions:
+                  - points:
+                    -   x: 0
+                        y: 0
+                    -   x: 1400
+                        y: 0
+                    -   x: 1400
+                        y: 1070
+                    -   x: 0
+                        y: 1070
+
+    CameraEast:
+        serialNumber: "23106241"
+        binning: 1
+        exposureTime: 3000
+        gain: 4
+        trigger: Trigger0
+        
+    CameraSouth:
+        serialNumber: "23106227"
+        binning: 1
+        exposureTime: 3000
+        gain: 4
+        trigger: Trigger0
+
+    CameraWest:
+        serialNumber: "23100956"
+        binning: 1
+        exposureTime: 10000
+        gain: 4
+        trigger: Trigger0
+
+    CameraLightMonitor:
+        serialNumber: "23032826"
+        binning: 4
+        exposureTime: 1000
+        gain: 4
+        trigger: Trigger1
+
+    CameraPatch1:
+        serialNumber: "23101737"
+        binning: 2
+        exposureTime: 5000
+        gain: 4
+        trigger: Trigger1
+    
+    CameraPatch2:
+        serialNumber: "23032811"
+        binning: 2
+        exposureTime: 5000
+        gain: 4
+        trigger: Trigger1
+    
+    CameraPatch3:
+        serialNumber: "23032823"
+        binning: 2
+        exposureTime: 5000
+        gain: 4
+        trigger: Trigger1
+
+feeders:
+
+    Feeder1:
+        portName: COM3
+        pelletDeliveryRetryCount: 2
+        pelletDeliveryTimeout: 1
+        wheelRadius: -4
+
+    Feeder2:
+        portName: COM4
+        pelletDeliveryRetryCount: 2
+        pelletDeliveryTimeout: 1
+        wheelRadius: -4
+
+    Feeder3:
+        portName: COM16
+        pelletDeliveryRetryCount: 2
+        pelletDeliveryTimeout: 1
+        wheelRadius: -4

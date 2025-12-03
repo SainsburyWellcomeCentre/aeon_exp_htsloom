@@ -1,0 +1,418 @@
+{
+  "$defs": {
+    "Camera": {
+      "properties": {
+        "serialNumber": {
+          "description": "The serial number of the camera.",
+          "examples": [
+            "00000"
+          ],
+          "title": "SerialNumber",
+          "type": "string"
+        },
+        "exposureTime": {
+          "default": 1000,
+          "description": "The exposure time of the sensor, in microseconds.",
+          "minimum": 100,
+          "title": "ExposureTime",
+          "type": "number"
+        },
+        "gain": {
+          "default": 0,
+          "description": "The camera gain.",
+          "minimum": 0,
+          "title": "Gain",
+          "type": "number"
+        },
+        "binning": {
+          "default": 1,
+          "description": "The camera binning configuration.",
+          "minimum": 1,
+          "title": "Binning",
+          "type": "integer"
+        },
+        "trigger": {
+          "$ref": "#/$defs/TriggerName",
+          "default": "Trigger0",
+          "description": "The name of the trigger.",
+          "title": "Trigger"
+        },
+        "tracking": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tracking"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Tracking Parameters.",
+          "title": "Tracking"
+        }
+      },
+      "required": [
+        "serialNumber"
+      ],
+      "title": "Camera",
+      "type": "object"
+    },
+    "CameraController": {
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COM"
+          ],
+          "title": "PortName",
+          "type": "string"
+        },
+        "triggers": {
+          "additionalProperties": {
+            "$ref": "#/$defs/CameraControllerTrigger"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/TriggerName"
+          },
+          "title": "Triggers",
+          "type": "object"
+        }
+      },
+      "required": [
+        "portName",
+        "triggers"
+      ],
+      "title": "CameraController",
+      "type": "object"
+    },
+    "CameraControllerTrigger": {
+      "properties": {
+        "frequency": {
+          "default": 50,
+          "description": "The frequency of the camera TTL trigger.",
+          "title": "Frequency",
+          "type": "integer"
+        }
+      },
+      "title": "CameraControllerTrigger",
+      "type": "object"
+    },
+    "CameraName": {
+      "enum": [
+        "CameraNorth",
+        "CameraSouth",
+        "CameraTop",
+        "CameraEast",
+        "CameraWest",
+        "CameraPatch1",
+        "CameraPatch2",
+        "CameraPatch3",
+        "CameraPatch4",
+        "CameraPatch5",
+        "CameraPatch6",
+        "CameraLightMonitor",
+        "CameraNest"
+      ],
+      "title": "CameraName",
+      "type": "string"
+    },
+    "Experiment": {
+      "properties": {
+        "workflow": {
+          "description": "Path to the workflow running the experiment.",
+          "title": "Workflow",
+          "type": "string"
+        },
+        "commit": {
+          "description": "Commit hash of the experiment repo.",
+          "title": "Commit",
+          "type": "string"
+        },
+        "repositoryUrl": {
+          "description": "The URL of the git repository used to version experiment source code.",
+          "title": "RepositoryUrl",
+          "type": "string"
+        },
+        "rig": {
+          "$ref": "#/$defs/Rig"
+        }
+      },
+      "required": [
+        "workflow",
+        "commit",
+        "repositoryUrl",
+        "rig"
+      ],
+      "title": "Experiment",
+      "type": "object"
+    },
+    "FeederName": {
+      "enum": [
+        "Feeder1",
+        "Feeder2",
+        "Feeder3",
+        "Feeder4",
+        "Feeder5",
+        "Feeder6"
+      ],
+      "title": "FeederName",
+      "type": "string"
+    },
+    "HarpTimestampGeneratorGen3": {
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COM"
+          ],
+          "title": "PortName",
+          "type": "string"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "HarpTimestampGeneratorGen3",
+      "type": "object"
+    },
+    "LightCycle": {
+      "properties": {
+        "commandSocket": {
+          "default": ">tcp://localhost:4304",
+          "description": "Specifies the endpoint to send commands to the Light Server.",
+          "title": "CommandSocket",
+          "type": "string"
+        },
+        "eventSocket": {
+          "default": ">tcp://localhost:4303",
+          "description": "Specifies the endpoint to send commands to the Light Server.",
+          "title": "EventSocket",
+          "type": "string"
+        },
+        "roomName": {
+          "default": "Aeon3",
+          "description": "The name of the room to monitor and control.",
+          "title": "RoomName",
+          "type": "string"
+        },
+        "configFileName": {
+          "default": "lightcycle.config",
+          "description": "The name of the CSV file describing the light model, where each row represents one whole minute and the red, cold white and warm white, light levels set for that minute.",
+          "title": "ConfigFileName",
+          "type": "string"
+        }
+      },
+      "title": "LightCycle",
+      "type": "object"
+    },
+    "Point": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "The X coordinate of the point",
+          "title": "X",
+          "type": "integer"
+        },
+        "y": {
+          "default": 0,
+          "description": "The Y coordinate of the point",
+          "title": "Y",
+          "type": "integer"
+        }
+      },
+      "title": "Point",
+      "type": "object"
+    },
+    "Polygon": {
+      "description": "A polygon is defined by list of points connected linearly in sequence",
+      "properties": {
+        "points": {
+          "default": [
+            {
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "description": "Points to make the polygon",
+          "items": {
+            "$ref": "#/$defs/Point"
+          },
+          "title": "Points",
+          "type": "array"
+        }
+      },
+      "title": "Polygon",
+      "type": "object"
+    },
+    "RegionsTrackingParameters": {
+      "properties": {
+        "threshold": {
+          "default": 100,
+          "description": "Threshold for the blob tracking.",
+          "title": "Threshold",
+          "type": "integer"
+        },
+        "regions": {
+          "description": "Regions for the tracking.",
+          "items": {
+            "$ref": "#/$defs/Polygon"
+          },
+          "title": "Regions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "regions"
+      ],
+      "title": "RegionsTrackingParameters",
+      "type": "object"
+    },
+    "Rig": {
+      "properties": {
+        "clockSynchronizer": {
+          "$ref": "#/$defs/HarpTimestampGeneratorGen3",
+          "title": "ClockSynchronizer"
+        },
+        "cameraSynchronizer": {
+          "$ref": "#/$defs/CameraController",
+          "title": "CameraSynchronizer"
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/$defs/Camera"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/CameraName"
+          },
+          "title": "Cameras",
+          "type": "object"
+        },
+        "feeders": {
+          "additionalProperties": {
+            "$ref": "#/$defs/UndergroundFeeder"
+          },
+          "propertyNames": {
+            "$ref": "#/$defs/FeederName"
+          },
+          "title": "Feeders",
+          "type": "object"
+        },
+        "nests": {
+          "additionalProperties": {
+            "$ref": "#/$defs/WeightScale"
+          },
+          "default": null,
+          "description": "Weight scale parameters.",
+          "title": "Nests",
+          "type": "object"
+        },
+        "lightCycle": {
+          "$ref": "#/$defs/LightCycle",
+          "description": "LightCycle components for the arena."
+        }
+      },
+      "required": [
+        "clockSynchronizer",
+        "cameraSynchronizer",
+        "cameras",
+        "feeders",
+        "lightCycle"
+      ],
+      "title": "Rig",
+      "type": "object"
+    },
+    "Tracking": {
+      "properties": {
+        "regionTracking": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RegionsTrackingParameters"
+          },
+          "description": "The subject tracking in the arena.",
+          "title": "Regiontracking",
+          "type": "object"
+        }
+      },
+      "required": [
+        "regionTracking"
+      ],
+      "title": "Tracking",
+      "type": "object"
+    },
+    "TriggerName": {
+      "enum": [
+        "Trigger0",
+        "Trigger1"
+      ],
+      "title": "TriggerName",
+      "type": "string"
+    },
+    "UndergroundFeeder": {
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COM"
+          ],
+          "title": "PortName",
+          "type": "string"
+        },
+        "pelletDeliveryRetryCount": {
+          "default": 2,
+          "description": "The number of times to retry a failed pellet delivery.",
+          "minimum": 0,
+          "title": "PelletDeliveryRetryCount",
+          "type": "integer"
+        },
+        "pelletDeliveryTimeout": {
+          "default": 1,
+          "description": "The amount of time to wait for pellet detection before reporting a failure.",
+          "minimum": 0,
+          "title": "PelletDeliveryTimeout",
+          "type": "number"
+        },
+        "wheelRadius": {
+          "default": -4.0,
+          "description": "The radius of the wheel, in centimeters.",
+          "title": "WheelRadius",
+          "type": "number"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "UndergroundFeeder",
+      "type": "object"
+    },
+    "WeightScale": {
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COM"
+          ],
+          "title": "PortName",
+          "type": "string"
+        },
+        "filterWindow": {
+          "default": 40,
+          "description": "Sliding window size of the weight linear regression filter.",
+          "title": "FilterWindow",
+          "type": "integer"
+        },
+        "weightBaselineRefactoryPeriod": {
+          "default": 5,
+          "description": "The time between consecutive weight baseline when subject in center of arena in seconds.",
+          "title": "WeightBaselineRefactoryPeriod",
+          "type": "number"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "WeightScale",
+      "type": "object"
+    }
+  },
+  "title": "HtsLoom",
+  "type": "object"
+}
