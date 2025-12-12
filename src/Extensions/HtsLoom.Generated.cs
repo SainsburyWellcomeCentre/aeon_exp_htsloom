@@ -87,6 +87,8 @@ namespace HtsLoom
     
         private Tracking _tracking;
     
+        private System.Collections.Generic.List<ZoneActivity> _zones;
+    
         public Camera()
         {
             _exposureTime = 1000D;
@@ -103,6 +105,7 @@ namespace HtsLoom
             _binning = other._binning;
             _trigger = other._trigger;
             _tracking = other._tracking;
+            _zones = other._zones;
         }
     
         /// <summary>
@@ -214,6 +217,25 @@ namespace HtsLoom
             }
         }
     
+        /// <summary>
+        /// ZonesOfInterest
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zones")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zones")]
+        [System.ComponentModel.DescriptionAttribute("ZonesOfInterest")]
+        public System.Collections.Generic.List<ZoneActivity> Zones
+        {
+            get
+            {
+                return _zones;
+            }
+            set
+            {
+                _zones = value;
+            }
+        }
+    
         public System.IObservable<Camera> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Camera(this)));
@@ -231,7 +253,8 @@ namespace HtsLoom
             stringBuilder.Append("Gain = " + _gain + ", ");
             stringBuilder.Append("Binning = " + _binning + ", ");
             stringBuilder.Append("Trigger = " + _trigger + ", ");
-            stringBuilder.Append("Tracking = " + _tracking);
+            stringBuilder.Append("Tracking = " + _tracking + ", ");
+            stringBuilder.Append("Zones = " + _zones);
             return true;
         }
     
@@ -701,6 +724,8 @@ namespace HtsLoom
     
         private int _bufferLength;
     
+        private System.Collections.Generic.List<ZoneActivity> _zones;
+    
         public HeadTailTracking()
         {
             _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
@@ -714,6 +739,7 @@ namespace HtsLoom
             _regionTracking = other._regionTracking;
             _velocityThreshold = other._velocityThreshold;
             _bufferLength = other._bufferLength;
+            _zones = other._zones;
         }
     
         /// <summary>
@@ -772,6 +798,25 @@ namespace HtsLoom
             }
         }
     
+        /// <summary>
+        /// ZonesOfInterest
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zones")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zones")]
+        [System.ComponentModel.DescriptionAttribute("ZonesOfInterest")]
+        public System.Collections.Generic.List<ZoneActivity> Zones
+        {
+            get
+            {
+                return _zones;
+            }
+            set
+            {
+                _zones = value;
+            }
+        }
+    
         public System.IObservable<HeadTailTracking> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HeadTailTracking(this)));
@@ -790,7 +835,8 @@ namespace HtsLoom
             }
             stringBuilder.Append("RegionTracking = " + _regionTracking + ", ");
             stringBuilder.Append("VelocityThreshold = " + _velocityThreshold + ", ");
-            stringBuilder.Append("BufferLength = " + _bufferLength);
+            stringBuilder.Append("BufferLength = " + _bufferLength + ", ");
+            stringBuilder.Append("Zones = " + _zones);
             return true;
         }
     }
@@ -1669,6 +1715,98 @@ namespace HtsLoom
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class ZoneActivity
+    {
+    
+        private Point _position;
+    
+        private System.Collections.Generic.List<Polygon> _regions;
+    
+        public ZoneActivity()
+        {
+            _position = new Point();
+            _regions = new System.Collections.Generic.List<Polygon>();
+        }
+    
+        protected ZoneActivity(ZoneActivity other)
+        {
+            _position = other._position;
+            _regions = other._regions;
+        }
+    
+        /// <summary>
+        /// Zone position
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("position")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="position")]
+        [System.ComponentModel.DescriptionAttribute("Zone position")]
+        public Point Position
+        {
+            get
+            {
+                return _position;
+            }
+            set
+            {
+                _position = value;
+            }
+        }
+    
+        /// <summary>
+        /// Regions for the Activity.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("regions", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="regions")]
+        [System.ComponentModel.DescriptionAttribute("Regions for the Activity.")]
+        public System.Collections.Generic.List<Polygon> Regions
+        {
+            get
+            {
+                return _regions;
+            }
+            set
+            {
+                _regions = value;
+            }
+        }
+    
+        public System.IObservable<ZoneActivity> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZoneActivity(this)));
+        }
+    
+        public System.IObservable<ZoneActivity> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ZoneActivity(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Position = " + _position + ", ");
+            stringBuilder.Append("Regions = " + _regions);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.9.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
     internal class JsonInheritanceAttribute : System.Attribute
@@ -1939,6 +2077,11 @@ namespace HtsLoom
         {
             return Process<WeightScale>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ZoneActivity> source)
+        {
+            return Process<ZoneActivity>(source);
+        }
     }
 
 
@@ -1964,6 +2107,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Tracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UndergroundFeeder>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WeightScale>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneActivity>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -2198,6 +2342,11 @@ namespace HtsLoom
         {
             return Process<WeightScale>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ZoneActivity> source)
+        {
+            return Process<ZoneActivity>(source);
+        }
     }
 
 
@@ -2223,6 +2372,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Tracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UndergroundFeeder>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WeightScale>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneActivity>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     

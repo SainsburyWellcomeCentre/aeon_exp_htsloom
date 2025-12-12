@@ -68,20 +68,27 @@ class BlobTracking(BaseSchema):
     tracking_type: Literal["BlobTracking"] = "BlobTracking"
     regionTracking : Dict[str, RegionsTrackingParameters] = Field(description="The subject tracking in the arena.")
 
+class ZoneActivity(BaseSchema):
+    position : Point = Field(default=Point(x=0,y=0), description="Zone position")
+    regions: List[Polygon] = Field(description="Regions for the Activity.")
+
 class HeadTailTracking(BlobTracking):
     tracking_type: Literal["HeadTailTracking"] = "HeadTailTracking"
     velocity_threshold : int = Field(default = 10, description = "Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject") # TODO: Update to generic (mm) vs camera (pixels) units
     buffer_length : int = Field(default = 10, description = "The length of the buffer history, in frames, on which to compute velocity")
+    Zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")
+
 
 Tracking = TypeAliasType ('Tracking', Annotated[Union[HeadTailTracking, BlobTracking], Field(discriminator="tracking_type")])
+
+
 
 class Camera(SpinnakerCamera):
     trigger: TriggerName = Field(default=TriggerName.TRIGGER0, description="The name of the trigger.")
     # tracking:  Annotated[Union[HeadTailTracking, Tracking], Field(discriminator="tracking_type")] | None = 
     tracking: Tracking | None =  Field(default=None, description="Tracking Parameters.") 
+    zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")
 
-# class ActivityCenter(BlobTrackingParameters):
-#     camera: CameraName = Field(description="Activity center camera")
 
 class LightCycle(BaseSchema):
     command_socket: str = Field(default=">tcp://localhost:4304", description="Specifies the endpoint to send commands to the Light Server.")

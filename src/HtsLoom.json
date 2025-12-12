@@ -72,6 +72,22 @@
           "default": null,
           "description": "Tracking Parameters.",
           "title": "Tracking"
+        },
+        "zones": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ZoneActivity"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ZonesOfInterest",
+          "title": "Zones"
         }
       },
       "required": [
@@ -225,6 +241,22 @@
           "description": "The length of the buffer history, in frames, on which to compute velocity",
           "title": "BufferLength",
           "type": "integer"
+        },
+        "zones": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ZoneActivity"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ZonesOfInterest",
+          "title": "Zones"
         }
       },
       "required": [
@@ -468,6 +500,32 @@
         "portName"
       ],
       "title": "WeightScale",
+      "type": "object"
+    },
+    "ZoneActivity": {
+      "properties": {
+        "position": {
+          "$ref": "#/$defs/Point",
+          "default": {
+            "x": 0,
+            "y": 0
+          },
+          "description": "Zone position",
+          "title": "Position"
+        },
+        "regions": {
+          "description": "Regions for the Activity.",
+          "items": {
+            "$ref": "#/$defs/Polygon"
+          },
+          "title": "Regions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "regions"
+      ],
+      "title": "ZoneActivity",
       "type": "object"
     }
   },

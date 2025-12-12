@@ -184,6 +184,33 @@ cameras:
                         y: 1032
                     -   x: 168
                         y: 422
+            zones: 
+            - position:
+                x: 480
+                y: 680
+              regions:
+                - points:
+                    -   x: 99
+                        y: 342
+                    -   x: 936
+                        y: 279
+                    -   x: 881
+                        y: 683
+                    -   x: 175
+                        y: 683  
+            - position:
+                x: 1400
+                y: 1000
+              regions:
+              - points:
+                - x: 1440
+                  y: 1080
+                - x: 1440 
+                  y: 680
+                - x: 1000
+                  y: 680
+                - x: 100
+                  y: 1080    
             bufferLength: 10
             velocityThreshold: 10
 
