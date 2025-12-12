@@ -2,12 +2,6 @@
 <WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:ui="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
-                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:p2="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
-                 xmlns:p3="clr-namespace:;assembly=Extensions"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -26,134 +20,11 @@
         <ui:Visible>true</ui:Visible>
         <ui:Location xsi:nil="true" />
         <ui:Size xsi:nil="true" />
-        <ui:WindowState xsi:nil="true" />
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="SubscribeSubject">
-          <Name>FrameEvents</Name>
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="rx:Condition">
-          <Workflow>
-            <Nodes>
-              <Expression xsi:type="WorkflowInput">
-                <Name>Source1</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Key.Item1</Selector>
-              </Expression>
-              <Expression xsi:type="ExternalizedMapping">
-                <Property Name="Value" />
-              </Expression>
-              <Expression xsi:type="Equal">
-                <Operand xsi:type="WorkflowProperty" TypeArguments="p1:CameraName">
-                  <Value>CameraNorth</Value>
-                </Operand>
-              </Expression>
-              <Expression xsi:type="WorkflowOutput" />
-            </Nodes>
-            <Edges>
-              <Edge From="0" To="1" Label="Source1" />
-              <Edge From="1" To="3" Label="Source1" />
-              <Edge From="2" To="3" Label="Source2" />
-              <Edge From="3" To="4" Label="Source1" />
-            </Edges>
-          </Workflow>
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Combinator">
-          <Combinator xsi:type="rx:Merge" />
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="MemberSelector">
-          <Selector>Value.Image</Selector>
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="ExternalizedMapping">
-          <Property Name="Regions" />
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Combinator">
-          <Combinator xsi:type="cv:MaskPolygon">
-            <cv:Regions>
-              <cv:ArrayOfPoint />
-            </cv:Regions>
-            <cv:MaskType>ToZero</cv:MaskType>
-            <cv:FillValue>
-              <cv:Val0>0</cv:Val0>
-              <cv:Val1>0</cv:Val1>
-              <cv:Val2>0</cv:Val2>
-              <cv:Val3>0</cv:Val3>
-            </cv:FillValue>
-          </Combinator>
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="GroupWorkflow">
-          <Workflow>
-            <Nodes>
-              <Expression xsi:type="ExternalizedMapping">
-                <Property Name="Value" DisplayName="Regions" />
-              </Expression>
-              <Expression xsi:type="PropertySource" TypeArguments="cv:MaskPolygon,p2:Point[][]">
-                <MemberName>Regions</MemberName>
-                <Value>
-                  <ArrayOfPoint />
-                </Value>
-              </Expression>
-              <Expression xsi:type="WorkflowOutput" />
-            </Nodes>
-            <Edges>
-              <Edge From="0" To="1" Label="Source1" />
-              <Edge From="1" To="2" Label="Source1" />
-            </Edges>
-          </Workflow>
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Combinator">
-          <Combinator xsi:type="p3:PointArrayConverter" />
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Index">
-          <Operand xsi:type="IntProperty">
-            <Value>0</Value>
-          </Operand>
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Combinator">
-          <Combinator xsi:type="p1:SerializeToYaml" />
-        </Builder>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Combinator">
-          <Combinator xsi:type="io:WriteAllText">
-            <io:Path>Polygon.yaml</io:Path>
-            <io:Overwrite>false</io:Overwrite>
-            <io:Append>false</io:Append>
-          </Combinator>
-        </Builder>
+        <ui:WindowState>Normal</ui:WindowState>
       </Expression>
     </Nodes>
     <Edges>
       <Edge From="4" To="5" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
-      <Edge From="7" To="8" Label="Source1" />
-      <Edge From="8" To="9" Label="Source1" />
-      <Edge From="9" To="11" Label="Source1" />
-      <Edge From="10" To="11" Label="Source2" />
-      <Edge From="10" To="12" Label="Source1" />
-      <Edge From="12" To="13" Label="Source1" />
-      <Edge From="13" To="14" Label="Source1" />
-      <Edge From="14" To="15" Label="Source1" />
-      <Edge From="15" To="16" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
