@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:zmq="clr-namespace:Bonsai.ZeroMQ;assembly=Bonsai.ZeroMQ"
+                 xmlns:osc="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc"
+                 xmlns:aeon-env="clr-namespace:Aeon.Environment;assembly=Aeon.Environment"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>RigConfiguration</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>LightCycle</Selector>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="EventSocket" Selector="EventSocket" />
+          <Property Name="RoomName" Selector="RoomName" />
+          <Property Name="CommandSocket" Selector="CommandSocket" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>LightClient</Name>
+        <Description>Provides a network client for automated room light control.</Description>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ConnectionString" DisplayName="EventSocket" />
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Topic" DisplayName="RoomName" Description="The name of the room to monitor and control." />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="zmq:Subscriber">
+                <zmq:ConnectionString>&gt;tcp://172.24.158.103:4303</zmq:ConnectionString>
+                <zmq:Topic>AEON4</zmq:Topic>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Last.Buffer</Selector>
+            </Expression>
+            <Expression xsi:type="osc:Parse">
+              <osc:Address>/channel</osc:Address>
+              <osc:TypeTag>ii</osc:TypeTag>
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Channel" Selector="Item1" />
+                <Property Name="Value" Selector="Item2" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="aeon-env:CreateRoomLightMessage">
+                <aeon-env:Channel>39</aeon-env:Channel>
+                <aeon-env:Value>0</aeon-env:Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CameraControllerEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="harp:CreateTimestamped" />
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Name" DisplayName="LightEvents" Description="The name of the output sequence containing all timestamped light events." />
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>LightEvents</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Name" DisplayName="LightCommands" Description="The name of the sequence controlling room light presets." />
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject" TypeArguments="aeon-env:RoomLightPreset">
+              <rx:Name>LightCommands</rx:Name>
+            </Expression>
+            <Expression xsi:type="osc:Format">
+              <osc:Address>/preset</osc:Address>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Buffer.Array</Selector>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ConnectionString" DisplayName="CommandSocket" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="zmq:Publisher">
+                <zmq:ConnectionString>&gt;tcp://172.24.158.103:4304</zmq:ConnectionString>
+                <zmq:Topic>AEON4</zmq:Topic>
+              </Combinator>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="2" Label="Source1" />
+            <Edge From="1" To="2" Label="Source2" />
+            <Edge From="1" To="18" Label="Source3" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="8" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="11" Label="Source1" />
+            <Edge From="10" To="11" Label="Source2" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="18" Label="Source1" />
+            <Edge From="17" To="18" Label="Source2" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="ConfigFileName" Selector="ConfigFileName" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Aeon.Environment:LightCycle.bonsai">
+        <ConfigFileName>lightcycle.config</ConfigFileName>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Aeon.Environment:EnvironmentCondition.bonsai">
+        <Value>Experiment</Value>
+      </Expression>
+      <Expression xsi:type="MulticastSubject">
+        <Name>LightCommands</Name>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="1" To="4" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
