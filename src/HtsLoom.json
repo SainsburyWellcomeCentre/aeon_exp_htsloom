@@ -155,6 +155,25 @@
       "title": "CameraName",
       "type": "string"
     },
+    "EventName": {
+      "enum": [
+        "StimulusEnded",
+        "Key1Event",
+        "Key2Event",
+        "Key3Event",
+        "Key4Event",
+        "TaskStimStart",
+        "TaskStimStop",
+        "TaskReward",
+        "ZoneTrigger1",
+        "ZoneTrigger2",
+        "ZoneTrigger3",
+        "ZoneTrigger4",
+        "ZoneTrigger5"
+      ],
+      "title": "EventName",
+      "type": "string"
+    },
     "Experiment": {
       "properties": {
         "workflow": {
@@ -174,13 +193,17 @@
         },
         "rig": {
           "$ref": "#/$defs/Rig"
+        },
+        "task": {
+          "$ref": "#/$defs/Task"
         }
       },
       "required": [
         "workflow",
         "commit",
         "repositoryUrl",
-        "rig"
+        "rig",
+        "task"
       ],
       "title": "Experiment",
       "type": "object"
@@ -293,6 +316,96 @@
         }
       },
       "title": "LightCycle",
+      "type": "object"
+    },
+    "LoomingPresentationParameters": {
+      "properties": {
+        "stopTriggers": {
+          "default": "Key1Event",
+          "description": "The triggers that interrupt the loom presentation",
+          "items": {
+            "$ref": "#/$defs/EventName"
+          },
+          "title": "StopTriggers",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "startTriggers": {
+          "default": "Key1Event",
+          "description": "The triggers that stat the loom presentation",
+          "items": {
+            "$ref": "#/$defs/EventName"
+          },
+          "title": "StartTriggers",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "initialDelay": {
+          "description": "The delay before starting to present the stimulus",
+          "title": "InitialDelay",
+          "type": "number"
+        },
+        "pulseDuration": {
+          "default": 10,
+          "description": "The time period that a stimulus is presented if it doesn't finishes by itself",
+          "title": "PulseDuration",
+          "type": "number"
+        },
+        "interPulseInterval": {
+          "description": "Period of time between pulses when running a set of pulses in sequence",
+          "title": "InterPulseInterval",
+          "type": "number"
+        },
+        "numberOfPulses": {
+          "description": "The quantity of stimulus to be presented each time it starts",
+          "title": "NumberOfPulses",
+          "type": "integer"
+        },
+        "location": {
+          "$ref": "#/$defs/ScreenPosition",
+          "description": "The screen coordinates of the loom",
+          "title": "Location"
+        },
+        "startSize": {
+          "description": "The initial size of the looming disc",
+          "minimum": 0,
+          "title": "StartSize",
+          "type": "number"
+        },
+        "endSize": {
+          "description": "The end size of the looming disc",
+          "minimum": 0,
+          "title": "EndSize",
+          "type": "number"
+        },
+        "animationDuration": {
+          "default": 10,
+          "description": "The time period that each loom takes to reach full size",
+          "title": "AnimationDuration",
+          "type": "number"
+        },
+        "timeOnSet": {
+          "default": 0,
+          "description": "The period that looming disc remains static on set after reaching the end size",
+          "title": "TimeOnSet",
+          "type": "number"
+        },
+        "loomingColor": {
+          "default": 0.5,
+          "description": "The grayscale value of the looming disc to be presented",
+          "title": "LoomingColor",
+          "type": "number"
+        }
+      },
+      "required": [
+        "initialDelay",
+        "interPulseInterval",
+        "numberOfPulses",
+        "location",
+        "startSize",
+        "endSize"
+      ],
+      "title": "LoomingPresentationParameters",
       "type": "object"
     },
     "Point": {
@@ -411,6 +524,82 @@
       "title": "Rig",
       "type": "object"
     },
+    "ScreenName": {
+      "enum": [
+        "ScreenNorth",
+        "ScreenSouth",
+        "ScreenEast",
+        "ScreenWest"
+      ],
+      "title": "ScreenName",
+      "type": "string"
+    },
+    "ScreenPosition": {
+      "properties": {
+        "x": {
+          "default": 0.5,
+          "description": "The X coordinate of the point",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0.5,
+          "description": "The Y coordinate of the point",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Y",
+          "type": "number"
+        }
+      },
+      "title": "ScreenPosition",
+      "type": "object"
+    },
+    "Task": {
+      "properties": {
+        "backgroundColor": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "The grayscale color of the background per screen  between 0 and 1",
+          "propertyNames": {
+            "$ref": "#/$defs/ScreenName"
+          },
+          "title": "BackgroundColor",
+          "type": "object"
+        },
+        "zoneTriggers": {
+          "description": "The zones that trigger events to be used by task control",
+          "items": {
+            "$ref": "#/$defs/ZoneTrigger"
+          },
+          "title": "ZoneTriggers",
+          "type": "array"
+        },
+        "looms": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/$defs/LoomingPresentationParameters"
+            },
+            "type": "array"
+          },
+          "description": "Dictionary with screen Id as a key for a list of loom regions",
+          "propertyNames": {
+            "$ref": "#/$defs/ScreenName"
+          },
+          "title": "Looms",
+          "type": "object"
+        }
+      },
+      "required": [
+        "backgroundColor",
+        "zoneTriggers",
+        "looms"
+      ],
+      "title": "Task",
+      "type": "object"
+    },
     "Tracking": {
       "discriminator": {
         "mapping": {
@@ -526,6 +715,62 @@
         "regions"
       ],
       "title": "ZoneActivity",
+      "type": "object"
+    },
+    "ZoneTrigger": {
+      "properties": {
+        "camera": {
+          "$ref": "#/$defs/CameraName",
+          "default": "CameraNorth",
+          "description": "Camera to be used",
+          "title": "Camera"
+        },
+        "zoneId": {
+          "description": "The index of the region to be used to trigger the loom",
+          "title": "ZoneId",
+          "type": "integer"
+        },
+        "triggerProbability": {
+          "description": "Probability to present a loom if all conditions are achieved",
+          "title": "TriggerProbability",
+          "type": "number"
+        },
+        "angleThreshold": {
+          "description": "Angle threshold that subject needs to be facing looming region",
+          "maximum": 3.141592653589793,
+          "minimum": 0,
+          "title": "AngleThreshold",
+          "type": "number"
+        },
+        "refractoryPeriod": {
+          "description": "Minimum period of inactivity after a loom is presented in seconds",
+          "title": "RefractoryPeriod",
+          "type": "number"
+        },
+        "timeInRegion": {
+          "description": "Minimum Period subject needs to be in loom region for a loom to be triggered",
+          "title": "TimeInRegion",
+          "type": "number"
+        },
+        "trigger": {
+          "description": "The triggers that will be set when all conditions are met",
+          "items": {
+            "$ref": "#/$defs/EventName"
+          },
+          "title": "Trigger",
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "zoneId",
+        "triggerProbability",
+        "angleThreshold",
+        "refractoryPeriod",
+        "timeInRegion",
+        "trigger"
+      ],
+      "title": "ZoneTrigger",
       "type": "object"
     }
   },
