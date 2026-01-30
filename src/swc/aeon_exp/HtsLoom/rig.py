@@ -45,7 +45,7 @@ class CameraController(HarpCameraControllerGen2):
 
 class WeightScale(Device):
     port_name: str = Field(examples=["COM"], description="The name of the device serial port.")
-    filter_window: int =Field(default=40, description="Sliding window size of the weight linear regression filter.")
+    filter_window: int = Field(default=40, description="Sliding window size of the weight linear regression filter.")
     weight_baseline_refactory_period : float = Field(default=5, description="The time between consecutive weight baseline when subject in center of arena in seconds.")
 
 class Point(BaseSchema):
@@ -78,10 +78,7 @@ class HeadTailTracking(BlobTracking):
     buffer_length : int = Field(default = 10, description = "The length of the buffer history, in frames, on which to compute velocity")
     Zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")
 
-
 Tracking = TypeAliasType ('Tracking', Annotated[Union[HeadTailTracking, BlobTracking], Field(discriminator="tracking_type")])
-
-
 
 class Camera(SpinnakerCamera):
     trigger: TriggerName = Field(default=TriggerName.TRIGGER0, description="The name of the trigger.")
