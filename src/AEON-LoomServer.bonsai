@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:zmq="clr-namespace:Bonsai.ZeroMQ;assembly=Bonsai.ZeroMQ"
+                 xmlns:osc="clr-namespace:Bonsai.Osc;assembly=Bonsai.Osc"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="zmq:Subscriber">
+          <zmq:ConnectionString>@tcp://*:4242</zmq:ConnectionString>
+          <zmq:Topic>LOOM</zmq:Topic>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Last.Buffer</Selector>
+      </Expression>
+      <Expression xsi:type="osc:Parse">
+        <osc:Address>/Screen</osc:Address>
+        <osc:TypeTag>i</osc:TypeTag>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
