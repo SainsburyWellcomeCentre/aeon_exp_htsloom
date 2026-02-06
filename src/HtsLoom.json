@@ -1,5 +1,28 @@
 {
   "$defs": {
+    "BlobTracking": {
+      "properties": {
+        "trackingType": {
+          "const": "BlobTracking",
+          "default": "BlobTracking",
+          "title": "TrackingType",
+          "type": "string"
+        },
+        "regionTracking": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RegionsTrackingParameters"
+          },
+          "description": "The subject tracking in the arena.",
+          "title": "Regiontracking",
+          "type": "object"
+        }
+      },
+      "required": [
+        "regionTracking"
+      ],
+      "title": "BlobTracking",
+      "type": "object"
+    },
     "Camera": {
       "properties": {
         "serialNumber": {
@@ -49,6 +72,22 @@
           "default": null,
           "description": "Tracking Parameters.",
           "title": "Tracking"
+        },
+        "zones": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ZoneActivity"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ZonesOfInterest",
+          "title": "Zones"
         }
       },
       "required": [
@@ -173,6 +212,57 @@
         "portName"
       ],
       "title": "HarpTimestampGeneratorGen3",
+      "type": "object"
+    },
+    "HeadTailTracking": {
+      "properties": {
+        "trackingType": {
+          "const": "HeadTailTracking",
+          "default": "HeadTailTracking",
+          "title": "TrackingType",
+          "type": "string"
+        },
+        "regionTracking": {
+          "additionalProperties": {
+            "$ref": "#/$defs/RegionsTrackingParameters"
+          },
+          "description": "The subject tracking in the arena.",
+          "title": "Regiontracking",
+          "type": "object"
+        },
+        "velocityThreshold": {
+          "default": 10,
+          "description": "Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject",
+          "title": "VelocityThreshold",
+          "type": "integer"
+        },
+        "bufferLength": {
+          "default": 10,
+          "description": "The length of the buffer history, in frames, on which to compute velocity",
+          "title": "BufferLength",
+          "type": "integer"
+        },
+        "zones": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ZoneActivity"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "ZonesOfInterest",
+          "title": "Zones"
+        }
+      },
+      "required": [
+        "regionTracking"
+      ],
+      "title": "HeadTailTracking",
       "type": "object"
     },
     "LightCycle": {
@@ -322,21 +412,21 @@
       "type": "object"
     },
     "Tracking": {
-      "properties": {
-        "regionTracking": {
-          "additionalProperties": {
-            "$ref": "#/$defs/RegionsTrackingParameters"
-          },
-          "description": "The subject tracking in the arena.",
-          "title": "Regiontracking",
-          "type": "object"
-        }
+      "discriminator": {
+        "mapping": {
+          "BlobTracking": "#/$defs/BlobTracking",
+          "HeadTailTracking": "#/$defs/HeadTailTracking"
+        },
+        "propertyName": "trackingType"
       },
-      "required": [
-        "regionTracking"
-      ],
-      "title": "Tracking",
-      "type": "object"
+      "oneOf": [
+        {
+          "$ref": "#/$defs/HeadTailTracking"
+        },
+        {
+          "$ref": "#/$defs/BlobTracking"
+        }
+      ]
     },
     "TriggerName": {
       "enum": [
@@ -410,6 +500,32 @@
         "portName"
       ],
       "title": "WeightScale",
+      "type": "object"
+    },
+    "ZoneActivity": {
+      "properties": {
+        "position": {
+          "$ref": "#/$defs/Point",
+          "default": {
+            "x": 0,
+            "y": 0
+          },
+          "description": "Zone position",
+          "title": "Position"
+        },
+        "regions": {
+          "description": "Regions for the Activity.",
+          "items": {
+            "$ref": "#/$defs/Polygon"
+          },
+          "title": "Regions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "regions"
+      ],
+      "title": "ZoneActivity",
       "type": "object"
     }
   },

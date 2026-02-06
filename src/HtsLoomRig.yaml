@@ -29,9 +29,12 @@ cameras:
         exposureTime: 5000
         gain: 0
         trigger: Trigger0
-        tracking: 
-           regionTracking:
-             Arena:
+        tracking:
+            trackingType: HeadTailTracking
+            bufferLength: 10
+            velocityThreshold: 10
+            regionTracking:
+              Arena:
                 threshold: 100
                 regions:
                 -   points:
@@ -109,7 +112,7 @@ cameras:
                         y: 355
                     -   x: 1251
                         y: 478
-             Nest:
+              Nest:
                 threshold: 100
                 regions:
                 - points:
@@ -145,19 +148,71 @@ cameras:
         gain: 4
         trigger: Trigger0
         tracking: 
+            trackingType: HeadTailTracking
             regionTracking:
               North: 
                 threshold: 100
                 regions:
-                  - points:
-                    -   x: 0
-                        y: 0
-                    -   x: 1400
-                        y: 0
-                    -   x: 1400
-                        y: 1070
-                    -   x: 0
-                        y: 1070
+                - points:
+                    -   x: 62
+                        y: 412
+                    -   x: 139
+                        y: 287
+                    -   x: 302
+                        y: 285
+                    -   x: 400
+                        y: 140
+                    -   x: 563
+                        y: 137
+                    -   x: 639
+                        y: 184
+                    -   x: 848
+                        y: 194
+                    -   x: 855
+                        y: 50
+                    -   x: 915
+                        y: 155
+                    -   x: 1081
+                        y: 165
+                    -   x: 1167
+                        y: 320
+                    -   x: 1325
+                        y: 327
+                    -   x: 1367
+                        y: 408
+                    -   x: 707
+                        y: 1032
+                    -   x: 168
+                        y: 422
+            zones: 
+            - position:
+                x: 480
+                y: 680
+              regions:
+                - points:
+                    -   x: 99
+                        y: 342
+                    -   x: 936
+                        y: 279
+                    -   x: 881
+                        y: 683
+                    -   x: 175
+                        y: 683  
+            - position:
+                x: 1400
+                y: 1000
+              regions:
+              - points:
+                - x: 1440
+                  y: 1080
+                - x: 1440 
+                  y: 680
+                - x: 1000
+                  y: 680
+                - x: 100
+                  y: 1080    
+            bufferLength: 10
+            velocityThreshold: 10
 
     CameraEast:
         serialNumber: "23106241"

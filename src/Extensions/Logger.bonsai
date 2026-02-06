@@ -90,9 +90,21 @@
         <LogName />
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>Tracking</Name>
+        <Name>TrackingEvents</Name>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogBinaryRegions.bonsai" />
+      <Expression xsi:type="SubscribeSubject">
+        <Name>HeadTailObservable</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogHeadTail.bonsai" />
+      <Expression xsi:type="SubscribeSubject">
+        <Name>LoomRegionStateObservable</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogLoomRegionState.bonsai" />
+      <Expression xsi:type="SubscribeSubject">
+        <Name>LoomAngleObservable</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogLoomAngleState.bonsai" />
       <Expression xsi:type="SubscribeSubject">
         <Name>NestWeightData</Name>
       </Expression>
@@ -390,18 +402,21 @@
       <Edge From="20" To="21" Label="Source1" />
       <Edge From="22" To="23" Label="Source1" />
       <Edge From="24" To="25" Label="Source1" />
-      <Edge From="25" To="26" Label="Source1" />
       <Edge From="26" To="27" Label="Source1" />
       <Edge From="28" To="29" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
       <Edge From="30" To="31" Label="Source1" />
+      <Edge From="31" To="32" Label="Source1" />
       <Edge From="32" To="33" Label="Source1" />
-      <Edge From="33" To="34" Label="Source1" />
       <Edge From="34" To="35" Label="Source1" />
+      <Edge From="35" To="36" Label="Source1" />
       <Edge From="36" To="37" Label="Source1" />
-      <Edge From="38" To="40" Label="Source1" />
-      <Edge From="39" To="40" Label="Source2" />
+      <Edge From="38" To="39" Label="Source1" />
+      <Edge From="39" To="40" Label="Source1" />
       <Edge From="40" To="41" Label="Source1" />
+      <Edge From="42" To="43" Label="Source1" />
+      <Edge From="44" To="46" Label="Source1" />
+      <Edge From="45" To="46" Label="Source2" />
+      <Edge From="46" To="47" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
