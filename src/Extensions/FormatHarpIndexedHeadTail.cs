@@ -10,7 +10,7 @@ using Bonsai.Vision;
 [Combinator]
 [Description("Converts timestamped Indexed HeadTail with region into a sequence of Harp messages.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
-public class IndexedHeadTailFormatHarp
+public class FormatHarpIndexedHeadTail
 {
     public int Address { get; set; }
     public IObservable<HarpMessage> Process(IObservable<Timestamped<Tuple<int, HeadTail, ConnectedComponent>>> source)

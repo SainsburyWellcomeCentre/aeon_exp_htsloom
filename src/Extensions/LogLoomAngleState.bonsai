@@ -107,7 +107,7 @@
               <Combinator xsi:type="rx:Merge" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:LoomRegionAngleFormatHarp">
+              <Combinator xsi:type="p1:FormatHarpLoomRegionAngle">
                 <p1:Address>203</p1:Address>
               </Combinator>
             </Expression>
