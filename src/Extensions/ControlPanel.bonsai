@@ -2061,7 +2061,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Range">
                       <rx:Start>0</rx:Start>
-                      <rx:Count>5</rx:Count>
+                      <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:ReplaySubject">
@@ -2337,7 +2337,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SelectedZoneKey</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\GetStreamCameraBlobZoneId.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FindBlobsInZoneId .bonsai">
                     <Name>LoomAngleObservable</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2377,8 +2377,8 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SelectedZoneKey</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\GetStreamCameraBlobZoneId.bonsai">
-                    <Name>LoomInRegionTimeObservable</Name>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FindBlobsInZoneId .bonsai">
+                    <Name>LoomAngleObservable</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Switch" />
@@ -3394,7 +3394,7 @@ LossWeightPercent: 63.11837</gui:Text>
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>SelectedZoneKey</Name>
                                     </Expression>
-                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\GetStreamCameraBlobZoneId.bonsai">
+                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\FindBlobsInZoneId .bonsai">
                                       <Name>LoomRegionStateObservable</Name>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
