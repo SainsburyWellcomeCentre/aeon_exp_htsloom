@@ -15,6 +15,9 @@ nests:
 clockSynchronizer:
   portName: COM5
 
+inputExpander:
+  portName: COM11
+  
 cameraSynchronizer:
   portName: COM6
   triggers:

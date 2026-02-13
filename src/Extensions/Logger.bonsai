@@ -65,6 +65,14 @@
         <ClosingDuration>PT2S</ClosingDuration>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
+        <Name>InputExpanderEvents</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Aeon.Acquisition:LogHarpState.bonsai">
+        <LogName>InputExpander</LogName>
+        <Heartbeats>Heartbeats</Heartbeats>
+        <ClosingDuration>PT2S</ClosingDuration>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
         <Name>SubjectState</Name>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Aeon.Acquisition:LogData.bonsai">
@@ -147,9 +155,10 @@
       <Edge From="26" To="27" Label="Source1" />
       <Edge From="28" To="29" Label="Source1" />
       <Edge From="30" To="31" Label="Source1" />
-      <Edge From="32" To="34" Label="Source1" />
-      <Edge From="33" To="34" Label="Source2" />
-      <Edge From="34" To="35" Label="Source1" />
+      <Edge From="32" To="33" Label="Source1" />
+      <Edge From="34" To="36" Label="Source1" />
+      <Edge From="35" To="36" Label="Source2" />
+      <Edge From="36" To="37" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

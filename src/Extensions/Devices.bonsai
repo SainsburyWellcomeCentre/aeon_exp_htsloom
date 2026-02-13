@@ -11,6 +11,7 @@
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\TimestampSynchronizer.bonsai" />
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\VideoController.bonsai" />
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\Cameras.bonsai" />
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\InputExpander.bonsai" />
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\UndergroundFeeder.bonsai" />
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LightCycle.bonsai" />
           </Nodes>

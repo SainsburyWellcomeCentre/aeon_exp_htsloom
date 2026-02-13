@@ -220,6 +220,23 @@
       "title": "FeederName",
       "type": "string"
     },
+    "HarpInputExpander": {
+      "properties": {
+        "portName": {
+          "description": "The name of the device serial port.",
+          "examples": [
+            "COM"
+          ],
+          "title": "PortName",
+          "type": "string"
+        }
+      },
+      "required": [
+        "portName"
+      ],
+      "title": "HarpInputExpander",
+      "type": "object"
+    },
     "HarpTimestampGeneratorGen3": {
       "properties": {
         "portName": {
@@ -476,6 +493,10 @@
           "$ref": "#/$defs/HarpTimestampGeneratorGen3",
           "title": "ClockSynchronizer"
         },
+        "inputExpander": {
+          "$ref": "#/$defs/HarpInputExpander",
+          "title": "InputExpander"
+        },
         "cameraSynchronizer": {
           "$ref": "#/$defs/CameraController",
           "title": "CameraSynchronizer"
@@ -516,6 +537,7 @@
       },
       "required": [
         "clockSynchronizer",
+        "inputExpander",
         "cameraSynchronizer",
         "cameras",
         "feeders",

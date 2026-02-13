@@ -728,6 +728,72 @@ namespace HtsLoom
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class HarpInputExpander
+    {
+    
+        private string _portName;
+    
+        public HarpInputExpander()
+        {
+        }
+    
+        protected HarpInputExpander(HarpInputExpander other)
+        {
+            _portName = other._portName;
+        }
+    
+        /// <summary>
+        /// The name of the device serial port.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
+        [System.ComponentModel.DescriptionAttribute("The name of the device serial port.")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        public System.IObservable<HarpInputExpander> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpInputExpander(this)));
+        }
+    
+        public System.IObservable<HarpInputExpander> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new HarpInputExpander(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("PortName = " + _portName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpTimestampGeneratorGen3
     {
     
@@ -1638,6 +1704,8 @@ namespace HtsLoom
     
         private HarpTimestampGeneratorGen3 _clockSynchronizer;
     
+        private HarpInputExpander _inputExpander;
+    
         private CameraController _cameraSynchronizer;
     
         private System.Collections.Generic.Dictionary<CameraName, Camera> _cameras;
@@ -1651,6 +1719,7 @@ namespace HtsLoom
         public Rig()
         {
             _clockSynchronizer = new HarpTimestampGeneratorGen3();
+            _inputExpander = new HarpInputExpander();
             _cameraSynchronizer = new CameraController();
             _cameras = new System.Collections.Generic.Dictionary<CameraName, Camera>();
             _feeders = new System.Collections.Generic.Dictionary<FeederName, UndergroundFeeder>();
@@ -1660,6 +1729,7 @@ namespace HtsLoom
         protected Rig(Rig other)
         {
             _clockSynchronizer = other._clockSynchronizer;
+            _inputExpander = other._inputExpander;
             _cameraSynchronizer = other._cameraSynchronizer;
             _cameras = other._cameras;
             _feeders = other._feeders;
@@ -1679,6 +1749,21 @@ namespace HtsLoom
             set
             {
                 _clockSynchronizer = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("inputExpander", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inputExpander")]
+        public HarpInputExpander InputExpander
+        {
+            get
+            {
+                return _inputExpander;
+            }
+            set
+            {
+                _inputExpander = value;
             }
         }
     
@@ -1778,6 +1863,7 @@ namespace HtsLoom
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("ClockSynchronizer = " + _clockSynchronizer + ", ");
+            stringBuilder.Append("InputExpander = " + _inputExpander + ", ");
             stringBuilder.Append("CameraSynchronizer = " + _cameraSynchronizer + ", ");
             stringBuilder.Append("Cameras = " + _cameras + ", ");
             stringBuilder.Append("Feeders = " + _feeders + ", ");
@@ -2855,6 +2941,11 @@ namespace HtsLoom
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<HarpInputExpander> source)
+        {
+            return Process<HarpInputExpander>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpTimestampGeneratorGen3> source)
         {
             return Process<HarpTimestampGeneratorGen3>(source);
@@ -2944,6 +3035,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpInputExpander>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
@@ -3144,6 +3236,11 @@ namespace HtsLoom
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<HarpInputExpander> source)
+        {
+            return Process<HarpInputExpander>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpTimestampGeneratorGen3> source)
         {
             return Process<HarpTimestampGeneratorGen3>(source);
@@ -3233,6 +3330,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpInputExpander>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
