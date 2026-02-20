@@ -601,12 +601,12 @@
         },
         "looms": {
           "additionalProperties": {
-            "items": {
+            "additionalProperties": {
               "$ref": "#/$defs/LoomingPresentationParameters"
             },
-            "type": "array"
+            "type": "object"
           },
-          "description": "Dictionary with screen Id as a key for a list of loom regions",
+          "description": "Dictionary with screen Id as a key for a dict of loom regions",
           "propertyNames": {
             "$ref": "#/$defs/ScreenName"
           },

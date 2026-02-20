@@ -2010,13 +2010,13 @@ namespace HtsLoom
     
         private System.Collections.Generic.List<ZoneTrigger> _zoneTriggers;
     
-        private System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.List<LoomingPresentationParameters>> _looms;
+        private System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> _looms;
     
         public Task()
         {
             _backgroundColor = new System.Collections.Generic.Dictionary<ScreenName, double>();
             _zoneTriggers = new System.Collections.Generic.List<ZoneTrigger>();
-            _looms = new System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.List<LoomingPresentationParameters>>();
+            _looms = new System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>>();
         }
     
         protected Task(Task other)
@@ -2065,13 +2065,13 @@ namespace HtsLoom
         }
     
         /// <summary>
-        /// Dictionary with screen Id as a key for a list of loom regions
+        /// Dictionary with screen Id as a key for a dict of loom regions
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("looms", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="looms")]
-        [System.ComponentModel.DescriptionAttribute("Dictionary with screen Id as a key for a list of loom regions")]
-        public System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.List<LoomingPresentationParameters>> Looms
+        [System.ComponentModel.DescriptionAttribute("Dictionary with screen Id as a key for a dict of loom regions")]
+        public System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> Looms
         {
             get
             {

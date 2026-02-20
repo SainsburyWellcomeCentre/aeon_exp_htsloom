@@ -8,19 +8,158 @@ zoneTriggers:
     timeInRegion: 1
     trigger:
       - ZoneTrigger1
+  - camera: CameraNorth
+    zoneId: 1
+    triggerProbability: 1
+    angleThreshold: 1.57
+    refractoryPeriod: 10
+    timeInRegion: 1
+    trigger:
+      - ZoneTrigger2
 looms:
   ScreenNorth:
-     -  stopTriggers:
+     Loom1:
+        stopTriggers:
+          - Key1Event
+        startTriggers:
+          - ZoneTrigger1
+          - Key1Event
+        initialDelay: 01
+        interPulseInterval: 01
+        numberOfPulses: 01
+        location:
+          x: 0.5
+          y: 0.5
+        startSize: 0
+        endSize: 1
+     Loom2:
+        stopTriggers:
             - Key1Event
         startTriggers:
-            - ZoneTrigger1
+            - ZoneTrigger2
+            - Key3Event
         initialDelay: 0
         interPulseInterval: 0
         numberOfPulses: 0
         location:
-            x: 0.5
+            x: 1.0
             y: 0.5
+        startSize: 1
+        endSize: 0
+     FastLoom:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        animationDuration: 10
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
+        endSize: 0
+     SuperLoom:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
+        endSize: 0
+     Fast:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
+        endSize: 0
+  ScreenSouth:
+     South11:
+        stopTriggers:
+          - Key1Event
+        startTriggers:
+          - ZoneTrigger1
+          - Key1Event
+        initialDelay: 01
+        interPulseInterval: 01
+        numberOfPulses: 01
+        location:
+          x: 0.5
+          y: 0.5
         startSize: 0
+        endSize: 1
+     South2:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
+        endSize: 0
+     FastSouthLoom:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        animationDuration: 10
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
+        endSize: 0
+     SouthSuperLoomSouth:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
+        endSize: 0
+     SSSSSSFast:
+        stopTriggers:
+            - Key1Event
+        startTriggers:
+            - ZoneTrigger2
+            - Key3Event
+        initialDelay: 0
+        interPulseInterval: 0
+        numberOfPulses: 0
+        location:
+            x: 1.0
+            y: 0.5
+        startSize: 1
         endSize: 0
 backgroundColor: 
     ScreenNorth: 0 

@@ -60,7 +60,8 @@ class LoomingPresentationParameters(StimulusSettings):
     time_on_set: float = Field(default=0 , description= "The period that looming disc remains static on set after reaching the end size")
     looming_color: float = Field(default = 0.5, description= "The grayscale value of the looming disc to be presented")
 
+
 class Task(BaseSchema):
     background_color: Dict[ScreenName, float] = Field(description = "The grayscale color of the background per screen  between 0 and 1")
     zone_triggers : List[ZoneTrigger] = Field(description="The zones that trigger events to be used by task control")
-    looms: Dict[ScreenName, List[LoomingPresentationParameters]] = Field(description="Dictionary with screen Id as a key for a list of loom regions")
+    looms: Dict[ScreenName, Dict[str ,LoomingPresentationParameters]] = Field(description="Dictionary with screen Id as a key for a dict of loom regions")
