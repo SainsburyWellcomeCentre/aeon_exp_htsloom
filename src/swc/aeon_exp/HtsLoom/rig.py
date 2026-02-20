@@ -4,7 +4,7 @@ from typing_extensions import Annotated, TypeAliasType
 from swc.aeon_rigs.base import BaseSchema, Device
 from swc.aeon_rigs.video import SpinnakerCamera
 from swc.aeon_rigs.foraging import UndergroundFeeder
-from swc.aeon_rigs.harp import HarpTimestampGeneratorGen3, HarpCameraControllerGen2
+from swc.aeon_rigs.harp import HarpTimestampGeneratorGen3, HarpCameraControllerGen2, HarpInputExpander
 from pydantic import Field
 
 class CameraName(StrEnum):
@@ -42,6 +42,7 @@ class CameraControllerTrigger(BaseSchema):
 
 class CameraController(HarpCameraControllerGen2):
     triggers: Dict[TriggerName,CameraControllerTrigger]
+
 
 class WeightScale(Device):
     port_name: str = Field(examples=["COM"], description="The name of the device serial port.")
@@ -95,6 +96,7 @@ class LightCycle(BaseSchema):
 
 class Rig(BaseSchema):
     clock_synchronizer: HarpTimestampGeneratorGen3
+    input_expander: HarpInputExpander
     camera_synchronizer: CameraController
     cameras: Dict[CameraName, Camera]
     feeders: Dict[FeederName,UndergroundFeeder]
