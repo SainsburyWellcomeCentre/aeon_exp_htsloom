@@ -20,182 +20,162 @@
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="GroupWorkflow">
-          <Name>EnvironmentSubjectState</Name>
-          <Workflow>
-            <Nodes>
-              <Expression xsi:type="SubscribeSubject">
-                <Name>CameraControllerEvents</Name>
-              </Expression>
-              <Expression xsi:type="IncludeWorkflow" Path="Extensions\SubjectDatabase.bonsai">
-                <DatabaseConfig>Z:\aeon\config\database.config</DatabaseConfig>
-              </Expression>
-              <Expression xsi:type="MulticastSubject">
-                <Name>SubjectState</Name>
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="SubscribeSubject">
-                <Name>CameraControllerEvents</Name>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="aeon-env:AnnotationSource" />
-              </Expression>
-              <Expression xsi:type="MulticastSubject">
-                <Name>Annotations</Name>
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="SubscribeSubject">
-                <Name>CameraControllerEvents</Name>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="aeon-env:EnvironmentState" />
-              </Expression>
-              <Expression xsi:type="MulticastSubject">
-                <Name>EnvironmentState</Name>
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="SubscribeSubject">
-                <Name>AlertLogs</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Seconds,Value.Priority,Value.Type,Value.Message</Selector>
-              </Expression>
-              <Expression xsi:type="Format">
-                <Format>{0},{1},{2},{3}</Format>
-                <Selector>Item1,Item2,Item3,Item4</Selector>
-              </Expression>
-              <Expression xsi:type="SubscribeSubject">
-                <Name>Annotations</Name>
-              </Expression>
-              <Expression xsi:type="rx:Condition">
-                <Name>Alert</Name>
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="WorkflowInput">
-                      <Name>Source1</Name>
-                    </Expression>
-                    <Expression xsi:type="MemberSelector">
-                      <Selector>Value.Priority</Selector>
-                    </Expression>
-                    <Expression xsi:type="Equal">
-                      <Operand xsi:type="WorkflowProperty" TypeArguments="aeon:PriorityLevel">
-                        <Value>Alert</Value>
-                      </Operand>
-                    </Expression>
-                    <Expression xsi:type="WorkflowOutput" />
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                    <Edge From="1" To="2" Label="Source1" />
-                    <Edge From="2" To="3" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Expression>
-              <Expression xsi:type="Format">
-                <Format>## **Experimenter Annotation**
+      <Expression xsi:type="GroupWorkflow">
+        <Name>EnvironmentSubjectState</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CameraControllerEvents</Name>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\SubjectDatabase.bonsai">
+              <DatabaseConfig>Z:\aeon\config\database.config</DatabaseConfig>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>SubjectState</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CameraControllerEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="aeon-env:AnnotationSource" />
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Annotations</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CameraControllerEvents</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="aeon-env:EnvironmentState" />
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>EnvironmentState</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>AlertLogs</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Seconds,Value.Priority,Value.Type,Value.Message</Selector>
+            </Expression>
+            <Expression xsi:type="Format">
+              <Format>{0},{1},{2},{3}</Format>
+              <Selector>Item1,Item2,Item3,Item4</Selector>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Annotations</Name>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Name>Alert</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value.Priority</Selector>
+                  </Expression>
+                  <Expression xsi:type="Equal">
+                    <Operand xsi:type="WorkflowProperty" TypeArguments="aeon:PriorityLevel">
+                      <Value>Alert</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Format">
+              <Format>## **Experimenter Annotation**
 **Message**: {0}</Format>
-                <Selector>Value.Message</Selector>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:Merge" />
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                <gui:Enabled>true</gui:Enabled>
-                <gui:Visible>true</gui:Visible>
-                <gui:ColumnCount>1</gui:ColumnCount>
-                <gui:RowCount>2</gui:RowCount>
-                <gui:ColumnStyles />
-                <gui:RowStyles />
-                <gui:CellSpans />
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                <gui:Enabled>true</gui:Enabled>
-                <gui:Visible>true</gui:Visible>
-                <gui:ColumnCount>2</gui:ColumnCount>
-                <gui:RowCount>1</gui:RowCount>
-                <gui:ColumnStyles />
-                <gui:RowStyles />
-                <gui:CellSpans />
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="SubscribeSubject">
-                <Name>SubjectWeight</Name>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:Merge" />
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:SampleInterval">
-                  <rx:Interval>PT0.1S</rx:Interval>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="VisualizerMapping" />
-              <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                <gui:Name>EnvironmentSubjectState</gui:Name>
-                <gui:Enabled>true</gui:Enabled>
-                <gui:Visible>true</gui:Visible>
-                <gui:ColumnCount>1</gui:ColumnCount>
-                <gui:RowCount>3</gui:RowCount>
-                <gui:ColumnStyles />
-                <gui:RowStyles>
-                  <gui:RowStyle>
-                    <gui:SizeType>Percent</gui:SizeType>
-                    <gui:Height>40</gui:Height>
-                  </gui:RowStyle>
-                  <gui:RowStyle>
-                    <gui:SizeType>Percent</gui:SizeType>
-                    <gui:Height>40</gui:Height>
-                  </gui:RowStyle>
-                  <gui:RowStyle>
-                    <gui:SizeType>Percent</gui:SizeType>
-                    <gui:Height>20</gui:Height>
-                  </gui:RowStyle>
-                </gui:RowStyles>
-                <gui:CellSpans />
-              </Expression>
-              <Expression xsi:type="WorkflowOutput" />
-            </Nodes>
-            <Edges>
-              <Edge From="0" To="1" Label="Source1" />
-              <Edge From="1" To="2" Label="Source1" />
-              <Edge From="2" To="3" Label="Source1" />
-              <Edge From="3" To="28" Label="Source1" />
-              <Edge From="4" To="5" Label="Source1" />
-              <Edge From="5" To="6" Label="Source1" />
-              <Edge From="6" To="7" Label="Source1" />
-              <Edge From="7" To="22" Label="Source1" />
-              <Edge From="8" To="9" Label="Source1" />
-              <Edge From="9" To="10" Label="Source1" />
-              <Edge From="10" To="11" Label="Source1" />
-              <Edge From="11" To="20" Label="Source1" />
-              <Edge From="12" To="13" Label="Source1" />
-              <Edge From="13" To="14" Label="Source1" />
-              <Edge From="14" To="18" Label="Source1" />
-              <Edge From="15" To="16" Label="Source1" />
-              <Edge From="16" To="17" Label="Source1" />
-              <Edge From="17" To="18" Label="Source2" />
-              <Edge From="18" To="19" Label="Source1" />
-              <Edge From="19" To="20" Label="Source2" />
-              <Edge From="20" To="21" Label="Source1" />
-              <Edge From="21" To="22" Label="Source2" />
-              <Edge From="22" To="23" Label="Source1" />
-              <Edge From="23" To="28" Label="Source2" />
-              <Edge From="24" To="25" Label="Source1" />
-              <Edge From="25" To="26" Label="Source1" />
-              <Edge From="26" To="27" Label="Source1" />
-              <Edge From="27" To="28" Label="Source3" />
-              <Edge From="28" To="29" Label="Source1" />
-            </Edges>
-          </Workflow>
-        </Builder>
+              <Selector>Value.Message</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="gui:TableLayoutPanelBuilder">
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:ColumnCount>1</gui:ColumnCount>
+              <gui:RowCount>2</gui:RowCount>
+              <gui:ColumnStyles />
+              <gui:RowStyles />
+              <gui:CellSpans />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="gui:TableLayoutPanelBuilder">
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:ColumnCount>2</gui:ColumnCount>
+              <gui:RowCount>1</gui:RowCount>
+              <gui:ColumnStyles />
+              <gui:RowStyles />
+              <gui:CellSpans />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="gui:TableLayoutPanelBuilder">
+              <gui:Name>EnvironmentSubjectState</gui:Name>
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:ColumnCount>1</gui:ColumnCount>
+              <gui:RowCount>3</gui:RowCount>
+              <gui:ColumnStyles />
+              <gui:RowStyles>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>40</gui:Height>
+                </gui:RowStyle>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>40</gui:Height>
+                </gui:RowStyle>
+                <gui:RowStyle>
+                  <gui:SizeType>Percent</gui:SizeType>
+                  <gui:Height>20</gui:Height>
+                </gui:RowStyle>
+              </gui:RowStyles>
+              <gui:CellSpans />
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="24" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="22" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="20" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="18" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source2" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source2" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source2" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source2" />
+            <Edge From="24" To="25" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="VisualizerMapping">
-          <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
-        </Builder>
+      <Expression xsi:type="VisualizerMapping">
+        <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
       </Expression>
       <Expression xsi:type="rx:Defer">
         <Name>FeederController</Name>
@@ -1521,6 +1501,489 @@ LossWeightPercent: 63.11837</gui:Text>
       <Expression xsi:type="Disable">
         <Builder xsi:type="VisualizerMapping" />
       </Expression>
+      <Expression xsi:type="rx:Defer">
+        <Name>Task</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskConfiguration</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Looms</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>LoomScreen</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>LoomScreen</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Value</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Key</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ToArray" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Key</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="3" To="8" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="9" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="9" To="10" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="rx:ToDictionary">
+              <rx:KeySelector>Item2</rx:KeySelector>
+              <rx:ElementSelector>Item1</rx:ElementSelector>
+            </Expression>
+            <Expression xsi:type="rx:ReplaySubject">
+              <Name>Looms</Name>
+              <rx:BufferSize xsi:nil="true" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SelectedLooms</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Distinct" />
+            </Expression>
+            <Expression xsi:type="aeon:CreateGroup">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SelectedLooms</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1.Item2,Item2</Selector>
+                        </Expression>
+                        <Expression xsi:type="Equal" />
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item1.Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>SelectedLoomsObservable</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Looms</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Keys</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:ToArray" />
+            </Expression>
+            <Expression xsi:type="gui:ListBoxDataSourceBuilder">
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:DisplayMember />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>ScreenName</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>ScreenName</Name>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:CreateObservable">
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>SelectedLoomsObservable</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>ScreenName</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="rx:Condition">
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item1.Key,Item2</Selector>
+                          </Expression>
+                          <Expression xsi:type="Equal" />
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source1" />
+                          <Edge From="2" To="3" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Item1</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="2" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source2" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:Switch" />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="gui:ListBoxDataSourceBuilder">
+                <gui:Enabled>true</gui:Enabled>
+                <gui:Visible>true</gui:Visible>
+                <gui:Font>Microsoft Sans Serif, 12pt, style=Bold, Italic</gui:Font>
+                <gui:DisplayMember />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ScreenName</Name>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>SelectActives</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SelectedLoomsObservable</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Key</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="WorkflowProperty" TypeArguments="p2:ScreenName">
+                            <Value>ScreenNorth</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="6" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="gui:ListBoxDataSourceBuilder">
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:DisplayMember />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="gui:TableLayoutPanelBuilder">
+              <gui:Name>LoomMapping</gui:Name>
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:ColumnCount>1</gui:ColumnCount>
+              <gui:RowCount>2</gui:RowCount>
+              <gui:ColumnStyles />
+              <gui:RowStyles />
+              <gui:CellSpans />
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ScreenName</Name>
+            </Expression>
+            <Expression xsi:type="rx:CreateObservable">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Looms</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Value" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Index">
+                    <Operand xsi:type="WorkflowProperty" TypeArguments="p2:ScreenName">
+                      <Value>ScreenNorth</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="gui:ListBoxDataSourceBuilder">
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:Font>Microsoft Sans Serif, 12pt</gui:Font>
+                    <gui:DisplayMember />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Skip">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:PublishSubject">
+                    <Name>SelectedItem</Name>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:ButtonBuilder">
+                    <gui:Name>Select</gui:Name>
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:Text>Select</gui:Text>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>1</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Visible" />
+                  </Expression>
+                  <Expression xsi:type="ui:VisualizerWindow">
+                    <ui:Visible>true</ui:Visible>
+                    <ui:Location xsi:nil="true" />
+                    <ui:Size xsi:nil="true" />
+                    <ui:WindowState xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SelectedItem</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:TakeUntil" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Distinct" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ToList" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Repeat" />
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ScreenName</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="6" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="7" To="10" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="10" To="13" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="11" To="17" Label="Source2" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="15" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="22" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Switch" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>SelectedLooms</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="26" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="25" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="25" To="26" Label="Source2" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="31" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="VisualizerMapping" />
       <Expression xsi:type="gui:TabControlBuilder">
         <gui:Name>Environment</gui:Name>
         <gui:Enabled>true</gui:Enabled>
@@ -1550,7 +2013,7 @@ LossWeightPercent: 63.11837</gui:Text>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
-                <rx:Count>10</rx:Count>
+                <rx:Count>11</rx:Count>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1709,8 +2172,8 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="gui:ToggleButtonBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>Stop</gui:Text>
-                    <gui:Checked>true</gui:Checked>
+                    <gui:Text>Start</gui:Text>
+                    <gui:Checked>false</gui:Checked>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>CamerasRunning</Name>
@@ -2055,10 +2518,16 @@ LossWeightPercent: 63.11837</gui:Text>
         </Workflow>
       </Expression>
       <Expression xsi:type="VisualizerMapping" />
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="NumberOfBlobs" />
+      </Expression>
       <Expression xsi:type="rx:Defer">
         <Name>HeadTailViz</Name>
         <Workflow>
           <Nodes>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="NumberOfBlobs" />
+            </Expression>
             <Expression xsi:type="GroupWorkflow">
               <Name>Tracking</Name>
               <Workflow>
@@ -2075,7 +2544,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Range">
                       <rx:Start>0</rx:Start>
-                      <rx:Count>5</rx:Count>
+                      <rx:Count>7</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:ReplaySubject">
@@ -2236,7 +2705,7 @@ LossWeightPercent: 63.11837</gui:Text>
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                            <Value>CameraNorth</Value>
+                            <Value>CameraTop</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -2301,7 +2770,7 @@ LossWeightPercent: 63.11837</gui:Text>
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                            <Value>CameraNorth</Value>
+                            <Value>CameraTop</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="rx:Condition">
@@ -2351,7 +2820,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SelectedZoneKey</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\GetStreamCameraBlobZoneId.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FindBlobsInZoneId .bonsai">
                     <Name>LoomAngleObservable</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2391,8 +2860,8 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>SelectedZoneKey</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\GetStreamCameraBlobZoneId.bonsai">
-                    <Name>LoomInRegionTimeObservable</Name>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\FindBlobsInZoneId .bonsai">
+                    <Name>LoomAngleObservable</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Switch" />
@@ -2635,7 +3104,7 @@ LossWeightPercent: 63.11837</gui:Text>
                 <gui:string>HeadTail</gui:string>
                 <gui:string>Zone</gui:string>
               </gui:Items>
-              <gui:SelectedItem>Zone</gui:SelectedItem>
+              <gui:SelectedItem>Histogram</gui:SelectedItem>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
@@ -3408,7 +3877,7 @@ LossWeightPercent: 63.11837</gui:Text>
                                     <Expression xsi:type="SubscribeSubject">
                                       <Name>SelectedZoneKey</Name>
                                     </Expression>
-                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\GetStreamCameraBlobZoneId.bonsai">
+                                    <Expression xsi:type="IncludeWorkflow" Path="Extensions\FindBlobsInZoneId .bonsai">
                                       <Name>LoomRegionStateObservable</Name>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
@@ -3494,7 +3963,7 @@ LossWeightPercent: 63.11837</gui:Text>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawBlob.bonsai">
                                       <ExternalColor>
-                                        <Val0>255</Val0>
+                                        <Val0>0</Val0>
                                         <Val1>0</Val1>
                                         <Val2>255</Val2>
                                         <Val3>255</Val3>
@@ -3666,8 +4135,8 @@ LossWeightPercent: 63.11837</gui:Text>
                                                 <Expression xsi:type="Combinator">
                                                   <Combinator xsi:type="drw:Circle">
                                                     <drw:Center>
-                                                      <drw:X>175</drw:X>
-                                                      <drw:Y>683</drw:Y>
+                                                      <drw:X>999</drw:X>
+                                                      <drw:Y>200</drw:Y>
                                                     </drw:Center>
                                                     <drw:Radius>10</drw:Radius>
                                                     <drw:Color>
@@ -3697,12 +4166,12 @@ LossWeightPercent: 63.11837</gui:Text>
                                                 <Expression xsi:type="Combinator">
                                                   <Combinator xsi:type="drw:Line">
                                                     <drw:Start>
-                                                      <drw:X>175</drw:X>
-                                                      <drw:Y>683</drw:Y>
+                                                      <drw:X>999</drw:X>
+                                                      <drw:Y>200</drw:Y>
                                                     </drw:Start>
                                                     <drw:End>
-                                                      <drw:X>99</drw:X>
-                                                      <drw:Y>342</drw:Y>
+                                                      <drw:X>999</drw:X>
+                                                      <drw:Y>100</drw:Y>
                                                     </drw:End>
                                                     <drw:Color>
                                                       <drw:Val0>0</drw:Val0>
@@ -4382,61 +4851,62 @@ LossWeightPercent: 63.11837</gui:Text>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
-            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="0" To="1" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="27" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="28" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="27" Label="Source2" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="20" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="28" Label="Source2" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="21" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source2" />
-            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source2" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="27" Label="Source3" />
-            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="28" Label="Source3" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source4" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="56" Label="Source1" />
-            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source4" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="57" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="56" Label="Source2" />
-            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="57" Label="Source2" />
             <Edge From="34" To="35" Label="Source1" />
             <Edge From="35" To="36" Label="Source1" />
             <Edge From="36" To="37" Label="Source1" />
-            <Edge From="37" To="44" Label="Source1" />
-            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="45" Label="Source1" />
             <Edge From="39" To="40" Label="Source1" />
             <Edge From="40" To="41" Label="Source1" />
             <Edge From="41" To="42" Label="Source1" />
             <Edge From="42" To="43" Label="Source1" />
-            <Edge From="43" To="44" Label="Source2" />
-            <Edge From="44" To="45" Label="Source1" />
-            <Edge From="45" To="56" Label="Source3" />
-            <Edge From="46" To="47" Label="Source1" />
+            <Edge From="43" To="44" Label="Source1" />
+            <Edge From="44" To="45" Label="Source2" />
+            <Edge From="45" To="46" Label="Source1" />
+            <Edge From="46" To="57" Label="Source3" />
             <Edge From="47" To="48" Label="Source1" />
             <Edge From="48" To="49" Label="Source1" />
-            <Edge From="49" To="54" Label="Source1" />
-            <Edge From="50" To="51" Label="Source1" />
+            <Edge From="49" To="50" Label="Source1" />
+            <Edge From="50" To="55" Label="Source1" />
             <Edge From="51" To="52" Label="Source1" />
             <Edge From="52" To="53" Label="Source1" />
-            <Edge From="53" To="54" Label="Source2" />
-            <Edge From="54" To="55" Label="Source1" />
-            <Edge From="55" To="56" Label="Source4" />
-            <Edge From="56" To="57" Label="Source1" />
+            <Edge From="53" To="54" Label="Source1" />
+            <Edge From="54" To="55" Label="Source2" />
+            <Edge From="55" To="56" Label="Source1" />
+            <Edge From="56" To="57" Label="Source4" />
+            <Edge From="57" To="58" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -4461,22 +4931,25 @@ LossWeightPercent: 63.11837</gui:Text>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
-      <Edge From="1" To="8" Label="Source1" />
+      <Edge From="1" To="10" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
-      <Edge From="3" To="8" Label="Source2" />
+      <Edge From="3" To="10" Label="Source2" />
       <Edge From="4" To="5" Label="Source1" />
-      <Edge From="5" To="8" Label="Source3" />
+      <Edge From="5" To="10" Label="Source3" />
       <Edge From="6" To="7" Label="Source1" />
-      <Edge From="7" To="8" Label="Source4" />
+      <Edge From="7" To="10" Label="Source4" />
       <Edge From="8" To="9" Label="Source1" />
-      <Edge From="9" To="16" Label="Source1" />
+      <Edge From="9" To="10" Label="Source5" />
       <Edge From="10" To="11" Label="Source1" />
-      <Edge From="11" To="14" Label="Source1" />
+      <Edge From="11" To="19" Label="Source1" />
       <Edge From="12" To="13" Label="Source1" />
-      <Edge From="13" To="14" Label="Source2" />
+      <Edge From="13" To="17" Label="Source1" />
       <Edge From="14" To="15" Label="Source1" />
-      <Edge From="15" To="16" Label="Source2" />
-      <Edge From="16" To="17" Label="Source1" />
+      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source2" />
+      <Edge From="17" To="18" Label="Source1" />
+      <Edge From="18" To="19" Label="Source2" />
+      <Edge From="19" To="20" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

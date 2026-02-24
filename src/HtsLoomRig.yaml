@@ -10,11 +10,14 @@ nests:
     Nest:
         portName: COM7
         filterWindow: 40
-        weightBaselineRefactoryPeriod: 5
+        weightBaselineRefractoryPeriod: 5
   
 clockSynchronizer:
   portName: COM5
 
+inputExpander:
+  portName: COM11
+  
 cameraSynchronizer:
   portName: COM6
   triggers:
@@ -198,6 +201,15 @@ cameras:
                         y: 683
                     -   x: 175
                         y: 683  
+                - points:
+                    -   x: 999
+                        y: 100
+                    -   x: 1440
+                        y: 100
+                    -   x: 1440
+                        y: 200
+                    -   x: 999
+                        y: 200  
             - position:
                 x: 1400
                 y: 1000
@@ -231,7 +243,7 @@ cameras:
     CameraWest:
         serialNumber: "23100956"
         binning: 1
-        exposureTime: 10000
+        exposureTime: 3000
         gain: 4
         trigger: Trigger0
 
@@ -258,6 +270,12 @@ cameras:
     
     CameraPatch3:
         serialNumber: "23032823"
+        binning: 2
+        exposureTime: 5000
+        gain: 4
+        trigger: Trigger1
+    CameraPatch4:
+        serialNumber: "21053805"
         binning: 2
         exposureTime: 5000
         gain: 4

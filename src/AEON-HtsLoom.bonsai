@@ -7,14 +7,18 @@
     <Nodes>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ReadConfiguration.bonsai">
         <RigConfigurationPath>HtsLoomRig.yaml</RigConfigurationPath>
+        <TaskConfigurationPath>HtsLoomTask.yaml</TaskConfigurationPath>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Devices.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\TaskControl.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Logger.bonsai">
         <DataPath>D:\ProjectAeonABC</DataPath>
         <Workflow>AEON-HtsLoom.bonsai</Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Alerts.bonsai" />
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ControlPanel.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ControlPanel.bonsai">
+        <NumberOfBlobs>7</NumberOfBlobs>
+      </Expression>
       <Expression xsi:type="ui:VisualizerWindow">
         <ui:Text>HTS Loom</ui:Text>
         <ui:Visible>true</ui:Visible>
@@ -24,7 +28,7 @@
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

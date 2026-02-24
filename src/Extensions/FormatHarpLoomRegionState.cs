@@ -7,28 +7,28 @@ using System.Reactive.Linq;
 using Bonsai.Harp;
 
 [Combinator]
-[Description("Transforms a Loom Zone Angle into a harp message for logging")]
+[Description("Transforms a Loom Zone State into a harp message for logging")]
 [WorkflowElementCategory(ElementCategory.Transform)]
-public class LoomRegionAngleFormatHarp
+public class FormatHarpLoomRegionState
 {
 public int Address { get; set; }
-    public IObservable<HarpMessage> Process(IObservable<Timestamped<Tuple<int, int, double>>> source)
+    public IObservable<HarpMessage> Process(IObservable<Timestamped<Tuple<int, int, bool>>> source)
     {
         return source.Select(x =>
             {
-                var loomZoneAngle = x.Value;
+                var loomZoneState = x.Value;
                 var timestamp = x.Seconds;
-                return HarpMessage.FromSingle(
+                return HarpMessage.FromByte(
                     Address,
                     timestamp,
                     MessageType.Event,
                     
                     //Blob Id
-                    (float)loomZoneAngle.Item1,
+                    (byte)loomZoneState.Item1,
                     //Zone Id
-                    (float)loomZoneAngle.Item2,
+                    (byte)loomZoneState.Item2,
                     //ZoneState
-                    (float)loomZoneAngle.Item3);
+                    (byte)(loomZoneState.Item3?1:0));
                     
             });
     }

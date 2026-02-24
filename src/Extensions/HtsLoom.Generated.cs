@@ -486,6 +486,65 @@ namespace HtsLoom
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum EventName
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="StimulusEnded")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="StimulusEnded")]
+        StimulusEnded = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Key1Event")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key1Event")]
+        Key1Event = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Key2Event")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key2Event")]
+        Key2Event = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Key3Event")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key3Event")]
+        Key3Event = 3,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Key4Event")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key4Event")]
+        Key4Event = 4,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskStimStart")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskStimStart")]
+        TaskStimStart = 5,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskStimStop")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskStimStop")]
+        TaskStimStop = 6,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskReward")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskReward")]
+        TaskReward = 7,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger1")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger1")]
+        ZoneTrigger1 = 8,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger2")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger2")]
+        ZoneTrigger2 = 9,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger3")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger3")]
+        ZoneTrigger3 = 10,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger4")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger4")]
+        ZoneTrigger4 = 11,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger5")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger5")]
+        ZoneTrigger5 = 12,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Experiment
@@ -499,9 +558,12 @@ namespace HtsLoom
     
         private Rig _rig;
     
+        private Task _task;
+    
         public Experiment()
         {
             _rig = new Rig();
+            _task = new Task();
         }
     
         protected Experiment(Experiment other)
@@ -510,6 +572,7 @@ namespace HtsLoom
             _commit = other._commit;
             _repositoryUrl = other._repositoryUrl;
             _rig = other._rig;
+            _task = other._task;
         }
     
         /// <summary>
@@ -581,6 +644,21 @@ namespace HtsLoom
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("task", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task")]
+        public Task Task
+        {
+            get
+            {
+                return _task;
+            }
+            set
+            {
+                _task = value;
+            }
+        }
+    
         public System.IObservable<Experiment> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Experiment(this)));
@@ -596,7 +674,8 @@ namespace HtsLoom
             stringBuilder.Append("Workflow = " + _workflow + ", ");
             stringBuilder.Append("Commit = " + _commit + ", ");
             stringBuilder.Append("RepositoryUrl = " + _repositoryUrl + ", ");
-            stringBuilder.Append("Rig = " + _rig);
+            stringBuilder.Append("Rig = " + _rig + ", ");
+            stringBuilder.Append("Task = " + _task);
             return true;
         }
     
@@ -646,7 +725,81 @@ namespace HtsLoom
     }
 
 
+    /// <summary>
+    /// Represents a Harp Input Expander device.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a Harp Input Expander device.")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class HarpInputExpander
+    {
+    
+        private string _portName;
+    
+        public HarpInputExpander()
+        {
+        }
+    
+        protected HarpInputExpander(HarpInputExpander other)
+        {
+            _portName = other._portName;
+        }
+    
+        /// <summary>
+        /// The name of the device serial port.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
+        [System.ComponentModel.DescriptionAttribute("The name of the device serial port.")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        public System.IObservable<HarpInputExpander> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpInputExpander(this)));
+        }
+    
+        public System.IObservable<HarpInputExpander> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new HarpInputExpander(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("PortName = " + _portName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    /// <summary>
+    /// Represents a Harp Timestamp Generator Gen3 device.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a Harp Timestamp Generator Gen3 device.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpTimestampGeneratorGen3
@@ -983,6 +1136,324 @@ namespace HtsLoom
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class LoomingPresentationParameters
+    {
+    
+        private System.Collections.Generic.List<EventName> _stopTriggers;
+    
+        private System.Collections.Generic.List<EventName> _startTriggers;
+    
+        private double _initialDelay;
+    
+        private double _pulseDuration;
+    
+        private double _interPulseInterval;
+    
+        private int _numberOfPulses;
+    
+        private ScreenPosition _location;
+    
+        private double _startSize;
+    
+        private double _endSize;
+    
+        private double _animationDuration;
+    
+        private double _timeOnSet;
+    
+        private double _loomingColor;
+    
+        public LoomingPresentationParameters()
+        {
+            _stopTriggers = new System.Collections.Generic.List<EventName>();
+            _startTriggers = new System.Collections.Generic.List<EventName>();
+            _pulseDuration = 10D;
+            _location = new ScreenPosition();
+            _animationDuration = 10D;
+            _timeOnSet = 0D;
+            _loomingColor = 0.5D;
+        }
+    
+        protected LoomingPresentationParameters(LoomingPresentationParameters other)
+        {
+            _stopTriggers = other._stopTriggers;
+            _startTriggers = other._startTriggers;
+            _initialDelay = other._initialDelay;
+            _pulseDuration = other._pulseDuration;
+            _interPulseInterval = other._interPulseInterval;
+            _numberOfPulses = other._numberOfPulses;
+            _location = other._location;
+            _startSize = other._startSize;
+            _endSize = other._endSize;
+            _animationDuration = other._animationDuration;
+            _timeOnSet = other._timeOnSet;
+            _loomingColor = other._loomingColor;
+        }
+    
+        /// <summary>
+        /// The triggers that interrupt the loom presentation
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("stopTriggers")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stopTriggers")]
+        [System.ComponentModel.DescriptionAttribute("The triggers that interrupt the loom presentation")]
+        public System.Collections.Generic.List<EventName> StopTriggers
+        {
+            get
+            {
+                return _stopTriggers;
+            }
+            set
+            {
+                _stopTriggers = value;
+            }
+        }
+    
+        /// <summary>
+        /// The triggers that stat the loom presentation
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("startTriggers")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startTriggers")]
+        [System.ComponentModel.DescriptionAttribute("The triggers that stat the loom presentation")]
+        public System.Collections.Generic.List<EventName> StartTriggers
+        {
+            get
+            {
+                return _startTriggers;
+            }
+            set
+            {
+                _startTriggers = value;
+            }
+        }
+    
+        /// <summary>
+        /// The delay before starting to present the stimulus
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("initialDelay", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="initialDelay")]
+        [System.ComponentModel.DescriptionAttribute("The delay before starting to present the stimulus")]
+        public double InitialDelay
+        {
+            get
+            {
+                return _initialDelay;
+            }
+            set
+            {
+                _initialDelay = value;
+            }
+        }
+    
+        /// <summary>
+        /// The time period that a stimulus is presented if it doesn't finishes by itself
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("pulseDuration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pulseDuration")]
+        [System.ComponentModel.DescriptionAttribute("The time period that a stimulus is presented if it doesn\'t finishes by itself")]
+        public double PulseDuration
+        {
+            get
+            {
+                return _pulseDuration;
+            }
+            set
+            {
+                _pulseDuration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Period of time between pulses when running a set of pulses in sequence
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("interPulseInterval", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="interPulseInterval")]
+        [System.ComponentModel.DescriptionAttribute("Period of time between pulses when running a set of pulses in sequence")]
+        public double InterPulseInterval
+        {
+            get
+            {
+                return _interPulseInterval;
+            }
+            set
+            {
+                _interPulseInterval = value;
+            }
+        }
+    
+        /// <summary>
+        /// The quantity of stimulus to be presented each time it starts
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("numberOfPulses", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="numberOfPulses")]
+        [System.ComponentModel.DescriptionAttribute("The quantity of stimulus to be presented each time it starts")]
+        public int NumberOfPulses
+        {
+            get
+            {
+                return _numberOfPulses;
+            }
+            set
+            {
+                _numberOfPulses = value;
+            }
+        }
+    
+        /// <summary>
+        /// The screen coordinates of the loom
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("location", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="location")]
+        [System.ComponentModel.DescriptionAttribute("The screen coordinates of the loom")]
+        public ScreenPosition Location
+        {
+            get
+            {
+                return _location;
+            }
+            set
+            {
+                _location = value;
+            }
+        }
+    
+        /// <summary>
+        /// The initial size of the looming disc
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("startSize", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startSize")]
+        [System.ComponentModel.DescriptionAttribute("The initial size of the looming disc")]
+        public double StartSize
+        {
+            get
+            {
+                return _startSize;
+            }
+            set
+            {
+                _startSize = value;
+            }
+        }
+    
+        /// <summary>
+        /// The end size of the looming disc
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("endSize", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="endSize")]
+        [System.ComponentModel.DescriptionAttribute("The end size of the looming disc")]
+        public double EndSize
+        {
+            get
+            {
+                return _endSize;
+            }
+            set
+            {
+                _endSize = value;
+            }
+        }
+    
+        /// <summary>
+        /// The time period that each loom takes to reach full size
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("animationDuration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="animationDuration")]
+        [System.ComponentModel.DescriptionAttribute("The time period that each loom takes to reach full size")]
+        public double AnimationDuration
+        {
+            get
+            {
+                return _animationDuration;
+            }
+            set
+            {
+                _animationDuration = value;
+            }
+        }
+    
+        /// <summary>
+        /// The period that looming disc remains static on set after reaching the end size
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("timeOnSet")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timeOnSet")]
+        [System.ComponentModel.DescriptionAttribute("The period that looming disc remains static on set after reaching the end size")]
+        public double TimeOnSet
+        {
+            get
+            {
+                return _timeOnSet;
+            }
+            set
+            {
+                _timeOnSet = value;
+            }
+        }
+    
+        /// <summary>
+        /// The grayscale value of the looming disc to be presented
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("loomingColor")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="loomingColor")]
+        [System.ComponentModel.DescriptionAttribute("The grayscale value of the looming disc to be presented")]
+        public double LoomingColor
+        {
+            get
+            {
+                return _loomingColor;
+            }
+            set
+            {
+                _loomingColor = value;
+            }
+        }
+    
+        public System.IObservable<LoomingPresentationParameters> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoomingPresentationParameters(this)));
+        }
+    
+        public System.IObservable<LoomingPresentationParameters> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new LoomingPresentationParameters(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("StopTriggers = " + _stopTriggers + ", ");
+            stringBuilder.Append("StartTriggers = " + _startTriggers + ", ");
+            stringBuilder.Append("InitialDelay = " + _initialDelay + ", ");
+            stringBuilder.Append("PulseDuration = " + _pulseDuration + ", ");
+            stringBuilder.Append("InterPulseInterval = " + _interPulseInterval + ", ");
+            stringBuilder.Append("NumberOfPulses = " + _numberOfPulses + ", ");
+            stringBuilder.Append("Location = " + _location + ", ");
+            stringBuilder.Append("StartSize = " + _startSize + ", ");
+            stringBuilder.Append("EndSize = " + _endSize + ", ");
+            stringBuilder.Append("AnimationDuration = " + _animationDuration + ", ");
+            stringBuilder.Append("TimeOnSet = " + _timeOnSet + ", ");
+            stringBuilder.Append("LoomingColor = " + _loomingColor);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Point
     {
     
@@ -1241,6 +1712,8 @@ namespace HtsLoom
     
         private HarpTimestampGeneratorGen3 _clockSynchronizer;
     
+        private HarpInputExpander _inputExpander;
+    
         private CameraController _cameraSynchronizer;
     
         private System.Collections.Generic.Dictionary<CameraName, Camera> _cameras;
@@ -1254,6 +1727,7 @@ namespace HtsLoom
         public Rig()
         {
             _clockSynchronizer = new HarpTimestampGeneratorGen3();
+            _inputExpander = new HarpInputExpander();
             _cameraSynchronizer = new CameraController();
             _cameras = new System.Collections.Generic.Dictionary<CameraName, Camera>();
             _feeders = new System.Collections.Generic.Dictionary<FeederName, UndergroundFeeder>();
@@ -1263,6 +1737,7 @@ namespace HtsLoom
         protected Rig(Rig other)
         {
             _clockSynchronizer = other._clockSynchronizer;
+            _inputExpander = other._inputExpander;
             _cameraSynchronizer = other._cameraSynchronizer;
             _cameras = other._cameras;
             _feeders = other._feeders;
@@ -1282,6 +1757,21 @@ namespace HtsLoom
             set
             {
                 _clockSynchronizer = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("inputExpander", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inputExpander")]
+        public HarpInputExpander InputExpander
+        {
+            get
+            {
+                return _inputExpander;
+            }
+            set
+            {
+                _inputExpander = value;
             }
         }
     
@@ -1381,11 +1871,241 @@ namespace HtsLoom
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("ClockSynchronizer = " + _clockSynchronizer + ", ");
+            stringBuilder.Append("InputExpander = " + _inputExpander + ", ");
             stringBuilder.Append("CameraSynchronizer = " + _cameraSynchronizer + ", ");
             stringBuilder.Append("Cameras = " + _cameras + ", ");
             stringBuilder.Append("Feeders = " + _feeders + ", ");
             stringBuilder.Append("Nests = " + _nests + ", ");
             stringBuilder.Append("LightCycle = " + _lightCycle);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum ScreenName
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenNorth")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenNorth")]
+        ScreenNorth = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenSouth")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenSouth")]
+        ScreenSouth = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenEast")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenEast")]
+        ScreenEast = 2,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenWest")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenWest")]
+        ScreenWest = 3,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class ScreenPosition
+    {
+    
+        private double _x;
+    
+        private double _y;
+    
+        public ScreenPosition()
+        {
+            _x = 0.5D;
+            _y = 0.5D;
+        }
+    
+        protected ScreenPosition(ScreenPosition other)
+        {
+            _x = other._x;
+            _y = other._y;
+        }
+    
+        /// <summary>
+        /// The X coordinate of the point
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        [System.ComponentModel.DescriptionAttribute("The X coordinate of the point")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// The Y coordinate of the point
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        [System.ComponentModel.DescriptionAttribute("The Y coordinate of the point")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        public System.IObservable<ScreenPosition> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScreenPosition(this)));
+        }
+    
+        public System.IObservable<ScreenPosition> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ScreenPosition(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("X = " + _x + ", ");
+            stringBuilder.Append("Y = " + _y);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class Task
+    {
+    
+        private System.Collections.Generic.Dictionary<ScreenName, double> _backgroundColor;
+    
+        private System.Collections.Generic.List<ZoneTrigger> _zoneTriggers;
+    
+        private System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> _looms;
+    
+        public Task()
+        {
+            _backgroundColor = new System.Collections.Generic.Dictionary<ScreenName, double>();
+            _zoneTriggers = new System.Collections.Generic.List<ZoneTrigger>();
+            _looms = new System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>>();
+        }
+    
+        protected Task(Task other)
+        {
+            _backgroundColor = other._backgroundColor;
+            _zoneTriggers = other._zoneTriggers;
+            _looms = other._looms;
+        }
+    
+        /// <summary>
+        /// The grayscale color of the background per screen  between 0 and 1
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("backgroundColor", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="backgroundColor")]
+        [System.ComponentModel.DescriptionAttribute("The grayscale color of the background per screen  between 0 and 1")]
+        public System.Collections.Generic.Dictionary<ScreenName, double> BackgroundColor
+        {
+            get
+            {
+                return _backgroundColor;
+            }
+            set
+            {
+                _backgroundColor = value;
+            }
+        }
+    
+        /// <summary>
+        /// The zones that trigger events to be used by task control
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zoneTriggers", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zoneTriggers")]
+        [System.ComponentModel.DescriptionAttribute("The zones that trigger events to be used by task control")]
+        public System.Collections.Generic.List<ZoneTrigger> ZoneTriggers
+        {
+            get
+            {
+                return _zoneTriggers;
+            }
+            set
+            {
+                _zoneTriggers = value;
+            }
+        }
+    
+        /// <summary>
+        /// Dictionary with screen Id as a key for a dict of loom regions
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("looms", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="looms")]
+        [System.ComponentModel.DescriptionAttribute("Dictionary with screen Id as a key for a dict of loom regions")]
+        public System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> Looms
+        {
+            get
+            {
+                return _looms;
+            }
+            set
+            {
+                _looms = value;
+            }
+        }
+    
+        public System.IObservable<Task> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Task(this)));
+        }
+    
+        public System.IObservable<Task> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Task(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("BackgroundColor = " + _backgroundColor + ", ");
+            stringBuilder.Append("ZoneTriggers = " + _zoneTriggers + ", ");
+            stringBuilder.Append("Looms = " + _looms);
             return true;
         }
     
@@ -1467,7 +2187,12 @@ namespace HtsLoom
     }
 
 
+    /// <summary>
+    /// Represents control and acquisition functionality for an underground feeder module.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents control and acquisition functionality for an underground feeder module" +
+        ".")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UndergroundFeeder
@@ -1533,11 +2258,12 @@ namespace HtsLoom
         }
     
         /// <summary>
-        /// The amount of time to wait for pellet detection before reporting a failure.
+        /// The amount of time in seconds to wait for pellet detection before reporting a failure.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pelletDeliveryTimeout")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pelletDeliveryTimeout")]
-        [System.ComponentModel.DescriptionAttribute("The amount of time to wait for pellet detection before reporting a failure.")]
+        [System.ComponentModel.DescriptionAttribute("The amount of time in seconds to wait for pellet detection before reporting a fai" +
+            "lure.")]
         public double PelletDeliveryTimeout
         {
             get
@@ -1612,19 +2338,19 @@ namespace HtsLoom
     
         private int _filterWindow;
     
-        private double _weightBaselineRefactoryPeriod;
+        private double _weightBaselineRefractoryPeriod;
     
         public WeightScale()
         {
             _filterWindow = 40;
-            _weightBaselineRefactoryPeriod = 5D;
+            _weightBaselineRefractoryPeriod = 5D;
         }
     
         protected WeightScale(WeightScale other)
         {
             _portName = other._portName;
             _filterWindow = other._filterWindow;
-            _weightBaselineRefactoryPeriod = other._weightBaselineRefactoryPeriod;
+            _weightBaselineRefractoryPeriod = other._weightBaselineRefractoryPeriod;
         }
     
         /// <summary>
@@ -1666,19 +2392,19 @@ namespace HtsLoom
         /// <summary>
         /// The time between consecutive weight baseline when subject in center of arena in seconds.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("weightBaselineRefactoryPeriod")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="weightBaselineRefactoryPeriod")]
+        [Newtonsoft.Json.JsonPropertyAttribute("weightBaselineRefractoryPeriod")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="weightBaselineRefractoryPeriod")]
         [System.ComponentModel.DescriptionAttribute("The time between consecutive weight baseline when subject in center of arena in s" +
             "econds.")]
-        public double WeightBaselineRefactoryPeriod
+        public double WeightBaselineRefractoryPeriod
         {
             get
             {
-                return _weightBaselineRefactoryPeriod;
+                return _weightBaselineRefractoryPeriod;
             }
             set
             {
-                _weightBaselineRefactoryPeriod = value;
+                _weightBaselineRefractoryPeriod = value;
             }
         }
     
@@ -1696,7 +2422,7 @@ namespace HtsLoom
         {
             stringBuilder.Append("PortName = " + _portName + ", ");
             stringBuilder.Append("FilterWindow = " + _filterWindow + ", ");
-            stringBuilder.Append("WeightBaselineRefactoryPeriod = " + _weightBaselineRefactoryPeriod);
+            stringBuilder.Append("WeightBaselineRefractoryPeriod = " + _weightBaselineRefractoryPeriod);
             return true;
         }
     
@@ -1789,6 +2515,207 @@ namespace HtsLoom
         {
             stringBuilder.Append("Position = " + _position + ", ");
             stringBuilder.Append("Regions = " + _regions);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class ZoneTrigger
+    {
+    
+        private CameraName _camera;
+    
+        private int _zoneId;
+    
+        private double _triggerProbability;
+    
+        private double _angleThreshold;
+    
+        private double _refractoryPeriod;
+    
+        private double _timeInRegion;
+    
+        private System.Collections.Generic.List<EventName> _trigger;
+    
+        public ZoneTrigger()
+        {
+            _camera = CameraName.CameraNorth;
+            _trigger = new System.Collections.Generic.List<EventName>();
+        }
+    
+        protected ZoneTrigger(ZoneTrigger other)
+        {
+            _camera = other._camera;
+            _zoneId = other._zoneId;
+            _triggerProbability = other._triggerProbability;
+            _angleThreshold = other._angleThreshold;
+            _refractoryPeriod = other._refractoryPeriod;
+            _timeInRegion = other._timeInRegion;
+            _trigger = other._trigger;
+        }
+    
+        /// <summary>
+        /// Camera to be used
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("camera")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="camera")]
+        [System.ComponentModel.DescriptionAttribute("Camera to be used")]
+        public CameraName Camera
+        {
+            get
+            {
+                return _camera;
+            }
+            set
+            {
+                _camera = value;
+            }
+        }
+    
+        /// <summary>
+        /// The index of the region to be used to trigger the loom
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("zoneId", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zoneId")]
+        [System.ComponentModel.DescriptionAttribute("The index of the region to be used to trigger the loom")]
+        public int ZoneId
+        {
+            get
+            {
+                return _zoneId;
+            }
+            set
+            {
+                _zoneId = value;
+            }
+        }
+    
+        /// <summary>
+        /// Probability to present a loom if all conditions are achieved
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("triggerProbability", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="triggerProbability")]
+        [System.ComponentModel.DescriptionAttribute("Probability to present a loom if all conditions are achieved")]
+        public double TriggerProbability
+        {
+            get
+            {
+                return _triggerProbability;
+            }
+            set
+            {
+                _triggerProbability = value;
+            }
+        }
+    
+        /// <summary>
+        /// Angle threshold that subject needs to be facing looming region
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("angleThreshold", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="angleThreshold")]
+        [System.ComponentModel.DescriptionAttribute("Angle threshold that subject needs to be facing looming region")]
+        public double AngleThreshold
+        {
+            get
+            {
+                return _angleThreshold;
+            }
+            set
+            {
+                _angleThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// Minimum period of inactivity after a loom is presented in seconds
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("refractoryPeriod", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="refractoryPeriod")]
+        [System.ComponentModel.DescriptionAttribute("Minimum period of inactivity after a loom is presented in seconds")]
+        public double RefractoryPeriod
+        {
+            get
+            {
+                return _refractoryPeriod;
+            }
+            set
+            {
+                _refractoryPeriod = value;
+            }
+        }
+    
+        /// <summary>
+        /// Minimum Period subject needs to be in loom region for a loom to be triggered
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("timeInRegion", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timeInRegion")]
+        [System.ComponentModel.DescriptionAttribute("Minimum Period subject needs to be in loom region for a loom to be triggered")]
+        public double TimeInRegion
+        {
+            get
+            {
+                return _timeInRegion;
+            }
+            set
+            {
+                _timeInRegion = value;
+            }
+        }
+    
+        /// <summary>
+        /// The triggers that will be set when all conditions are met
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("trigger", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="trigger")]
+        [System.ComponentModel.DescriptionAttribute("The triggers that will be set when all conditions are met")]
+        public System.Collections.Generic.List<EventName> Trigger
+        {
+            get
+            {
+                return _trigger;
+            }
+            set
+            {
+                _trigger = value;
+            }
+        }
+    
+        public System.IObservable<ZoneTrigger> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZoneTrigger(this)));
+        }
+    
+        public System.IObservable<ZoneTrigger> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ZoneTrigger(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Camera = " + _camera + ", ");
+            stringBuilder.Append("ZoneId = " + _zoneId + ", ");
+            stringBuilder.Append("TriggerProbability = " + _triggerProbability + ", ");
+            stringBuilder.Append("AngleThreshold = " + _angleThreshold + ", ");
+            stringBuilder.Append("RefractoryPeriod = " + _refractoryPeriod + ", ");
+            stringBuilder.Append("TimeInRegion = " + _timeInRegion + ", ");
+            stringBuilder.Append("Trigger = " + _trigger);
             return true;
         }
     
@@ -2028,6 +2955,11 @@ namespace HtsLoom
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<HarpInputExpander> source)
+        {
+            return Process<HarpInputExpander>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpTimestampGeneratorGen3> source)
         {
             return Process<HarpTimestampGeneratorGen3>(source);
@@ -2041,6 +2973,11 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<LightCycle> source)
         {
             return Process<LightCycle>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LoomingPresentationParameters> source)
+        {
+            return Process<LoomingPresentationParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Point> source)
@@ -2063,6 +3000,16 @@ namespace HtsLoom
             return Process<Rig>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ScreenPosition> source)
+        {
+            return Process<ScreenPosition>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Task> source)
+        {
+            return Process<Task>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Tracking> source)
         {
             return Process<Tracking>(source);
@@ -2082,6 +3029,11 @@ namespace HtsLoom
         {
             return Process<ZoneActivity>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ZoneTrigger> source)
+        {
+            return Process<ZoneTrigger>(source);
+        }
     }
 
 
@@ -2097,17 +3049,22 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpInputExpander>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoomingPresentationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RegionsTrackingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScreenPosition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Task>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Tracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UndergroundFeeder>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WeightScale>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneActivity>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneTrigger>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
@@ -2293,6 +3250,11 @@ namespace HtsLoom
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<HarpInputExpander> source)
+        {
+            return Process<HarpInputExpander>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpTimestampGeneratorGen3> source)
         {
             return Process<HarpTimestampGeneratorGen3>(source);
@@ -2306,6 +3268,11 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<LightCycle> source)
         {
             return Process<LightCycle>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<LoomingPresentationParameters> source)
+        {
+            return Process<LoomingPresentationParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Point> source)
@@ -2328,6 +3295,16 @@ namespace HtsLoom
             return Process<Rig>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ScreenPosition> source)
+        {
+            return Process<ScreenPosition>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Task> source)
+        {
+            return Process<Task>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Tracking> source)
         {
             return Process<Tracking>(source);
@@ -2347,6 +3324,11 @@ namespace HtsLoom
         {
             return Process<ZoneActivity>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ZoneTrigger> source)
+        {
+            return Process<ZoneTrigger>(source);
+        }
     }
 
 
@@ -2362,17 +3344,22 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpInputExpander>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoomingPresentationParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RegionsTrackingParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Rig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ScreenPosition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Task>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Tracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<UndergroundFeeder>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<WeightScale>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneActivity>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneTrigger>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
