@@ -25,18 +25,19 @@ looms:
           - ZoneTrigger1
           - Key1Event
         initialDelay: 01
-        interPulseInterval: 01
-        numberOfPulses: 01
+        interPulseInterval: 0
+        numberOfPulses: 05
+        animationDuration: 0.5
         location:
-          x: 0.5
-          y: 0.5
+          x: 0
+          y: 0
         startSize: 0
-        endSize: 1
+        endSize: 2
      Loom2:
         stopTriggers:
             - Key1Event
         startTriggers:
-            - ZoneTrigger2
+            - ZoneTrigger1
             - Key3Event
         initialDelay: 0
         interPulseInterval: 0
@@ -99,9 +100,11 @@ looms:
         initialDelay: 01
         interPulseInterval: 01
         numberOfPulses: 01
+        animationDuration: 5
+        loomingColor: 1
         location:
-          x: 0.5
-          y: 0.5
+          x: 0
+          y: 0
         startSize: 0
         endSize: 1
      South2:
