@@ -51,6 +51,36 @@
               <Name>FeederControllerGroup</Name>
               <rx:BufferSize xsi:nil="true" />
             </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(harp:Timestamped(sys:Byte),p2:FeederName)">
+              <rx:Name>PelletMissed</rx:Name>
+            </Expression>
+            <Expression xsi:type="rx:GroupBy">
+              <rx:KeySelector>Item2</rx:KeySelector>
+              <rx:ElementSelector>Item1</rx:ElementSelector>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>FeederPelletMissed</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Double,p2:FeederName)">
+              <rx:Name>TimeSpentOnWheel</rx:Name>
+            </Expression>
+            <Expression xsi:type="rx:GroupBy">
+              <rx:KeySelector>Item2</rx:KeySelector>
+              <rx:ElementSelector>Item1</rx:ElementSelector>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>FeederTimeSpentOnWheel</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Double,p2:FeederName)">
+              <rx:Name>TimeSinceLastVisit</rx:Name>
+            </Expression>
+            <Expression xsi:type="rx:GroupBy">
+              <rx:KeySelector>Item2</rx:KeySelector>
+              <rx:ElementSelector>Item1</rx:ElementSelector>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>FeederTimeSinceLastVisit</Name>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RigConfiguration</Name>
             </Expression>
@@ -479,12 +509,8 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
-                  <Expression xsi:type="rx:GroupBy">
-                    <rx:KeySelector>Item2</rx:KeySelector>
-                    <rx:ElementSelector>Item1</rx:ElementSelector>
-                  </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>FeederPelletMissed</Name>
+                    <Name>PelletMissed</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>FeederId</Name>
@@ -561,12 +587,8 @@
                   <Expression xsi:type="rx:PublishSubject">
                     <Name>TimeSpentOn</Name>
                   </Expression>
-                  <Expression xsi:type="rx:GroupBy">
-                    <rx:KeySelector>Item2</rx:KeySelector>
-                    <rx:ElementSelector>Item1</rx:ElementSelector>
-                  </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>FeederTimeSpentOnWheel</Name>
+                    <Name>TimeSpentOnWheel</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>TimeSpentOn</Name>
@@ -586,12 +608,8 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
-                  <Expression xsi:type="rx:GroupBy">
-                    <rx:KeySelector>Item2</rx:KeySelector>
-                    <rx:ElementSelector>Item1</rx:ElementSelector>
-                  </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>FeederTimeSinceLastVisit</Name>
+                    <Name>TimeSinceLastVisit</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -646,23 +664,20 @@
                   <Edge From="56" To="58" Label="Source1" />
                   <Edge From="57" To="58" Label="Source2" />
                   <Edge From="58" To="59" Label="Source1" />
-                  <Edge From="59" To="60" Label="Source1" />
+                  <Edge From="60" To="61" Label="Source1" />
                   <Edge From="61" To="62" Label="Source1" />
-                  <Edge From="62" To="63" Label="Source1" />
+                  <Edge From="63" To="64" Label="Source1" />
                   <Edge From="64" To="65" Label="Source1" />
-                  <Edge From="65" To="66" Label="Source1" />
-                  <Edge From="67" To="69" Label="Source1" />
-                  <Edge From="68" To="69" Label="Source2" />
+                  <Edge From="66" To="68" Label="Source1" />
+                  <Edge From="67" To="68" Label="Source2" />
+                  <Edge From="68" To="69" Label="Source1" />
                   <Edge From="69" To="70" Label="Source1" />
-                  <Edge From="70" To="71" Label="Source1" />
                   <Edge From="71" To="72" Label="Source1" />
+                  <Edge From="72" To="73" Label="Source1" />
                   <Edge From="73" To="74" Label="Source1" />
-                  <Edge From="74" To="75" Label="Source1" />
-                  <Edge From="75" To="76" Label="Source1" />
-                  <Edge From="76" To="78" Label="Source1" />
-                  <Edge From="77" To="78" Label="Source2" />
-                  <Edge From="78" To="79" Label="Source1" />
-                  <Edge From="79" To="80" Label="Source1" />
+                  <Edge From="74" To="76" Label="Source1" />
+                  <Edge From="75" To="76" Label="Source2" />
+                  <Edge From="76" To="77" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -673,9 +688,15 @@
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
