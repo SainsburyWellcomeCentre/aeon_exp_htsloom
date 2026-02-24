@@ -136,6 +136,12 @@
         <LogName>Environment_MessageLog</LogName>
         <Selector>Seconds,Value.Priority,Value.Type,Value.Message</Selector>
       </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>LogKeyLoomTrigger</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>LogZoneLoomTrigger</Name>
+      </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
