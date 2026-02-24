@@ -725,7 +725,11 @@ namespace HtsLoom
     }
 
 
+    /// <summary>
+    /// Represents a Harp Input Expander device.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a Harp Input Expander device.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpInputExpander
@@ -791,7 +795,11 @@ namespace HtsLoom
     }
 
 
+    /// <summary>
+    /// Represents a Harp Timestamp Generator Gen3 device.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents a Harp Timestamp Generator Gen3 device.")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpTimestampGeneratorGen3
@@ -2179,7 +2187,12 @@ namespace HtsLoom
     }
 
 
+    /// <summary>
+    /// Represents control and acquisition functionality for an underground feeder module.
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [System.ComponentModel.DescriptionAttribute("Represents control and acquisition functionality for an underground feeder module" +
+        ".")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UndergroundFeeder
@@ -2245,11 +2258,12 @@ namespace HtsLoom
         }
     
         /// <summary>
-        /// The amount of time to wait for pellet detection before reporting a failure.
+        /// The amount of time in seconds to wait for pellet detection before reporting a failure.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("pelletDeliveryTimeout")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="pelletDeliveryTimeout")]
-        [System.ComponentModel.DescriptionAttribute("The amount of time to wait for pellet detection before reporting a failure.")]
+        [System.ComponentModel.DescriptionAttribute("The amount of time in seconds to wait for pellet detection before reporting a fai" +
+            "lure.")]
         public double PelletDeliveryTimeout
         {
             get
@@ -2324,19 +2338,19 @@ namespace HtsLoom
     
         private int _filterWindow;
     
-        private double _weightBaselineRefactoryPeriod;
+        private double _weightBaselineRefractoryPeriod;
     
         public WeightScale()
         {
             _filterWindow = 40;
-            _weightBaselineRefactoryPeriod = 5D;
+            _weightBaselineRefractoryPeriod = 5D;
         }
     
         protected WeightScale(WeightScale other)
         {
             _portName = other._portName;
             _filterWindow = other._filterWindow;
-            _weightBaselineRefactoryPeriod = other._weightBaselineRefactoryPeriod;
+            _weightBaselineRefractoryPeriod = other._weightBaselineRefractoryPeriod;
         }
     
         /// <summary>
@@ -2378,19 +2392,19 @@ namespace HtsLoom
         /// <summary>
         /// The time between consecutive weight baseline when subject in center of arena in seconds.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("weightBaselineRefactoryPeriod")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="weightBaselineRefactoryPeriod")]
+        [Newtonsoft.Json.JsonPropertyAttribute("weightBaselineRefractoryPeriod")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="weightBaselineRefractoryPeriod")]
         [System.ComponentModel.DescriptionAttribute("The time between consecutive weight baseline when subject in center of arena in s" +
             "econds.")]
-        public double WeightBaselineRefactoryPeriod
+        public double WeightBaselineRefractoryPeriod
         {
             get
             {
-                return _weightBaselineRefactoryPeriod;
+                return _weightBaselineRefractoryPeriod;
             }
             set
             {
-                _weightBaselineRefactoryPeriod = value;
+                _weightBaselineRefractoryPeriod = value;
             }
         }
     
@@ -2408,7 +2422,7 @@ namespace HtsLoom
         {
             stringBuilder.Append("PortName = " + _portName + ", ");
             stringBuilder.Append("FilterWindow = " + _filterWindow + ", ");
-            stringBuilder.Append("WeightBaselineRefactoryPeriod = " + _weightBaselineRefactoryPeriod);
+            stringBuilder.Append("WeightBaselineRefractoryPeriod = " + _weightBaselineRefractoryPeriod);
             return true;
         }
     

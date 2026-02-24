@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from swc.aeon_rigs.experiment import Experiment as ExperimentBase, BaseSchema
+from swc.aeon.schema import Experiment as ExperimentBase, BaseSchema
 
 from swc.aeon_exp.HtsLoom.rig import Rig
 from swc.aeon_exp.HtsLoom.task import Task

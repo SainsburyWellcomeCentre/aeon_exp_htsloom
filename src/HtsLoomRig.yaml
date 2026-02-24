@@ -10,7 +10,7 @@ nests:
     Nest:
         portName: COM7
         filterWindow: 40
-        weightBaselineRefactoryPeriod: 5
+        weightBaselineRefractoryPeriod: 5
   
 clockSynchronizer:
   portName: COM5

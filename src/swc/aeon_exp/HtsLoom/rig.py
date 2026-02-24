@@ -1,10 +1,11 @@
 from enum import StrEnum
-from typing import Literal, Dict, List, Optional, Union
+from typing import Any, Literal, Dict, List, Optional, Union
 from typing_extensions import Annotated, TypeAliasType
-from swc.aeon_rigs.base import BaseSchema, Device
-from swc.aeon_rigs.video import SpinnakerCamera
-from swc.aeon_rigs.foraging import UndergroundFeeder
-from swc.aeon_rigs.harp import HarpTimestampGeneratorGen3, HarpCameraControllerGen2, HarpInputExpander
+from swc.aeon.schema import BaseSchema
+from swc.aeon.schema.video import SpinnakerCamera
+from swc.aeon.schema.foraging import UndergroundFeeder
+from swc.aeon.schema.environment import WeightScale as WeightScaleBase
+from swc.aeon.schema.harp import HarpTimestampGeneratorGen3, HarpCameraControllerGen2, HarpInputExpander
 from pydantic import Field
 
 class CameraName(StrEnum):
@@ -44,10 +45,8 @@ class CameraController(HarpCameraControllerGen2):
     triggers: Dict[TriggerName,CameraControllerTrigger]
 
 
-class WeightScale(Device):
-    port_name: str = Field(examples=["COM"], description="The name of the device serial port.")
-    filter_window: int = Field(default=40, description="Sliding window size of the weight linear regression filter.")
-    weight_baseline_refactory_period : float = Field(default=5, description="The time between consecutive weight baseline when subject in center of arena in seconds.")
+class WeightScale(WeightScaleBase):
+    weight_baseline_refractory_period : float = Field(default=5, description="The time between consecutive weight baseline when subject in center of arena in seconds.")
 
 class Point(BaseSchema):
     x: int = Field(default=0, description="The X coordinate of the point")
@@ -65,8 +64,20 @@ class RegionsTrackingParameters(BaseSchema):
     threshold : int = Field(default=100, description="Threshold for the blob tracking.")
     regions: List[Polygon] = Field(description="Regions for the tracking.")
 
-class BlobTracking(BaseSchema):
-    tracking_type: Literal["BlobTracking"] = "BlobTracking"
+class TrackingTypeMixin:
+    """Mixin to set `tracking_type` to the subclass name for blob tracking models."""
+
+    def __init_subclass__(cls, **kwargs):
+        """Injects `tracking_type` as a Literal of the subclass name."""
+        super().__init_subclass__(**kwargs)
+        name = cls.__name__
+        cls.__annotations__["tracking_type"] = Literal[name]
+        cls.tracking_type = name
+
+class TrackingBase(TrackingTypeMixin, BaseSchema):
+    tracking_type: Any = Field(default=None, description="The type of blob tracking.")
+
+class BlobTracking(TrackingBase):
     regionTracking : Dict[str, RegionsTrackingParameters] = Field(description="The subject tracking in the arena.")
 
 class ZoneActivity(BaseSchema):
@@ -74,7 +85,6 @@ class ZoneActivity(BaseSchema):
     regions: List[Polygon] = Field(description="Regions for the Activity.")
 
 class HeadTailTracking(BlobTracking):
-    tracking_type: Literal["HeadTailTracking"] = "HeadTailTracking"
     velocity_threshold : int = Field(default = 10, description = "Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject") # TODO: Update to generic (mm) vs camera (pixels) units
     buffer_length : int = Field(default = 10, description = "The length of the buffer history, in frames, on which to compute velocity")
     Zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")

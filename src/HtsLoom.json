@@ -221,6 +221,7 @@
       "type": "string"
     },
     "HarpInputExpander": {
+      "description": "Represents a Harp Input Expander device.",
       "properties": {
         "portName": {
           "description": "The name of the device serial port.",
@@ -238,6 +239,7 @@
       "type": "object"
     },
     "HarpTimestampGeneratorGen3": {
+      "description": "Represents a Harp Timestamp Generator Gen3 device.",
       "properties": {
         "portName": {
           "description": "The name of the device serial port.",
@@ -338,7 +340,9 @@
     "LoomingPresentationParameters": {
       "properties": {
         "stopTriggers": {
-          "default": "Key1Event",
+          "default": [
+            "Key1Event"
+          ],
           "description": "The triggers that interrupt the loom presentation",
           "items": {
             "$ref": "#/$defs/EventName"
@@ -348,7 +352,9 @@
           "uniqueItems": true
         },
         "startTriggers": {
-          "default": "Key1Event",
+          "default": [
+            "Key1Event"
+          ],
           "description": "The triggers that stat the loom presentation",
           "items": {
             "$ref": "#/$defs/EventName"
@@ -648,6 +654,7 @@
       "type": "string"
     },
     "UndergroundFeeder": {
+      "description": "Represents control and acquisition functionality for an underground feeder module.",
       "properties": {
         "portName": {
           "description": "The name of the device serial port.",
@@ -666,7 +673,7 @@
         },
         "pelletDeliveryTimeout": {
           "default": 1,
-          "description": "The amount of time to wait for pellet detection before reporting a failure.",
+          "description": "The amount of time in seconds to wait for pellet detection before reporting a failure.",
           "minimum": 0,
           "title": "PelletDeliveryTimeout",
           "type": "number"
@@ -700,10 +707,10 @@
           "title": "FilterWindow",
           "type": "integer"
         },
-        "weightBaselineRefactoryPeriod": {
+        "weightBaselineRefractoryPeriod": {
           "default": 5,
           "description": "The time between consecutive weight baseline when subject in center of arena in seconds.",
-          "title": "WeightBaselineRefactoryPeriod",
+          "title": "WeightBaselineRefractoryPeriod",
           "type": "number"
         }
       },

@@ -2,7 +2,7 @@ from enum import StrEnum
 import json
 from pathlib import Path
 from pydantic import Field
-from swc.aeon_rigs.base import BaseSchema
+from swc.aeon.schema import BaseSchema
 
 
 class FeederCommand(StrEnum):

@@ -1,7 +1,7 @@
 import math
 from enum import StrEnum
 from typing import Dict, List
-from swc.aeon_rigs.base import BaseSchema
+from swc.aeon.schema import BaseSchema
 from swc.aeon_exp.HtsLoom.rig import CameraName, Point
 from pydantic import Field
 
@@ -31,7 +31,7 @@ class ScreenPosition(BaseSchema):
     y: float = Field(default=0.5, ge=0, le=1, description="The Y coordinate of the point")
 
 class ZoneTrigger(BaseSchema):
-    camera: CameraName = Field(default="CameraNorth", description="Camera to be used")
+    camera: CameraName = Field(default=CameraName.NORTH, description="Camera to be used")
     zone_id: int = Field(description= "The index of the region to be used to trigger the loom")
     trigger_probability: float = Field(description= "Probability to present a loom if all conditions are achieved")
     angle_threshold: float = Field(ge= 0, le = math.pi, description= "Angle threshold that subject needs to be facing looming region")
@@ -43,8 +43,8 @@ class ZoneTrigger(BaseSchema):
 #     trigger:Dict[ScreenName, List]
 
 class StimulusSettings(BaseSchema):
-    stop_triggers: set[EventName] = Field(default="Key1Event", description= "The triggers that interrupt the loom presentation")
-    start_triggers: set[EventName] = Field(default="Key1Event", description= "The triggers that stat the loom presentation")
+    stop_triggers: set[EventName] = Field(default={EventName.KEY_1_EVENT}, description= "The triggers that interrupt the loom presentation")
+    start_triggers: set[EventName] = Field(default={EventName.KEY_1_EVENT}, description= "The triggers that stat the loom presentation")
     initial_delay: float = Field(description= "The delay before starting to present the stimulus")
     pulse_duration: float = Field(default= 10, description= "The time period that a stimulus is presented if it doesn't finishes by itself")
     inter_pulse_interval: float = Field(description= "Period of time between pulses when running a set of pulses in sequence")
