@@ -102,8 +102,8 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="zmq:Publisher">
-                <zmq:ConnectionString>&gt;tcp://127.0.0.1:4242</zmq:ConnectionString>
-                <zmq:Topic>ScreenWest</zmq:Topic>
+                <zmq:ConnectionString>&gt;tcp://172.24.158.114:4242</zmq:ConnectionString>
+                <zmq:Topic>ScreenEast</zmq:Topic>
               </Combinator>
             </Expression>
           </Nodes>
@@ -149,7 +149,7 @@
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p2:ScreenName),p2:ScreenName">
         <MemberName>Value</MemberName>
-        <Value>ScreenWest</Value>
+        <Value>ScreenEast</Value>
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="InitialDelay" />
@@ -209,14 +209,14 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p2:LoomingPresentationParameters">
-                <p2:InitialDelay>1</p2:InitialDelay>
-                <p2:PulseDuration>2</p2:PulseDuration>
-                <p2:InterPulseInterval>0</p2:InterPulseInterval>
-                <p2:NumberOfPulses>1</p2:NumberOfPulses>
-                <p2:StartSize>0</p2:StartSize>
-                <p2:EndSize>2</p2:EndSize>
-                <p2:AnimationDuration>1</p2:AnimationDuration>
-                <p2:TimeOnSet>0</p2:TimeOnSet>
+                <p2:InitialDelay>0</p2:InitialDelay>
+                <p2:PulseDuration>10</p2:PulseDuration>
+                <p2:InterPulseInterval>0.5</p2:InterPulseInterval>
+                <p2:NumberOfPulses>3</p2:NumberOfPulses>
+                <p2:StartSize>0.1</p2:StartSize>
+                <p2:EndSize>4</p2:EndSize>
+                <p2:AnimationDuration>0.34</p2:AnimationDuration>
+                <p2:TimeOnSet>0.25</p2:TimeOnSet>
                 <p2:LoomingColor>1</p2:LoomingColor>
               </Combinator>
             </Expression>
@@ -281,9 +281,10 @@
       </Expression>
       <Expression xsi:type="VisualizerMapping" />
       <Expression xsi:type="gui:ButtonBuilder">
+        <gui:Name>Trigger</gui:Name>
         <gui:Enabled>true</gui:Enabled>
         <gui:Visible>true</gui:Visible>
-        <gui:Text />
+        <gui:Text>Trigger</gui:Text>
       </Expression>
       <Expression xsi:type="rx:PublishSubject">
         <Name>Trigger</Name>
