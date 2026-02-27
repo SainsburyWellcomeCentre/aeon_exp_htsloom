@@ -84,8 +84,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="zmq:Publisher">
-          <zmq:ConnectionString>&gt;tcp://127.0.0.1:4242</zmq:ConnectionString>
-          <zmq:Topic>ScreenSouth</zmq:Topic>
+          <zmq:ConnectionString>&gt;tcp://172.24.158.114:4242</zmq:ConnectionString>
+          <zmq:Topic>ScreenNorth</zmq:Topic>
         </Combinator>
       </Expression>
     </Nodes>
