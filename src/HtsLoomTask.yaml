@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=HtsLoom.json#/$defs/Task
 zoneTriggers:
   - camera: CameraEast
-    zoneId: 1
+    zoneId: 0
     triggerProbability: 1
-    angleThreshold: 1.57
-    refractoryPeriod: 10
-    timeInRegion: 1
+    angleThreshold: 1.74533
+    refractoryPeriod: 20
+    timeInRegion: 5
     trigger:
       - ZoneTrigger1
 looms:
