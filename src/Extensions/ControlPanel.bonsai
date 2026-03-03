@@ -2597,7 +2597,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Range">
                       <rx:Start>0</rx:Start>
-                      <rx:Count>7</rx:Count>
+                      <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:ReplaySubject">
@@ -4016,7 +4016,7 @@ LossWeightPercent: 63.11837</gui:Text>
                                     </Expression>
                                     <Expression xsi:type="IncludeWorkflow" Path="Extensions\DrawBlob.bonsai">
                                       <ExternalColor>
-                                        <Val0>255</Val0>
+                                        <Val0>0</Val0>
                                         <Val1>0</Val1>
                                         <Val2>255</Val2>
                                         <Val3>255</Val3>
@@ -4188,8 +4188,8 @@ LossWeightPercent: 63.11837</gui:Text>
                                                 <Expression xsi:type="Combinator">
                                                   <Combinator xsi:type="drw:Circle">
                                                     <drw:Center>
-                                                      <drw:X>999</drw:X>
-                                                      <drw:Y>200</drw:Y>
+                                                      <drw:X>360</drw:X>
+                                                      <drw:Y>483</drw:Y>
                                                     </drw:Center>
                                                     <drw:Radius>10</drw:Radius>
                                                     <drw:Color>
@@ -4219,12 +4219,12 @@ LossWeightPercent: 63.11837</gui:Text>
                                                 <Expression xsi:type="Combinator">
                                                   <Combinator xsi:type="drw:Line">
                                                     <drw:Start>
-                                                      <drw:X>999</drw:X>
-                                                      <drw:Y>200</drw:Y>
+                                                      <drw:X>360</drw:X>
+                                                      <drw:Y>483</drw:Y>
                                                     </drw:Start>
                                                     <drw:End>
-                                                      <drw:X>999</drw:X>
-                                                      <drw:Y>100</drw:Y>
+                                                      <drw:X>243</drw:X>
+                                                      <drw:Y>387</drw:Y>
                                                     </drw:End>
                                                     <drw:Color>
                                                       <drw:Val0>0</drw:Val0>
@@ -4342,8 +4342,8 @@ LossWeightPercent: 63.11837</gui:Text>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="drw:Circle">
                                         <drw:Center>
-                                          <drw:X>480</drw:X>
-                                          <drw:Y>680</drw:Y>
+                                          <drw:X>741</drw:X>
+                                          <drw:Y>140</drw:Y>
                                         </drw:Center>
                                         <drw:Radius>10</drw:Radius>
                                         <drw:Color>
@@ -4788,15 +4788,15 @@ LossWeightPercent: 63.11837</gui:Text>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
-  it as LoomAngle
+  it as Heading
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="zg:RollingGraphBuilder">
-              <zg:ValueSelector>LoomAngle</zg:ValueSelector>
+              <zg:ValueSelector>Heading</zg:ValueSelector>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
@@ -4821,7 +4821,7 @@ LossWeightPercent: 63.11837</gui:Text>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
@@ -4847,7 +4847,7 @@ LossWeightPercent: 63.11837</gui:Text>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
@@ -4863,7 +4863,7 @@ LossWeightPercent: 63.11837</gui:Text>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>

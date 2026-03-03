@@ -17,7 +17,7 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Alerts.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ControlPanel.bonsai">
-        <NumberOfBlobs>7</NumberOfBlobs>
+        <NumberOfBlobs>0</NumberOfBlobs>
       </Expression>
       <Expression xsi:type="ui:VisualizerWindow">
         <ui:Text>HTS Loom</ui:Text>
