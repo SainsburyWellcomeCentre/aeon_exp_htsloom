@@ -1846,6 +1846,18 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Timestamp" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Timestamp.UtcDateTime</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Aeon.Environment:EnvironmentCondition.bonsai">
+                    <Value>Experiment</Value>
+                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
@@ -1853,10 +1865,15 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="9" Label="Source1" />
                   <Edge From="5" To="8" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source2" />
-                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="8" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2225,8 +2242,8 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="gui:ToggleButtonBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>Start</gui:Text>
-                    <gui:Checked>false</gui:Checked>
+                    <gui:Text>Stop</gui:Text>
+                    <gui:Checked>true</gui:Checked>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>CamerasRunning</Name>
@@ -3157,7 +3174,7 @@ LossWeightPercent: 63.11837</gui:Text>
                 <gui:string>HeadTail</gui:string>
                 <gui:string>Zone</gui:string>
               </gui:Items>
-              <gui:SelectedItem>Histogram</gui:SelectedItem>
+              <gui:SelectedItem>Zone</gui:SelectedItem>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
