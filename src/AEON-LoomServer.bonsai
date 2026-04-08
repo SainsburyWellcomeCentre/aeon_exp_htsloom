@@ -11,6 +11,7 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenConfiguration.bonsai">
         <DisplayDevice>First</DisplayDevice>
         <Textures />
+        <BackGroundColor>0.5</BackGroundColor>
       </Expression>
       <Expression xsi:type="rx:Defer">
         <Name>LoomActionsNetworkStream</Name>
@@ -106,8 +107,8 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1</LocationX>
-        <LocationY>-1</LocationY>
+        <LocationX>-1.65</LocationX>
+        <LocationY>-0.82</LocationY>
       </Expression>
       <Expression xsi:type="rx:Condition">
         <Workflow>
@@ -137,8 +138,8 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1</LocationX>
-        <LocationY>-1</LocationY>
+        <LocationX>-1.65</LocationX>
+        <LocationY>-0.82</LocationY>
       </Expression>
       <Expression xsi:type="rx:Condition">
         <Workflow>
@@ -168,8 +169,8 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1</LocationX>
-        <LocationY>-1</LocationY>
+        <LocationX>-1.65</LocationX>
+        <LocationY>-0.82</LocationY>
       </Expression>
       <Expression xsi:type="rx:Condition">
         <Workflow>
@@ -199,8 +200,8 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1</LocationX>
-        <LocationY>-1</LocationY>
+        <LocationX>-1.65</LocationX>
+        <LocationY>-0.82</LocationY>
       </Expression>
     </Nodes>
     <Edges>

@@ -859,8 +859,8 @@ wheels = [
 
 [[package]]
 name = "swc-aeon"
-version = "0.1.1.dev64+g3240703cf"
-source = { git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git#3240703cfe4110bd6bdad2879fd4bd968d0d0334" }
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dotmap" },
     { name = "harp-python" },
@@ -872,9 +872,13 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-yaml" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/95/bd/5fdc5c817379d32813b9559e9251e6835c04411bd6e239a58021b5989e1a/swc_aeon-0.2.0.tar.gz", hash = "sha256:c92179f89cc182c1be72568564a0cb184b1b921c139994b4be81425f701ce444", size = 146116, upload-time = "2026-03-16T14:13:53.563Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d0/d5/8b879cc6a295f6d22fc7027f9c7fc579af217a0d7fa46ced4ca8374f3ee8/swc_aeon-0.2.0-py3-none-any.whl", hash = "sha256:65b3964f54baafd6339959430a79e13231dc62313207ada52f9fe3605a4ec25c", size = 26887, upload-time = "2026-03-16T14:13:54.597Z" },
+]
 
 [[package]]
-name = "swc-aeon-rigs-htsloom"
+name = "swc-aeon-exp-htsloom"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [
@@ -901,7 +905,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=1.21.0,<2" },
     { name = "opencv-python", specifier = "~=4.7.0" },
     { name = "pandas", specifier = ">=1.3" },
-    { name = "swc-aeon", git = "https://github.com/SainsburyWellcomeCentre/aeon_api.git" },
+    { name = "swc-aeon", specifier = ">=0.2.0" },
 ]
 
 [[package]]

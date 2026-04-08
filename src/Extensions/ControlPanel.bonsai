@@ -1776,7 +1776,7 @@ LossWeightPercent: 63.11837</gui:Text>
                         </Expression>
                         <Expression xsi:type="Equal">
                           <Operand xsi:type="WorkflowProperty" TypeArguments="p2:ScreenName">
-                            <Value>ScreenNorth</Value>
+                            <Value>ScreenEast</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1811,12 +1811,79 @@ LossWeightPercent: 63.11837</gui:Text>
               <gui:DisplayMember />
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskLoom</Name>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>ScreeenLoom</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ScreeenLoom</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Key</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ScreeenLoom</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Key</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Timestamp" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Timestamp.UtcDateTime</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Aeon.Environment:EnvironmentCondition.bonsai">
+                    <Value>Experiment</Value>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="9" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Name>LoomMapping</gui:Name>
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
               <gui:ColumnCount>1</gui:ColumnCount>
-              <gui:RowCount>2</gui:RowCount>
+              <gui:RowCount>3</gui:RowCount>
               <gui:ColumnStyles />
               <gui:RowStyles />
               <gui:CellSpans />
@@ -1852,7 +1919,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   </Expression>
                   <Expression xsi:type="Index">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="p2:ScreenName">
-                      <Value>ScreenNorth</Value>
+                      <Value>ScreenEast</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="gui:ListBoxDataSourceBuilder">
@@ -1967,7 +2034,7 @@ LossWeightPercent: 63.11837</gui:Text>
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="26" Label="Source1" />
+            <Edge From="17" To="29" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
@@ -1975,11 +2042,14 @@ LossWeightPercent: 63.11837</gui:Text>
             <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
             <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source2" />
+            <Edge From="25" To="29" Label="Source2" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source3" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2013,7 +2083,7 @@ LossWeightPercent: 63.11837</gui:Text>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
-                <rx:Count>11</rx:Count>
+                <rx:Count>6</rx:Count>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2172,8 +2242,8 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="gui:ToggleButtonBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>Start</gui:Text>
-                    <gui:Checked>false</gui:Checked>
+                    <gui:Text>Stop</gui:Text>
+                    <gui:Checked>true</gui:Checked>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>CamerasRunning</Name>
@@ -2544,7 +2614,7 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Range">
                       <rx:Start>0</rx:Start>
-                      <rx:Count>7</rx:Count>
+                      <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:ReplaySubject">
@@ -2705,7 +2775,7 @@ LossWeightPercent: 63.11837</gui:Text>
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                            <Value>CameraTop</Value>
+                            <Value>CameraEast</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -2770,7 +2840,7 @@ LossWeightPercent: 63.11837</gui:Text>
                         </Expression>
                         <Expression xsi:type="Index">
                           <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                            <Value>CameraTop</Value>
+                            <Value>CameraEast</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="rx:Condition">
@@ -3104,7 +3174,7 @@ LossWeightPercent: 63.11837</gui:Text>
                 <gui:string>HeadTail</gui:string>
                 <gui:string>Zone</gui:string>
               </gui:Items>
-              <gui:SelectedItem>Histogram</gui:SelectedItem>
+              <gui:SelectedItem>Zone</gui:SelectedItem>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
@@ -3281,7 +3351,7 @@ LossWeightPercent: 63.11837</gui:Text>
                               </Expression>
                               <Expression xsi:type="Equal">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                                  <Value>CameraNorth</Value>
+                                  <Value>CameraEast</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -3620,7 +3690,7 @@ LossWeightPercent: 63.11837</gui:Text>
                               </Expression>
                               <Expression xsi:type="Equal">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                                  <Value>CameraNorth</Value>
+                                  <Value>CameraEast</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -4135,8 +4205,8 @@ LossWeightPercent: 63.11837</gui:Text>
                                                 <Expression xsi:type="Combinator">
                                                   <Combinator xsi:type="drw:Circle">
                                                     <drw:Center>
-                                                      <drw:X>999</drw:X>
-                                                      <drw:Y>200</drw:Y>
+                                                      <drw:X>360</drw:X>
+                                                      <drw:Y>483</drw:Y>
                                                     </drw:Center>
                                                     <drw:Radius>10</drw:Radius>
                                                     <drw:Color>
@@ -4166,12 +4236,12 @@ LossWeightPercent: 63.11837</gui:Text>
                                                 <Expression xsi:type="Combinator">
                                                   <Combinator xsi:type="drw:Line">
                                                     <drw:Start>
-                                                      <drw:X>999</drw:X>
-                                                      <drw:Y>200</drw:Y>
+                                                      <drw:X>360</drw:X>
+                                                      <drw:Y>483</drw:Y>
                                                     </drw:Start>
                                                     <drw:End>
-                                                      <drw:X>999</drw:X>
-                                                      <drw:Y>100</drw:Y>
+                                                      <drw:X>243</drw:X>
+                                                      <drw:Y>387</drw:Y>
                                                     </drw:End>
                                                     <drw:Color>
                                                       <drw:Val0>0</drw:Val0>
@@ -4289,8 +4359,8 @@ LossWeightPercent: 63.11837</gui:Text>
                                     <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="drw:Circle">
                                         <drw:Center>
-                                          <drw:X>480</drw:X>
-                                          <drw:Y>680</drw:Y>
+                                          <drw:X>741</drw:X>
+                                          <drw:Y>140</drw:Y>
                                         </drw:Center>
                                         <drw:Radius>10</drw:Radius>
                                         <drw:Color>
@@ -4735,15 +4805,15 @@ LossWeightPercent: 63.11837</gui:Text>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
-  it as LoomAngle
+  it as Heading
 )</scr:Expression>
             </Expression>
             <Expression xsi:type="zg:RollingGraphBuilder">
-              <zg:ValueSelector>LoomAngle</zg:ValueSelector>
+              <zg:ValueSelector>Heading</zg:ValueSelector>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
@@ -4768,7 +4838,7 @@ LossWeightPercent: 63.11837</gui:Text>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
@@ -4794,7 +4864,7 @@ LossWeightPercent: 63.11837</gui:Text>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
@@ -4810,7 +4880,7 @@ LossWeightPercent: 63.11837</gui:Text>
               <zg:SymbolType>None</zg:SymbolType>
               <zg:LineWidth>1</zg:LineWidth>
               <zg:CurveSettings />
-              <zg:Capacity xsi:nil="true" />
+              <zg:Capacity>10000</zg:Capacity>
               <zg:Min xsi:nil="true" />
               <zg:Max xsi:nil="true" />
             </Expression>
