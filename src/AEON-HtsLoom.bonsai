@@ -12,7 +12,7 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Devices.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\TaskControl.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Logger.bonsai">
-        <DataPath>D:\ProjectAeonABC</DataPath>
+        <DataPath>D:\ProjectAeon</DataPath>
         <Workflow>AEON-HtsLoom.bonsai</Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Alerts.bonsai" />
