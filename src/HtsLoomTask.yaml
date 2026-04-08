@@ -2,10 +2,10 @@
 zoneTriggers:
   - camera: CameraEast
     zoneId: 0
-    triggerProbability: 1
+    triggerProbability: 0.5
     angleThreshold: 1.74533
-    refractoryPeriod: 20
-    timeInRegion: 5
+    refractoryPeriod: 10
+    timeInRegion: 0.5
     trigger:
       - ZoneTrigger1
 looms:
@@ -49,6 +49,7 @@ looms:
         - Key1Event
       startTriggers:
         - Key1Event
+        - ZoneTrigger1
       initialDelay: 0
       pulseDuration: 10
       interPulseInterval: 0.5
