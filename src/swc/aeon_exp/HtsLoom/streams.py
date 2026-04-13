@@ -46,12 +46,6 @@ class LoomAngleState(Stream):
             "blob_id", "zone_id", "angle"
         ]))
 
-class LoomCamera(StreamGroup):
-
-    def __init__(self, pattern):
-        super().__init__(pattern, _stream.Video, LoomRegionState, LoomAngleState)
-
-
 class FeederBeamBreak(Stream):
 
     def __init__(self, pattern):
@@ -68,7 +62,7 @@ class TrackingCamera(StreamGroup):
     """Video metadata + HeadTail tracking (used for CameraTop)."""
 
     def __init__(self, pattern):
-        super().__init__(pattern, _stream.Video, HeadTail)
+        super().__init__(pattern, _stream.Video, HeadTail, LoomRegionState, LoomAngleState)
 
 
 class Feeder(StreamGroup):
@@ -85,10 +79,10 @@ htsloom = DotMap([
     # Top-down tracking camera
     Device("CameraTop",          TrackingCamera),
     # Side cameras facing looming screens
-    Device("CameraNorth",        LoomCamera),
-    Device("CameraSouth",        LoomCamera),
-    Device("CameraEast",         LoomCamera),
-    Device("CameraWest",         LoomCamera),
+    Device("CameraNorth",        TrackingCamera),
+    Device("CameraSouth",        TrackingCamera),
+    Device("CameraEast",         TrackingCamera),
+    Device("CameraWest",         TrackingCamera),
     # Nest and patch cameras (video only)
     Device("CameraNest",         _stream.Video),
     Device("CameraLightMonitor", _stream.Video),
