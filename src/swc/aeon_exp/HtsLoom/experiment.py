@@ -2,11 +2,15 @@ import json
 from pathlib import Path
 from swc.aeon.schema import Experiment as ExperimentBase, BaseSchema
 
-from swc.aeon_exp.HtsLoom.rig import Rig
-from swc.aeon_exp.HtsLoom.task import Task
+from swc.aeon_exp.htsloom.rig import Rig
+from swc.aeon_exp.htsloom.task import Task
 
 
 class Experiment(ExperimentBase):
+    def _join_pattern_prefix(self, pattern_prefix: str) -> str:
+        """Rig is a root container — pass through child prefix unchanged."""
+        return pattern_prefix
+
     rig: Rig
     task: Task
 
