@@ -22,6 +22,9 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ControlPanel.bonsai">
         <NumberOfBlobs>1</NumberOfBlobs>
       </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\CalibrateRegions.bonsai">
+        <Value>CameraEast</Value>
+      </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />

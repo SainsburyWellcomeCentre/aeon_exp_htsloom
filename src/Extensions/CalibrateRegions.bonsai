@@ -13,6 +13,9 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>FrameEvents</Name>
       </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="Value" />
+      </Expression>
       <Expression xsi:type="rx:Condition">
         <Workflow>
           <Nodes>
@@ -27,7 +30,7 @@
             </Expression>
             <Expression xsi:type="Equal">
               <Operand xsi:type="WorkflowProperty" TypeArguments="p1:CameraName">
-                <Value>CameraNorth</Value>
+                <Value>CameraEast</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -54,24 +57,78 @@
           <cv:Regions>
             <cv:ArrayOfPoint>
               <cv:Point>
-                <cv:X>96</cv:X>
-                <cv:Y>333</cv:Y>
+                <cv:X>137</cv:X>
+                <cv:Y>372</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>591</cv:X>
-                <cv:Y>136</cv:Y>
+                <cv:X>169</cv:X>
+                <cv:Y>324</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>933</cv:X>
-                <cv:Y>270</cv:Y>
+                <cv:X>436</cv:X>
+                <cv:Y>157</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>878</cv:X>
-                <cv:Y>674</cv:Y>
+                <cv:X>745</cv:X>
+                <cv:Y>123</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>172</cv:X>
-                <cv:Y>674</cv:Y>
+                <cv:X>1060</cv:X>
+                <cv:Y>153</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>1313</cv:X>
+                <cv:Y>320</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>1364</cv:X>
+                <cv:Y>363</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>1133</cv:X>
+                <cv:Y>615</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>845</cv:X>
+                <cv:Y>897</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>740</cv:X>
+                <cv:Y>902</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>680</cv:X>
+                <cv:Y>903</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>656</cv:X>
+                <cv:Y>897</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>426</cv:X>
+                <cv:Y>676</cv:Y>
+              </cv:Point>
+            </cv:ArrayOfPoint>
+            <cv:ArrayOfPoint>
+              <cv:Point>
+                <cv:X>659</cv:X>
+                <cv:Y>885</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>838</cv:X>
+                <cv:Y>885</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>840</cv:X>
+                <cv:Y>901</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>751</cv:X>
+                <cv:Y>971</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>659</cv:X>
+                <cv:Y>901</cv:Y>
               </cv:Point>
             </cv:ArrayOfPoint>
           </cv:Regions>
@@ -95,20 +152,78 @@
               <Value>
                 <ArrayOfPoint>
                   <Point>
-                    <X>99</X>
-                    <Y>342</Y>
+                    <X>137</X>
+                    <Y>372</Y>
                   </Point>
                   <Point>
-                    <X>936</X>
-                    <Y>279</Y>
+                    <X>169</X>
+                    <Y>324</Y>
                   </Point>
                   <Point>
-                    <X>881</X>
-                    <Y>683</Y>
+                    <X>436</X>
+                    <Y>157</Y>
                   </Point>
                   <Point>
-                    <X>175</X>
-                    <Y>683</Y>
+                    <X>745</X>
+                    <Y>123</Y>
+                  </Point>
+                  <Point>
+                    <X>1060</X>
+                    <Y>153</Y>
+                  </Point>
+                  <Point>
+                    <X>1313</X>
+                    <Y>320</Y>
+                  </Point>
+                  <Point>
+                    <X>1364</X>
+                    <Y>363</Y>
+                  </Point>
+                  <Point>
+                    <X>1133</X>
+                    <Y>615</Y>
+                  </Point>
+                  <Point>
+                    <X>845</X>
+                    <Y>897</Y>
+                  </Point>
+                  <Point>
+                    <X>740</X>
+                    <Y>902</Y>
+                  </Point>
+                  <Point>
+                    <X>680</X>
+                    <Y>903</Y>
+                  </Point>
+                  <Point>
+                    <X>656</X>
+                    <Y>897</Y>
+                  </Point>
+                  <Point>
+                    <X>426</X>
+                    <Y>676</Y>
+                  </Point>
+                </ArrayOfPoint>
+                <ArrayOfPoint>
+                  <Point>
+                    <X>659</X>
+                    <Y>885</Y>
+                  </Point>
+                  <Point>
+                    <X>838</X>
+                    <Y>885</Y>
+                  </Point>
+                  <Point>
+                    <X>840</X>
+                    <Y>901</Y>
+                  </Point>
+                  <Point>
+                    <X>751</X>
+                    <Y>971</Y>
+                  </Point>
+                  <Point>
+                    <X>659</X>
+                    <Y>901</Y>
                   </Point>
                 </ArrayOfPoint>
               </Value>
@@ -124,10 +239,15 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p3:PointArrayConverter" />
       </Expression>
-      <Expression xsi:type="Index">
-        <Operand xsi:type="IntProperty">
-          <Value>0</Value>
-        </Operand>
+      <Expression xsi:type="InputMapping">
+        <PropertyMappings>
+          <Property Name="Regions" Selector="it" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p1:RegionsTrackingParameters">
+          <p1:Threshold>99</p1:Threshold>
+        </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:SerializeToYaml" />
@@ -141,16 +261,18 @@
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="0" To="1" Label="Source1" />
-      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="0" To="2" Label="Source1" />
+      <Edge From="1" To="2" Label="Source2" />
       <Edge From="2" To="3" Label="Source1" />
-      <Edge From="3" To="5" Label="Source1" />
-      <Edge From="4" To="5" Label="Source2" />
+      <Edge From="3" To="4" Label="Source1" />
       <Edge From="4" To="6" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="5" To="6" Label="Source2" />
+      <Edge From="5" To="7" Label="Source1" />
       <Edge From="7" To="8" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
       <Edge From="9" To="10" Label="Source1" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
