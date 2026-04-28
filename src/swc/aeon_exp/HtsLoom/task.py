@@ -2,7 +2,7 @@ import math
 from enum import StrEnum
 from typing import Dict, List
 from swc.aeon.schema import BaseSchema
-from swc.aeon_exp.HtsLoom.rig import CameraName, Point
+from swc.aeon_exp.htsloom.rig import CameraName, Point
 from pydantic import Field
 
 class ScreenName(StrEnum):

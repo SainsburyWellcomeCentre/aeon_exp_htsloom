@@ -3,6 +3,14 @@ from swc.aeon.schema import core as _stream
 from swc.aeon.schema.streams import Device, Stream, StreamGroup
 from dotmap import DotMap
 
+
+# class Photodiode(Stream):
+#     """Photodiode data from an InputExpander"""
+
+#     def __init__(self, pattern):
+#         """Initializes the Photodiode stream."""
+#         super().__init__(_reader.Harp(f"{pattern}_90_*"))
+
 class HeadTail(Stream):
     """Head-tail tracking data logged at HARP register 201.
 
@@ -100,4 +108,5 @@ htsloom = DotMap([
     Device("Feeder5",            Feeder),
     Device("Feeder6",            Feeder),
     Device("Environment",        _stream.Environment, _stream.MessageLog),
+    Device("InputExpander",         _stream.Device)
 ])
