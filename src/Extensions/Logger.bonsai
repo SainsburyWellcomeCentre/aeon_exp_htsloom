@@ -14,7 +14,7 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Aeon.Acquisition:RepositoryLogController.bonsai">
         <RepositoryPath>..\</RepositoryPath>
-        <DataPath>D:\ProjectAeonABC</DataPath>
+        <DataPath>D:\ProjectAeon</DataPath>
         <FallbackPath>D:\Tests</FallbackPath>
         <ChunkSize>1</ChunkSize>
       </Expression>
