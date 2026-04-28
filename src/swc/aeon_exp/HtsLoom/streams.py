@@ -4,12 +4,12 @@ from swc.aeon.schema.streams import Device, Stream, StreamGroup
 from dotmap import DotMap
 
 
-# class Photodiode(Stream):
-#     """Photodiode data from an InputExpander"""
 
-#     def __init__(self, pattern):
-#         """Initializes the Photodiode stream."""
-#         super().__init__(_reader.Harp(f"{pattern}_90_*"))
+class Photodiode(Stream):
+    """Photodiode data from an InputExpander (4 inputs: pd0..pd3)."""
+
+    def __init__(self, pattern):
+        super().__init__(_reader.Harp(f"{pattern}_90_*", columns=["pd0", "pd1", "pd2", "pd3"]))
 
 class HeadTail(Stream):
     """Head-tail tracking data logged at HARP register 201.
@@ -54,12 +54,12 @@ class LoomAngleState(Stream):
             "blob_id", "zone_id", "angle"
         ]))
 
-class FeederBeamBreak(Stream):
+class BeamBreak(Stream):
 
     def __init__(self, pattern):
         super().__init__(_reader.BitmaskEvent(f"{pattern}_32_*", 0x22, "PelletDetected"))
 
-class FeederDeliverPellet(Stream):
+class DeliverPellet(Stream):
     """Pellet-delivery command events from an underground feeder (register 35)."""
 
     def __init__(self, pattern):
@@ -77,7 +77,7 @@ class Feeder(StreamGroup):
     """Beam-break and pellet-delivery events for one underground feeder."""
 
     def __init__(self, pattern):
-        super().__init__(pattern, FeederBeamBreak, FeederDeliverPellet)
+        super().__init__(pattern, BeamBreak, DeliverPellet)
 
 # Dataset schema
 # Device names must match the LogName parameter used in the Bonsai workflow.
@@ -108,5 +108,5 @@ htsloom = DotMap([
     Device("Feeder5",            Feeder),
     Device("Feeder6",            Feeder),
     Device("Environment",        _stream.Environment, _stream.MessageLog),
-    Device("InputExpander",         _stream.Device)
+    Device("InputExpander",      Photodiode)
 ])
