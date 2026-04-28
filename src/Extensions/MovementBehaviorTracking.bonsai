@@ -163,7 +163,7 @@
                     <Name>Collection</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
+                    <Selector>Value.Item1</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Concat" />

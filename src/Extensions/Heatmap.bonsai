@@ -107,7 +107,7 @@
                     <Name>Source1</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Value</Selector>
+                    <Selector>Value.Item1</Selector>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Count</Selector>
@@ -128,7 +128,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Value[0].Centroid</Selector>
+              <Selector>Value.Item1[0].Centroid</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="dsp:Histogram2D">
@@ -149,14 +149,16 @@
                 <dsp:Shift>0</dsp:Shift>
               </Combinator>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Aeon.Foraging:RepeatEverySubject.bonsai" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="Aeon.Foraging:RepeatEverySubject.bonsai" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:SampleInterval">
                 <rx:Interval>PT0.03S</rx:Interval>
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TrackingEvents</Name>
+              <Name>TrackingCamera</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Key</Selector>

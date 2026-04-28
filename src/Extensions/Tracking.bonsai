@@ -183,64 +183,32 @@
                       <cv:Regions>
                         <cv:ArrayOfPoint>
                           <cv:Point>
-                            <cv:X>62</cv:X>
-                            <cv:Y>412</cv:Y>
+                            <cv:X>308</cv:X>
+                            <cv:Y>226</cv:Y>
                           </cv:Point>
                           <cv:Point>
-                            <cv:X>139</cv:X>
-                            <cv:Y>287</cv:Y>
+                            <cv:X>594</cv:X>
+                            <cv:Y>131</cv:Y>
                           </cv:Point>
                           <cv:Point>
-                            <cv:X>302</cv:X>
-                            <cv:Y>285</cv:Y>
+                            <cv:X>909</cv:X>
+                            <cv:Y>144</cv:Y>
                           </cv:Point>
                           <cv:Point>
-                            <cv:X>400</cv:X>
-                            <cv:Y>140</cv:Y>
+                            <cv:X>1190</cv:X>
+                            <cv:Y>270</cv:Y>
                           </cv:Point>
                           <cv:Point>
-                            <cv:X>563</cv:X>
-                            <cv:Y>137</cv:Y>
+                            <cv:X>1332</cv:X>
+                            <cv:Y>410</cv:Y>
                           </cv:Point>
                           <cv:Point>
-                            <cv:X>639</cv:X>
-                            <cv:Y>184</cv:Y>
+                            <cv:X>717</cv:X>
+                            <cv:Y>1003</cv:Y>
                           </cv:Point>
                           <cv:Point>
-                            <cv:X>848</cv:X>
-                            <cv:Y>194</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>855</cv:X>
-                            <cv:Y>50</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>915</cv:X>
-                            <cv:Y>155</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1081</cv:X>
-                            <cv:Y>165</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1167</cv:X>
-                            <cv:Y>320</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1325</cv:X>
-                            <cv:Y>327</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1367</cv:X>
-                            <cv:Y>408</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>707</cv:X>
-                            <cv:Y>1032</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>168</cv:X>
-                            <cv:Y>422</cv:Y>
+                            <cv:X>141</cv:X>
+                            <cv:Y>364</cv:Y>
                           </cv:Point>
                         </cv:ArrayOfPoint>
                       </cv:Regions>
@@ -270,7 +238,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:Threshold">
-                      <cv:ThresholdValue>100</cv:ThresholdValue>
+                      <cv:ThresholdValue>200</cv:ThresholdValue>
                       <cv:MaxValue>255</cv:MaxValue>
                       <cv:ThresholdType>BinaryInv</cv:ThresholdType>
                     </Combinator>
@@ -335,6 +303,14 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:SortBinaryRegions" />
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:SelectFirstNConnectedComponentCollection">
+                <p2:NumberOfElements>3</p2:NumberOfElements>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>CameraFrame</Name>
             </Expression>
@@ -377,17 +353,20 @@
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
+            <Edge From="18" To="24" Label="Source2" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="25" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="24" To="27" Label="Source1" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="29" Label="Source1" />
+            <Edge From="26" To="27" Label="Source2" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source2" />
+            <Edge From="28" To="31" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
+            <Edge From="31" To="32" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
