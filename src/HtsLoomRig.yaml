@@ -49,24 +49,42 @@ cameras:
         tracking: 
            trackingType: HeadTailTracking
            regionTracking:
-             North:
-                threshold: 140
+              North:
+                threshold: 120
                 regions:
                   - points:
-                      - x: 308
-                        y: 226
-                      - x: 594
-                        y: 131
-                      - x: 909
-                        y: 144
-                      - x: 1190
-                        y: 270
-                      - x: 1332
-                        y: 410
-                      - x: 717
-                        y: 1003
-                      - x: 141
-                        y: 364
+                    - x: 141
+                      y: 355
+                    - x: 291
+                      y: 226
+                    - x: 592
+                      y: 124
+                    - x: 912
+                      y: 139
+                    - x: 1200
+                      y: 264
+                    - x: 1353
+                      y: 404
+                    - x: 1075
+                      y: 679
+                    - x: 817
+                      y: 918
+                    - x: 627
+                      y: 910
+              Nest:
+                threshold: 150
+                regions:
+                  - points:
+                    - x: 632
+                      y: 897
+                    - x: 816
+                      y: 900
+                    - x: 818
+                      y: 920
+                    - x: 718
+                      y: 1001
+                    - x: 627
+                      y: 919
            zones: 
             - position:
                 x: 741
@@ -170,25 +188,44 @@ cameras:
         tracking: 
            trackingType: HeadTailTracking
            regionTracking:
-             North:
-                threshold: 90
+              South:
+                threshold: 100
                 regions:
                   - points:
-                      - x: 302
-                        y: 279
-                      - x: 592
-                        y: 152
-                      - x: 916
-                        y: 139
-                      - x: 1218
-                        y: 249
-                      - x: 1392
-                        y: 387
-                      - x: 780
-                        y: 1040
-                      - x: 151
-                        y: 423
-
+                    - x: 414
+                      y: 680
+                    - x: 135
+                      y: 354
+                    - x: 285
+                      y: 224
+                    - x: 591
+                      y: 121
+                    - x: 913
+                      y: 134
+                    - x: 1201
+                      y: 264
+                    - x: 1353
+                      y: 404
+                    - x: 1086
+                      y: 667
+                    - x: 818
+                      y: 920
+                    - x: 633
+                      y: 918
+              Nest:
+                threshold: 150
+                regions:
+                  - points:
+                    - x: 634
+                      y: 898
+                    - x: 813
+                      y: 901
+                    - x: 817
+                      y: 923
+                    - x: 718
+                      y: 996
+                    - x: 629
+                      y: 915
            zones: 
             - position:
                 x: 741
@@ -221,26 +258,46 @@ cameras:
         tracking: 
            trackingType: HeadTailTracking
            regionTracking:
-             North:
-                threshold: 90
+              North:
+                threshold: 100
                 regions:
                   - points:
-                      - x: 151
-                        y: 324
-                      - x: 401
-                        y: 159
-                      - x: 707
-                        y: 96
-                      - x: 1015
-                        y: 151
-                      - x: 1275
-                        y: 313
-                      - x: 1316
-                        y: 356
-                      - x: 715
-                        y: 976
-                      - x: 105
-                        y: 360
+                    - x: 365
+                      y: 636
+                    - x: 103
+                      y: 368
+                    - x: 148
+                      y: 321
+                    - x: 400
+                      y: 156
+                    - x: 707
+                      y: 96
+                    - x: 1015
+                      y: 152
+                    - x: 1279
+                      y: 310
+                    - x: 1323
+                      y: 358
+                    - x: 1057
+                      y: 640
+                    - x: 810
+                      y: 881
+                    - x: 623
+                      y: 886
+              Nest:
+                threshold: 140
+                regions:
+                  - points:
+                    - x: 629
+                      y: 868
+                    - x: 804
+                      y: 865
+                    - x: 811
+                      y: 893
+                    - x: 718
+                      y: 964
+                    - x: 625
+                      y: 888
            zones: 
             - position:
                 x: 741
