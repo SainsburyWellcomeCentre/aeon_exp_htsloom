@@ -1,134 +1,212 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:p2="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
-                 xmlns:p3="clr-namespace:;assembly=Extensions"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
+                 xmlns:p2="clr-namespace:;assembly=Extensions"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:p3="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
-      <Expression xsi:type="SubscribeSubject">
-        <Name>FrameEvents</Name>
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source1</Name>
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Value" />
+        <Property Name="Path" />
       </Expression>
-      <Expression xsi:type="rx:Condition">
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="io:ReadAllText">
+          <io:Path>PolygonSouth.yaml</io:Path>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="p1:DeserializeFromYaml">
+        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:RegionsTrackingParameters" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Regions</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p2:PointArrayConverter" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="Regions" />
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
         <Workflow>
           <Nodes>
-            <Expression xsi:type="WorkflowInput">
-              <Name>Source1</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Key.Item1</Selector>
-            </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" />
+              <Property Name="Value" DisplayName="Regions" />
             </Expression>
-            <Expression xsi:type="Equal">
-              <Operand xsi:type="WorkflowProperty" TypeArguments="p1:CameraName">
-                <Value>CameraEast</Value>
-              </Operand>
+            <Expression xsi:type="PropertySource" TypeArguments="cv:MaskPolygon,p3:Point[][]">
+              <MemberName>Regions</MemberName>
+              <Value>
+                <ArrayOfPoint>
+                  <Point>
+                    <X>98</X>
+                    <Y>365</Y>
+                  </Point>
+                  <Point>
+                    <X>132</X>
+                    <Y>321</Y>
+                  </Point>
+                  <Point>
+                    <X>387</X>
+                    <Y>147</Y>
+                  </Point>
+                  <Point>
+                    <X>708</X>
+                    <Y>94</Y>
+                  </Point>
+                  <Point>
+                    <X>1021</X>
+                    <Y>146</Y>
+                  </Point>
+                  <Point>
+                    <X>1279</X>
+                    <Y>306</Y>
+                  </Point>
+                  <Point>
+                    <X>1325</X>
+                    <Y>355</Y>
+                  </Point>
+                  <Point>
+                    <X>1088</X>
+                    <Y>613</Y>
+                  </Point>
+                  <Point>
+                    <X>812</X>
+                    <Y>886</Y>
+                  </Point>
+                  <Point>
+                    <X>616</X>
+                    <Y>884</Y>
+                  </Point>
+                  <Point>
+                    <X>408</X>
+                    <Y>682</Y>
+                  </Point>
+                </ArrayOfPoint>
+                <ArrayOfPoint>
+                  <Point>
+                    <X>628</X>
+                    <Y>872</Y>
+                  </Point>
+                  <Point>
+                    <X>804</X>
+                    <Y>867</Y>
+                  </Point>
+                  <Point>
+                    <X>809</X>
+                    <Y>885</Y>
+                  </Point>
+                  <Point>
+                    <X>718</X>
+                    <Y>964</Y>
+                  </Point>
+                  <Point>
+                    <X>624</X>
+                    <Y>889</Y>
+                  </Point>
+                </ArrayOfPoint>
+              </Value>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="3" Label="Source1" />
-            <Edge From="2" To="3" Label="Source2" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Merge" />
+        <Combinator xsi:type="rx:Skip">
+          <rx:Count>1</rx:Count>
+        </Combinator>
       </Expression>
-      <Expression xsi:type="MemberSelector">
-        <Selector>Value.Image</Selector>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Concat" />
       </Expression>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Regions" />
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Regions" />
+        </PropertyMappings>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:MaskPolygon">
           <cv:Regions>
             <cv:ArrayOfPoint>
               <cv:Point>
-                <cv:X>137</cv:X>
-                <cv:Y>372</cv:Y>
+                <cv:X>98</cv:X>
+                <cv:Y>365</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>169</cv:X>
-                <cv:Y>324</cv:Y>
+                <cv:X>132</cv:X>
+                <cv:Y>321</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>436</cv:X>
-                <cv:Y>157</cv:Y>
+                <cv:X>387</cv:X>
+                <cv:Y>147</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>745</cv:X>
-                <cv:Y>123</cv:Y>
+                <cv:X>708</cv:X>
+                <cv:Y>94</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>1060</cv:X>
-                <cv:Y>153</cv:Y>
+                <cv:X>1021</cv:X>
+                <cv:Y>146</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>1313</cv:X>
-                <cv:Y>320</cv:Y>
+                <cv:X>1279</cv:X>
+                <cv:Y>306</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>1364</cv:X>
-                <cv:Y>363</cv:Y>
+                <cv:X>1325</cv:X>
+                <cv:Y>355</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>1133</cv:X>
-                <cv:Y>615</cv:Y>
+                <cv:X>1088</cv:X>
+                <cv:Y>613</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>845</cv:X>
-                <cv:Y>897</cv:Y>
+                <cv:X>812</cv:X>
+                <cv:Y>886</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>740</cv:X>
-                <cv:Y>902</cv:Y>
+                <cv:X>616</cv:X>
+                <cv:Y>884</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>680</cv:X>
-                <cv:Y>903</cv:Y>
-              </cv:Point>
-              <cv:Point>
-                <cv:X>656</cv:X>
-                <cv:Y>897</cv:Y>
-              </cv:Point>
-              <cv:Point>
-                <cv:X>426</cv:X>
-                <cv:Y>676</cv:Y>
+                <cv:X>408</cv:X>
+                <cv:Y>682</cv:Y>
               </cv:Point>
             </cv:ArrayOfPoint>
             <cv:ArrayOfPoint>
               <cv:Point>
-                <cv:X>659</cv:X>
+                <cv:X>628</cv:X>
+                <cv:Y>872</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>804</cv:X>
+                <cv:Y>867</cv:Y>
+              </cv:Point>
+              <cv:Point>
+                <cv:X>809</cv:X>
                 <cv:Y>885</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>838</cv:X>
-                <cv:Y>885</cv:Y>
+                <cv:X>718</cv:X>
+                <cv:Y>964</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>840</cv:X>
-                <cv:Y>901</cv:Y>
-              </cv:Point>
-              <cv:Point>
-                <cv:X>751</cv:X>
-                <cv:Y>971</cv:Y>
-              </cv:Point>
-              <cv:Point>
-                <cv:X>659</cv:X>
-                <cv:Y>901</cv:Y>
+                <cv:X>624</cv:X>
+                <cv:Y>889</cv:Y>
               </cv:Point>
             </cv:ArrayOfPoint>
           </cv:Regions>
@@ -147,97 +225,95 @@
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="Regions" />
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="cv:MaskPolygon,p2:Point[][]">
+            <Expression xsi:type="PropertySource" TypeArguments="cv:MaskPolygon,p3:Point[][]">
               <MemberName>Regions</MemberName>
               <Value>
                 <ArrayOfPoint>
                   <Point>
-                    <X>137</X>
-                    <Y>372</Y>
+                    <X>98</X>
+                    <Y>365</Y>
                   </Point>
                   <Point>
-                    <X>169</X>
-                    <Y>324</Y>
+                    <X>132</X>
+                    <Y>321</Y>
                   </Point>
                   <Point>
-                    <X>436</X>
-                    <Y>157</Y>
+                    <X>387</X>
+                    <Y>147</Y>
                   </Point>
                   <Point>
-                    <X>745</X>
-                    <Y>123</Y>
+                    <X>708</X>
+                    <Y>94</Y>
                   </Point>
                   <Point>
-                    <X>1060</X>
-                    <Y>153</Y>
+                    <X>1021</X>
+                    <Y>146</Y>
                   </Point>
                   <Point>
-                    <X>1313</X>
-                    <Y>320</Y>
+                    <X>1279</X>
+                    <Y>306</Y>
                   </Point>
                   <Point>
-                    <X>1364</X>
-                    <Y>363</Y>
+                    <X>1325</X>
+                    <Y>355</Y>
                   </Point>
                   <Point>
-                    <X>1133</X>
-                    <Y>615</Y>
+                    <X>1088</X>
+                    <Y>613</Y>
                   </Point>
                   <Point>
-                    <X>845</X>
-                    <Y>897</Y>
+                    <X>812</X>
+                    <Y>886</Y>
                   </Point>
                   <Point>
-                    <X>740</X>
-                    <Y>902</Y>
+                    <X>616</X>
+                    <Y>884</Y>
                   </Point>
                   <Point>
-                    <X>680</X>
-                    <Y>903</Y>
-                  </Point>
-                  <Point>
-                    <X>656</X>
-                    <Y>897</Y>
-                  </Point>
-                  <Point>
-                    <X>426</X>
-                    <Y>676</Y>
+                    <X>408</X>
+                    <Y>682</Y>
                   </Point>
                 </ArrayOfPoint>
                 <ArrayOfPoint>
                   <Point>
-                    <X>659</X>
+                    <X>628</X>
+                    <Y>872</Y>
+                  </Point>
+                  <Point>
+                    <X>804</X>
+                    <Y>867</Y>
+                  </Point>
+                  <Point>
+                    <X>809</X>
                     <Y>885</Y>
                   </Point>
                   <Point>
-                    <X>838</X>
-                    <Y>885</Y>
+                    <X>718</X>
+                    <Y>964</Y>
                   </Point>
                   <Point>
-                    <X>840</X>
-                    <Y>901</Y>
-                  </Point>
-                  <Point>
-                    <X>751</X>
-                    <Y>971</Y>
-                  </Point>
-                  <Point>
-                    <X>659</X>
-                    <Y>901</Y>
+                    <X>624</X>
+                    <Y>889</Y>
                   </Point>
                 </ArrayOfPoint>
               </Value>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Skip">
+                <rx:Count>1</rx:Count>
+              </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p3:PointArrayConverter" />
+        <Combinator xsi:type="p2:PointArrayConverter" />
       </Expression>
       <Expression xsi:type="InputMapping">
         <PropertyMappings>
@@ -254,25 +330,32 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:WriteAllText">
-          <io:Path>Polygon.yaml</io:Path>
+          <io:Path>PolygonSouth.yaml</io:Path>
           <io:Overwrite>true</io:Overwrite>
           <io:Append>false</io:Append>
         </Combinator>
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="0" To="2" Label="Source1" />
-      <Edge From="1" To="2" Label="Source2" />
+      <Edge From="0" To="12" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="1" To="18" Label="Source2" />
       <Edge From="2" To="3" Label="Source1" />
       <Edge From="3" To="4" Label="Source1" />
-      <Edge From="4" To="6" Label="Source1" />
-      <Edge From="5" To="6" Label="Source2" />
-      <Edge From="5" To="7" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="10" Label="Source1" />
       <Edge From="7" To="8" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
-      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="9" To="10" Label="Source2" />
       <Edge From="10" To="11" Label="Source1" />
-      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="11" To="12" Label="Source2" />
+      <Edge From="11" To="13" Label="Source1" />
+      <Edge From="13" To="14" Label="Source1" />
+      <Edge From="14" To="15" Label="Source1" />
+      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source1" />
+      <Edge From="17" To="18" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
