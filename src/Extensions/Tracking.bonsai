@@ -308,8 +308,8 @@
               <Combinator xsi:type="cv:SortBinaryRegions" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p2:SelectFirstNConnectedComponentCollection">
-                <p2:minArea>500</p2:minArea>
+              <Combinator xsi:type="p2:SelectTopComponent">
+                <p2:MinArea>500</p2:MinArea>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">

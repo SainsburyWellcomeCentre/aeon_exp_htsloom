@@ -9,11 +9,11 @@ using OpenCV.Net;
 using System.Diagnostics.Eventing.Reader;
 
 [Combinator]
-[Description("")]
+[Description("From the two first elements in the collection select the top one if both are bigger than MinAera")]
 [WorkflowElementCategory(ElementCategory.Transform)]
-public class SelectFirstNConnectedComponentCollection
+public class SelectTopComponent
 {
-    public double minArea { get; set; }
+    public double MinArea { get; set; }
 
     public IObservable<ConnectedComponentCollection> Process(IObservable<ConnectedComponentCollection> source)
     {
@@ -28,7 +28,7 @@ public class SelectFirstNConnectedComponentCollection
 
             if (value.Count > 1)
             {
-                if (value[0].Area > minArea && value[1].Area > 200)
+                if (value[0].Area > MinArea && value[1].Area > MinArea)
                     result.Add((value[0].Centroid.Y < value[1].Centroid.Y) ? value[0] : value[1]);
                 else
                     result.Add(value[0]);
