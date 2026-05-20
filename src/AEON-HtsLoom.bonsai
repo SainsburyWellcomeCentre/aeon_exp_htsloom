@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -23,89 +22,9 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ControlPanel.bonsai">
         <NumberOfBlobs>1</NumberOfBlobs>
       </Expression>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Value" DisplayName="Value" />
-      </Expression>
-      <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:CameraName),p1:CameraName">
-        <MemberName>Value</MemberName>
-        <Value>CameraSouth</Value>
-      </Expression>
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\SelectCamera.bonsai" />
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\CalibrateRegions.bonsai">
-        <Path>PolygonSouth.yaml</Path>
-        <Regions>
-          <ArrayOfPoint>
-            <Point>
-              <X>146</X>
-              <Y>425</Y>
-            </Point>
-            <Point>
-              <X>300</X>
-              <Y>279</Y>
-            </Point>
-            <Point>
-              <X>588</X>
-              <Y>152</Y>
-            </Point>
-            <Point>
-              <X>919</X>
-              <Y>126</Y>
-            </Point>
-            <Point>
-              <X>1231</X>
-              <Y>236</Y>
-            </Point>
-            <Point>
-              <X>1390</X>
-              <Y>372</Y>
-            </Point>
-            <Point>
-              <X>1140</X>
-              <Y>666</Y>
-            </Point>
-            <Point>
-              <X>870</X>
-              <Y>941</Y>
-            </Point>
-            <Point>
-              <X>675</X>
-              <Y>947</Y>
-            </Point>
-            <Point>
-              <X>467</X>
-              <Y>745</Y>
-            </Point>
-          </ArrayOfPoint>
-          <ArrayOfPoint>
-            <Point>
-              <X>690</X>
-              <Y>931</Y>
-            </Point>
-            <Point>
-              <X>866</X>
-              <Y>926</Y>
-            </Point>
-            <Point>
-              <X>871</X>
-              <Y>944</Y>
-            </Point>
-            <Point>
-              <X>780</X>
-              <Y>1023</Y>
-            </Point>
-            <Point>
-              <X>686</X>
-              <Y>948</Y>
-            </Point>
-          </ArrayOfPoint>
-        </Regions>
-      </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
-      <Edge From="7" To="8" Label="Source1" />
-      <Edge From="8" To="9" Label="Source1" />
-      <Edge From="9" To="10" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

@@ -2223,8 +2223,8 @@ LossWeightPercent: 63.11837</gui:Text>
                   <Expression xsi:type="gui:ToggleButtonBuilder">
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:Text>Start</gui:Text>
-                    <gui:Checked>false</gui:Checked>
+                    <gui:Text>Stop</gui:Text>
+                    <gui:Checked>true</gui:Checked>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>CamerasRunning</Name>
@@ -2324,12 +2324,18 @@ LossWeightPercent: 63.11837</gui:Text>
             <Expression xsi:type="SubscribeSubject">
               <Name>SelectedCamera</Name>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item1</Selector>
+            </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\SelectStream.bonsai">
               <Name>Heatmap</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="SubscribeSubject">
               <Name>SelectedCamera</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item1</Selector>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\SelectStream.bonsai">
               <Name>TrackingEvents</Name>
@@ -2403,7 +2409,7 @@ LossWeightPercent: 63.11837</gui:Text>
               </Workflow>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Item1</Selector>
+              <Selector>Item1.Item3</Selector>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>image</Name>
@@ -2453,7 +2459,7 @@ LossWeightPercent: 63.11837</gui:Text>
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="12" To="43" Label="Source1" />
+            <Edge From="12" To="45" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="21" Label="Source2" />
@@ -2463,29 +2469,31 @@ LossWeightPercent: 63.11837</gui:Text>
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source4" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="35" Label="Source1" />
+            <Edge From="22" To="37" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="35" Label="Source2" />
+            <Edge From="24" To="37" Label="Source2" />
             <Edge From="25" To="26" Label="Source1" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="33" Label="Source1" />
-            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="35" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
-            <Edge From="31" To="38" Label="Source1" />
-            <Edge From="32" To="33" Label="Source2" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="32" To="40" Label="Source1" />
             <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source3" />
+            <Edge From="34" To="35" Label="Source2" />
             <Edge From="35" To="36" Label="Source1" />
-            <Edge From="37" To="38" Label="Source2" />
-            <Edge From="38" To="39" Label="Source1" />
-            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="36" To="37" Label="Source3" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="39" To="40" Label="Source2" />
             <Edge From="40" To="41" Label="Source1" />
-            <Edge From="42" To="43" Label="Source2" />
-            <Edge From="43" To="44" Label="Source1" />
-            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="43" Label="Source1" />
+            <Edge From="44" To="45" Label="Source2" />
             <Edge From="45" To="46" Label="Source1" />
+            <Edge From="46" To="47" Label="Source1" />
+            <Edge From="47" To="48" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3076,7 +3084,7 @@ LossWeightPercent: 63.11837</gui:Text>
                 <gui:string>HeadTail</gui:string>
                 <gui:string>Zone</gui:string>
               </gui:Items>
-              <gui:SelectedItem>Histogram</gui:SelectedItem>
+              <gui:SelectedItem>Zone</gui:SelectedItem>
             </Expression>
             <Expression xsi:type="rx:Sink">
               <Workflow>
@@ -3253,7 +3261,7 @@ LossWeightPercent: 63.11837</gui:Text>
                               </Expression>
                               <Expression xsi:type="Equal">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="p2:CameraName">
-                                  <Value>CameraNorth</Value>
+                                  <Value>CameraSouth</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
