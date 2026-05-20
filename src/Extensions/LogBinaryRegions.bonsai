@@ -64,17 +64,7 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:WithLatestFrom" />
             </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="LogName" Selector="Item2" />
-              </PropertyMappings>
-              <Selector>Item1</Selector>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="Aeon.Acquisition:LogHarpState.bonsai">
-              <LogName>CameraNorth</LogName>
-              <Heartbeats>Heartbeats</Heartbeats>
-              <ClosingDuration>PT2S</ClosingDuration>
-            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogHarpState.bonsai" />
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
@@ -89,7 +79,6 @@
             <Edge From="9" To="10" Label="Source2" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
