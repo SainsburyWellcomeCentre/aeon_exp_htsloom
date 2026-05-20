@@ -87,7 +87,6 @@ class ZoneActivity(BaseSchema):
 
 class HeadTailTracking(BlobTracking):
     velocity_threshold : int = Field(default = 10, description = "Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject") # TODO: Update to generic (mm) vs camera (pixels) units
-    buffer_length : int = Field(default = 10, description = "The length of the buffer history, in frames, on which to compute velocity")
     Zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")
 
 Tracking = TypeAliasType ('Tracking', Annotated[Union[HeadTailTracking, BlobTracking], Field(discriminator="tracking_type")])
