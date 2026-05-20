@@ -5,6 +5,7 @@
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:aeon="clr-namespace:Aeon.Acquisition;assembly=Aeon.Acquisition"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:p2="clr-namespace:;assembly=Extensions"
@@ -235,8 +236,11 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>TrackingIndexed</Name>
       </Expression>
-      <Expression xsi:type="rx:SelectMany">
-        <Name>HeadTailVelocity</Name>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Key</Selector>
+      </Expression>
+      <Expression xsi:type="aeon:CreateGroup">
+        <Name>HeadTailGroup</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
@@ -246,15 +250,6 @@
               <Combinator xsi:type="rx:Take">
                 <rx:Count>1</rx:Count>
               </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:AsyncSubject">
-              <Name>IndexedComponent</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>IndexedComponent</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Key</Selector>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
               <Name>IndexedKey</Name>
@@ -276,7 +271,7 @@
             </Expression>
             <Expression xsi:type="Index">
               <Operand xsi:type="WorkflowProperty" TypeArguments="p1:CameraName">
-                <Value>CameraTop</Value>
+                <Value>CameraEast</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -288,7 +283,37 @@
               <Name>Settings</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>IndexedComponent</Name>
+              <Name>TrackingIndexed</Name>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Key</Selector>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>IndexedKey</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>(it.Item1.Item1 == it.Item2.Item1) &amp;&amp; (it.Item1.Item2 == it.Item2.Item2)
+</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="3" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Settings</Name>
@@ -310,15 +335,6 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Settings</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="VelocityThreshold" Selector="VelocityThreshold" />
-                <Property Name="BufferLength" Selector="BufferLength" />
-              </PropertyMappings>
-            </Expression>
             <Expression xsi:type="harp:ConvertTimestamped">
               <Name>HeadTailVelocity</Name>
               <Workflow>
@@ -328,7 +344,6 @@
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="BufferLength" />
-                    <Property Name="VelocityThreshold" />
                   </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>HeadTail</Name>
@@ -405,8 +420,17 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:WithLatestFrom" />
                         </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="VelocityThreshold" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Settings</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>VelocityThreshold</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1.Item1.Item1,Item1.Item1.Item2,Item1.Item2,Item2</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p2:HeadTailVelocity">
@@ -432,9 +456,12 @@
                         <Edge From="13" To="15" Label="Source1" />
                         <Edge From="14" To="15" Label="Source2" />
                         <Edge From="15" To="16" Label="Source2" />
-                        <Edge From="16" To="18" Label="Source1" />
-                        <Edge From="17" To="18" Label="Source2" />
-                        <Edge From="18" To="19" Label="Source1" />
+                        <Edge From="16" To="19" Label="Source1" />
+                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="18" To="19" Label="Source2" />
+                        <Edge From="19" To="20" Label="Source1" />
+                        <Edge From="20" To="21" Label="Source1" />
+                        <Edge From="21" To="22" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -452,46 +479,27 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TrackingSortedPerCamera</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Key</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
-            </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="6" To="8" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="3" To="5" Label="Source1" />
+            <Edge From="4" To="5" Label="Source2" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="13" To="15" Label="Source1" />
-            <Edge From="14" To="15" Label="Source2" />
-            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="11" To="13" Label="Source1" />
+            <Edge From="12" To="13" Label="Source2" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="22" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source2" />
-            <Edge From="22" To="25" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source1" />
           </Edges>
         </Workflow>
-      </Expression>
-      <Expression xsi:type="rx:GroupBy">
-        <rx:KeySelector>Item2</rx:KeySelector>
-        <rx:ElementSelector>Item1</rx:ElementSelector>
       </Expression>
       <Expression xsi:type="rx:ReplaySubject">
         <Name>HeadTailObservable</Name>

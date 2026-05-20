@@ -29,7 +29,7 @@
               <Property Name="Name" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>Heatmap</Name>
+              <Name>TrackingEvents</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SelectedCamera</Name>
@@ -44,7 +44,7 @@
                     <Name>Source1</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
-                    <Selector>Item1.Key,Item2.Item1</Selector>
+                    <Selector>Item1.Key,Item2</Selector>
                   </Expression>
                   <Expression xsi:type="Equal" />
                   <Expression xsi:type="WorkflowOutput" />
