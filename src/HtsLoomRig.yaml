@@ -22,7 +22,7 @@ cameraSynchronizer:
   portName: COM6
   triggers:
     Trigger0:
-        frequency: 50 
+        frequency: 50
     Trigger1: 
         frequency: 100
 cameras:
@@ -104,9 +104,7 @@ cameras:
                     -   x: 754
                         y: 482
                     -   x: 360
-
                         y: 483
-           bufferLength: 10
            velocityThreshold: 10
 
     CameraEast:
@@ -176,7 +174,6 @@ cameras:
                         y: 482
                     -   x: 360
                         y: 483
-            bufferLength: 10
             velocityThreshold: 10
 
     CameraSouth:
@@ -226,6 +223,7 @@ cameras:
                       y: 1023
                     - x: 686
                       y: 948
+
            zones: 
             - position:
                 x: 741
@@ -246,7 +244,6 @@ cameras:
                         y: 482
                     -   x: 360
                         y: 483
-           bufferLength: 10
            velocityThreshold: 10        
 
     CameraWest:
@@ -318,7 +315,6 @@ cameras:
                         y: 482
                     -   x: 360
                         y: 483
-           bufferLength: 10
            velocityThreshold: 10    
 
 feeders:
