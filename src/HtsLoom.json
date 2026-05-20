@@ -278,12 +278,6 @@
           "title": "VelocityThreshold",
           "type": "integer"
         },
-        "bufferLength": {
-          "default": 10,
-          "description": "The length of the buffer history, in frames, on which to compute velocity",
-          "title": "BufferLength",
-          "type": "integer"
-        },
         "zones": {
           "anyOf": [
             {
