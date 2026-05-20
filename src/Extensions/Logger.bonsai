@@ -92,15 +92,13 @@
         <Selector>Seconds,Value.Type</Selector>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>FeederEvents</Name>
-      </Expression>
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogHarpObservable.bonsai">
-        <LogName />
-      </Expression>
-      <Expression xsi:type="SubscribeSubject">
         <Name>TrackingEvents</Name>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogBinaryRegions.bonsai" />
+      <Expression xsi:type="SubscribeSubject">
+        <Name>FeederEvents</Name>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogHarpObservable.bonsai" />
       <Expression xsi:type="SubscribeSubject">
         <Name>HeadTailObservable</Name>
       </Expression>
