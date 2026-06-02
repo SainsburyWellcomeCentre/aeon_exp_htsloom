@@ -9,7 +9,7 @@ class Photodiode(Stream):
     """Photodiode data from an InputExpander (4 inputs: pd0..pd3)."""
 
     def __init__(self, pattern):
-        super().__init__(_reader.Harp(f"{pattern}_90_*", columns=["pd0", "pd1", "pd2", "pd3"]))
+        super().__init__(_reader.Harp(f"{pattern}_35_*", columns=["pd0", "pd1", "pd2", "pd3"]))
 
 class HeadTail(Stream):
     """Head-tail tracking data logged at HARP register 201.
