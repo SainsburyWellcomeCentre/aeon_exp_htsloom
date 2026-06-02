@@ -21,10 +21,11 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\SubjectAndEnvironmentState.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Tracking.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\WheelFeederDispenser.bonsai" />
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\Heatmap.bonsai" />
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\InputKeys.bonsai" />
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\MovementBehaviorTracking.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoomClient.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\MovementBehaviorTracking.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\InputKeys.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\Heatmap.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\Lag.bonsai" />
     </Nodes>
     <Edges />
   </Workflow>
