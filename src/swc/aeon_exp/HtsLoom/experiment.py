@@ -8,7 +8,13 @@ from swc.aeon_exp.htsloom.task import Task
 
 class Experiment(ExperimentBase):
     def _join_pattern_prefix(self, pattern_prefix: str) -> str:
-        """Rig is a root container — pass through child prefix unchanged."""
+        """Override the BaseSchema hook so Experiment stays transparent.
+
+        Experiment is a structural grouping container, so its name must not
+        be injected into the flat data-file patterns (e.g. CameraNorth_201_*,
+        not Experiment/CameraNorth_201_*). We pass the child prefix through
+        unchanged instead of replacing it with the container name.
+        """
         return pattern_prefix
 
     rig: Rig

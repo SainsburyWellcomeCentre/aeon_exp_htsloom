@@ -151,7 +151,13 @@ class LightCycle(BaseSchema):
 
 class Rig(BaseSchema):
     def _join_pattern_prefix(self, pattern_prefix: str) -> str:
-        """Rig is a root container — pass through child prefix unchanged."""
+        """Override the BaseSchema hook so Rig stays transparent.
+
+        Rig is a structural grouping container, so its name must not be
+        injected into the flat data-file patterns (e.g. CameraNorth_201_*,
+        not Rig/CameraNorth_201_*). We pass the child prefix through
+        unchanged instead of replacing it with the container name.
+        """
         return pattern_prefix
 
     clock_synchronizer: HarpTimestampGeneratorGen3
