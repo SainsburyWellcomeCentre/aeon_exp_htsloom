@@ -72,7 +72,7 @@ cameras:
                     - x: 627
                       y: 910
               Nest:
-                threshold: 130
+                threshold: 145
                 regions:
                   - points:
                     - x: 632
@@ -210,7 +210,7 @@ cameras:
                   - x: 467
                     y: 745
               Nest:
-                threshold: 130
+                threshold: 140
                 regions:
                   - points:
                     - x: 690

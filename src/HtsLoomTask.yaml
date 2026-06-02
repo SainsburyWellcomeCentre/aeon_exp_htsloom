@@ -8,6 +8,14 @@ zoneTriggers:
     timeInRegion: 0.5
     trigger:
       - ZoneTrigger1
+  - camera: CameraNorth
+    zoneId: 0
+    triggerProbability: 0.2
+    angleThreshold: 1.5
+    refractoryPeriod: 300
+    timeInRegion: 0.5
+    trigger:
+      - ZoneTrigger2
 looms:
   ScreenEast:
     Loom200:
@@ -134,12 +142,30 @@ looms:
       loomingColor: 0   
       
   ScreenNorth:
+     Loom100:
+      stopTriggers:
+        - Key2Event
+      startTriggers:
+        - Key2Event
+        - ZoneTrigger2
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.340
+      timeOnSet: 0.25
+      loomingColor: 0
      Loom1:
         stopTriggers:
           - Key1Event
         startTriggers:
-          - ZoneTrigger1
-          - Key1Event
+          - ZoneTrigger2
+          - Key2Event
         initialDelay: 01
         interPulseInterval: 0
         numberOfPulses: 05
@@ -209,6 +235,24 @@ looms:
         startSize: 1
         endSize: 0
   ScreenSouth:
+     Loom100:
+        stopTriggers:
+          - Key3Event
+        startTriggers:
+          - Key3Event
+          - ZoneTrigger2
+        initialDelay: 0
+        pulseDuration: 10
+        interPulseInterval: 0.5
+        numberOfPulses: 3
+        location:
+          x: 0
+          y: 0
+        startSize: 0.1
+        endSize: 2
+        animationDuration: 0.340
+        timeOnSet: 0.25
+        loomingColor: 0
      South11:
         stopTriggers:
           - Key1Event
