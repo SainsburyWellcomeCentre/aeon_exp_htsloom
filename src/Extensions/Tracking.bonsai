@@ -597,7 +597,7 @@
                   <cv:Y>-1</cv:Y>
                 </cv:Anchor>
                 <cv:Shape>Rectangle</cv:Shape>
-                <cv:Iterations>10</cv:Iterations>
+                <cv:Iterations>3</cv:Iterations>
                 <cv:Operation>Open</cv:Operation>
               </Combinator>
             </Expression>
