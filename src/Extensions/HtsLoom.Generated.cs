@@ -875,15 +875,12 @@ namespace HtsLoom
     
         private int _velocityThreshold;
     
-        private int _bufferLength;
-    
         private System.Collections.Generic.List<ZoneActivity> _zones;
     
         public HeadTailTracking()
         {
             _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
             _velocityThreshold = 10;
-            _bufferLength = 10;
         }
     
         protected HeadTailTracking(HeadTailTracking other) : 
@@ -891,7 +888,6 @@ namespace HtsLoom
         {
             _regionTracking = other._regionTracking;
             _velocityThreshold = other._velocityThreshold;
-            _bufferLength = other._bufferLength;
             _zones = other._zones;
         }
     
@@ -934,24 +930,6 @@ namespace HtsLoom
         }
     
         /// <summary>
-        /// The length of the buffer history, in frames, on which to compute velocity
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("bufferLength")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bufferLength")]
-        [System.ComponentModel.DescriptionAttribute("The length of the buffer history, in frames, on which to compute velocity")]
-        public int BufferLength
-        {
-            get
-            {
-                return _bufferLength;
-            }
-            set
-            {
-                _bufferLength = value;
-            }
-        }
-    
-        /// <summary>
         /// ZonesOfInterest
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -988,7 +966,6 @@ namespace HtsLoom
             }
             stringBuilder.Append("RegionTracking = " + _regionTracking + ", ");
             stringBuilder.Append("VelocityThreshold = " + _velocityThreshold + ", ");
-            stringBuilder.Append("BufferLength = " + _bufferLength + ", ");
             stringBuilder.Append("Zones = " + _zones);
             return true;
         }

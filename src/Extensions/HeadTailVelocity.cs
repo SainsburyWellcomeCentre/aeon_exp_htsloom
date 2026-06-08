@@ -5,79 +5,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using OpenCV.Net;
-/*
-[assembly:TypeVisualizer("Bonsai.Vision.Design.BinaryRegionExtremesVisualizer, Bonsai.Vision.Design", TargetType= typeof(Tuple<Point2f,Point2f>))]
-*/
+ 
 [Combinator]
-[Description("Creates a HeadTail data type from two points(region extremes) and a list of points (Centroids) used has history to calculate current velocity Tuple<Tuple<Point2f, Point2f>, IList<Point2f>>")]
+[Description("Creates a HeadTail data type from two region extremes and a centroid history used to compute current velocity.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
 [TypeVisualizer("Bonsai.Vision.Design.BinaryRegionExtremesVisualizer, Bonsai.Vision.Design")]
 public class HeadTailVelocity
 {
     public double VelocityThreshold { get; set; }
-  
+ 
+    static double Norm(Point2f v)
+    {
+        return Math.Sqrt(v.X * v.X + v.Y * v.Y);
+    }
+ 
+    static double Dot(Point2f a, Point2f b)
+    {
+        return a.X * b.X + a.Y * b.Y;
+    }
 
+    public IObservable<HeadTail> Process(IObservable<Tuple<Point2f, Point2f, IList<Point2f>, double>> source)
+    {
+        return ProcessCore(source);
+    }
     
-    double  Norm(Point2f value)
+    public IObservable<HeadTail> Process(IObservable<Tuple<Point2f, Point2f, IList<Point2f>, int>> source)
     {
-        return Math.Sqrt((value.X*value.X)+(value.Y*value.Y));
+        return ProcessCore(source.Select(value => Tuple.Create(value.Item1, value.Item2,value.Item3, (double)VelocityThreshold)));
     }
-    double  DotProduct(Point2f value1, Point2f value2)
+ 
+    public IObservable<HeadTail> Process(IObservable<Tuple<Point2f, Point2f, IList<Point2f>>> source)
     {
-        return (value1.X*value2.X)+(value1.Y*value2.Y);
+        return ProcessCore(source.Select(value => Tuple.Create(value.Item1, value.Item2,value.Item3, VelocityThreshold)));
     }
-    public IObservable<HeadTail> Process(IObservable<Tuple<Tuple<Point2f, Point2f>, IList<Point2f>>> source)
+ 
+    IObservable<HeadTail> ProcessCore(IObservable<Tuple<Point2f, Point2f, IList<Point2f>, double>> source)
     {
-        Point2f oldHead = new Point2f();
-        Point2f oldTail = new Point2f();
-        return source.Select(value => 
+        // Defer so each subscription gets its own oldHead/oldTail state.
+        return Observable.Defer(() =>
         {
-            Point2f head, tail;
-            var dist11 = Norm(value.Item1.Item1 - oldHead) + Norm(value.Item1.Item2 - oldTail);
-            var dist12 = Norm(value.Item1.Item1 - oldTail) + Norm(value.Item1.Item2 - oldHead);
-            
-            if(dist11<dist12 )
+            Point2f oldHead = new Point2f();
+            Point2f oldTail = new Point2f();
+            return source.Select(value =>
             {
-               head = value.Item1.Item1;
-               tail = value.Item1.Item2; 
-            }
-          
-            else //if(dist21>dist12 && dist21>dist11 && dist21>dist22)
-            {
-                head = value.Item1.Item2;
-                tail = value.Item1.Item1;
-            }
-            Point2f distance = new Point2f(0,0);
-            for(int i=1; i <value.Item2.Count; i++)
-            {
-                distance += value.Item2[i]-value.Item2[i-1];
-            }
-            var res = Norm(distance);
-            if (res > VelocityThreshold)
-            {
-                if(DotProduct(distance, head-tail)<0)
+                var p1 = value.Item1;
+                var p2 = value.Item2;
+                var centroids = value.Item3;
+                var threshold = value.Item4;
+ 
+                // Assign current extremes to head/tail by minimum total distance to previous frame.
+                Point2f head, tail;
+                if (Norm(p1 - oldHead) + Norm(p2 - oldTail) <
+                    Norm(p1 - oldTail) + Norm(p2 - oldHead))
                 {
-                    var tmp = head;
-                    head= tail;
-                    tail = tmp;
+                    head = p1; tail = p2;
                 }
-            }
-
-            //else
-            oldHead = head;
-            oldTail = tail;
-            var subtract = head-tail;
-            var heading = Math.Atan2(-subtract.Y,subtract.X);
-            return new HeadTail{Head = head, Tail= tail, Heading= heading, Centroid= value.Item2.Last(), Velocity = distance};
-            // var centerA = (value.Item1.Item1+value.Item1.Item2)*0.5f;
-            // //var ExtremeA2 = value.Item1.Item2;
-            // var centerB = (value.Item2.Item1+value.Item2.Item2)*0.5f;
-            // var originVector = centerB - centerA;
-            // var orientation = Math.Atan2(originVector.X,originVector.Y);
-            // return new Tuple<Point2f, Point2f>(centerA,centerB);
+                else
+                {
+                    head = p2; tail = p1;
+                }
+ 
+                // Net displacement across the centroid history.
+                var distance = new Point2f(0, 0);
+                for (int i = 1; i < centroids.Count; i++)
+                {
+                    distance += centroids[i] - centroids[i - 1];
+                }
+ 
+                // If motion is strong and points against head-tail, flip them.
+                if (Norm(distance) > threshold && Dot(distance, head - tail) < 0)
+                {
+                    var tmp = head; head = tail; tail = tmp;
+                }
+ 
+                oldHead = head;
+                oldTail = tail;
+ 
+                var d = head - tail;
+                return new HeadTail
+                {
+                    Head = head,
+                    Tail = tail,
+                    Heading = Math.Atan2(-d.Y, d.X),
+                    Centroid = centroids.Last(),
+                    Velocity = distance
+                };
+            });
         });
     }
 }
+ 
 public struct HeadTail
 {
     public Point2f Head;

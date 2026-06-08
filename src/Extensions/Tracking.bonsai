@@ -3,6 +3,7 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:aeon="clr-namespace:Aeon.Acquisition;assembly=Aeon.Acquisition"
                  xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
                  xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
@@ -41,8 +42,11 @@
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="rx:SelectMany">
-        <Name>CreateTrackers</Name>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Key</Selector>
+      </Expression>
+      <Expression xsi:type="aeon:CreateGroup">
+        <Name>BlobTracking</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
@@ -54,7 +58,360 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:AsyncSubject">
-              <Name>TrackingCameraSettings</Name>
+              <Name>TrackingCameraName</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigConfiguration</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Cameras</Selector>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TrackingCameraName</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Value" Selector="Item2" />
+              </PropertyMappings>
+              <Selector>Item1</Selector>
+            </Expression>
+            <Expression xsi:type="Index">
+              <Operand xsi:type="WorkflowProperty" TypeArguments="p1:CameraName">
+                <Value>CameraWest</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>CameraSettings</Name>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>CameraSettings</Name>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:SelectMany">
+                <Name>CreateTrackers</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>FrameEvents</Name>
+                    </Expression>
+                    <Expression xsi:type="rx:Condition">
+                      <Name>SelectedCamera</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Key</Selector>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>TrackingCameraName</Name>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:WithLatestFrom" />
+                          </Expression>
+                          <Expression xsi:type="Equal" />
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source1" />
+                          <Edge From="2" To="4" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                          <Edge From="5" To="6" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="Disable">
+                      <Builder xsi:type="Combinator">
+                        <Combinator xsi:type="rx:ObserveOn">
+                          <rx:Scheduler>TaskPoolScheduler</rx:Scheduler>
+                        </Combinator>
+                      </Builder>
+                    </Expression>
+                    <Expression xsi:type="rx:PublishSubject">
+                      <Name>CameraFrame</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>CameraFrame</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Value.Image</Selector>
+                    </Expression>
+                    <Expression xsi:type="rx:PublishSubject">
+                      <Name>CameraImage</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>CameraSettings</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Tracking</Selector>
+                    </Expression>
+                    <Expression xsi:type="p1:MatchTracking">
+                      <p1:Type xsi:type="TypeMapping" TypeArguments="p1:BlobTracking" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>RegionTracking</Selector>
+                    </Expression>
+                    <Expression xsi:type="p1:MatchTracking">
+                      <p1:Type xsi:type="TypeMapping" TypeArguments="p1:HeadTailTracking" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>RegionTracking</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Value</Selector>
+                    </Expression>
+                    <Expression xsi:type="rx:CreateObservable">
+                      <Name>MaskAndThreshold</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Take">
+                              <rx:Count>1</rx:Count>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>TrackingParameters</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>TrackingParameters</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Regions</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="p2:PointArrayConverter" />
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Take">
+                              <rx:Count>1</rx:Count>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="rx:AsyncSubject">
+                            <Name>Regions</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>CameraImage</Name>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>Regions</Name>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:WithLatestFrom" />
+                          </Expression>
+                          <Expression xsi:type="InputMapping">
+                            <PropertyMappings>
+                              <Property Name="Regions" Selector="Item2" />
+                            </PropertyMappings>
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="cv:MaskPolygon">
+                              <cv:Regions>
+                                <cv:ArrayOfPoint>
+                                  <cv:Point>
+                                    <cv:X>629</cv:X>
+                                    <cv:Y>868</cv:Y>
+                                  </cv:Point>
+                                  <cv:Point>
+                                    <cv:X>804</cv:X>
+                                    <cv:Y>865</cv:Y>
+                                  </cv:Point>
+                                  <cv:Point>
+                                    <cv:X>811</cv:X>
+                                    <cv:Y>893</cv:Y>
+                                  </cv:Point>
+                                  <cv:Point>
+                                    <cv:X>718</cv:X>
+                                    <cv:Y>964</cv:Y>
+                                  </cv:Point>
+                                  <cv:Point>
+                                    <cv:X>625</cv:X>
+                                    <cv:Y>888</cv:Y>
+                                  </cv:Point>
+                                </cv:ArrayOfPoint>
+                              </cv:Regions>
+                              <cv:MaskType>ToZero</cv:MaskType>
+                              <cv:FillValue>
+                                <cv:Val0>255</cv:Val0>
+                                <cv:Val1>0</cv:Val1>
+                                <cv:Val2>0</cv:Val2>
+                                <cv:Val3>0</cv:Val3>
+                              </cv:FillValue>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="SubscribeSubject">
+                            <Name>TrackingParameters</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Threshold</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:WithLatestFrom" />
+                          </Expression>
+                          <Expression xsi:type="InputMapping">
+                            <PropertyMappings>
+                              <Property Name="ThresholdValue" Selector="Item2" />
+                            </PropertyMappings>
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="cv:Threshold">
+                              <cv:ThresholdValue>130</cv:ThresholdValue>
+                              <cv:MaxValue>255</cv:MaxValue>
+                              <cv:ThresholdType>BinaryInv</cv:ThresholdType>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source1" />
+                          <Edge From="4" To="5" Label="Source1" />
+                          <Edge From="5" To="6" Label="Source1" />
+                          <Edge From="6" To="7" Label="Source1" />
+                          <Edge From="8" To="10" Label="Source1" />
+                          <Edge From="9" To="10" Label="Source2" />
+                          <Edge From="10" To="11" Label="Source1" />
+                          <Edge From="11" To="12" Label="Source1" />
+                          <Edge From="12" To="15" Label="Source1" />
+                          <Edge From="13" To="14" Label="Source1" />
+                          <Edge From="14" To="15" Label="Source2" />
+                          <Edge From="15" To="16" Label="Source1" />
+                          <Edge From="16" To="17" Label="Source1" />
+                          <Edge From="17" To="18" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Zip" />
+                    </Expression>
+                    <Expression xsi:type="Add" />
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="cv:MorphologicalOperator">
+                        <cv:Size>
+                          <cv:Width>4</cv:Width>
+                          <cv:Height>4</cv:Height>
+                        </cv:Size>
+                        <cv:Anchor>
+                          <cv:X>-1</cv:X>
+                          <cv:Y>-1</cv:Y>
+                        </cv:Anchor>
+                        <cv:Shape>Rectangle</cv:Shape>
+                        <cv:Iterations>10</cv:Iterations>
+                        <cv:Operation>Open</cv:Operation>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="cv:FindContours">
+                        <cv:Mode>External</cv:Mode>
+                        <cv:Method>ChainApproxSimple</cv:Method>
+                        <cv:Offset>
+                          <cv:X>0</cv:X>
+                          <cv:Y>0</cv:Y>
+                        </cv:Offset>
+                        <cv:MinArea>200</cv:MinArea>
+                        <cv:MaxArea xsi:nil="true" />
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="cv:SortBinaryRegions" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="p2:SelectTopComponent">
+                        <p2:MinArea>500</p2:MinArea>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>CameraImage</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Zip" />
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>CameraFrame</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Seconds</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Zip" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="harp:CreateTimestamped" />
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source1" />
+                    <Edge From="8" To="9" Label="Source1" />
+                    <Edge From="9" To="10" Label="Source1" />
+                    <Edge From="9" To="12" Label="Source1" />
+                    <Edge From="10" To="11" Label="Source1" />
+                    <Edge From="11" To="14" Label="Source1" />
+                    <Edge From="12" To="13" Label="Source1" />
+                    <Edge From="13" To="14" Label="Source2" />
+                    <Edge From="14" To="15" Label="Source1" />
+                    <Edge From="15" To="16" Label="Source1" />
+                    <Edge From="16" To="17" Label="Source1" />
+                    <Edge From="17" To="18" Label="Source1" />
+                    <Edge From="18" To="19" Label="Source1" />
+                    <Edge From="19" To="20" Label="Source1" />
+                    <Edge From="19" To="26" Label="Source3" />
+                    <Edge From="20" To="21" Label="Source1" />
+                    <Edge From="20" To="26" Label="Source2" />
+                    <Edge From="21" To="22" Label="Source1" />
+                    <Edge From="22" To="23" Label="Source1" />
+                    <Edge From="23" To="24" Label="Source1" />
+                    <Edge From="24" To="26" Label="Source1" />
+                    <Edge From="25" To="26" Label="Source4" />
+                    <Edge From="26" To="29" Label="Source1" />
+                    <Edge From="27" To="28" Label="Source1" />
+                    <Edge From="28" To="29" Label="Source2" />
+                    <Edge From="29" To="30" Label="Source1" />
+                    <Edge From="30" To="31" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="WorkflowOutput" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -73,10 +430,7 @@
                     <Selector>Item1</Selector>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TrackingCameraSettings</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Key</Selector>
+                    <Name>TrackingCameraName</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
@@ -87,11 +441,10 @@
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="5" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="2" To="4" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -101,11 +454,17 @@
             <Expression xsi:type="rx:PublishSubject">
               <Name>CameraFrame</Name>
             </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value.Image</Selector>
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>CameraImage</Name>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TrackingCameraSettings</Name>
+              <Name>CameraSettings</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Value.Tracking</Selector>
+              <Selector>Tracking</Selector>
             </Expression>
             <Expression xsi:type="p1:MatchTracking">
               <p1:Type xsi:type="TypeMapping" TypeArguments="p1:BlobTracking" />
@@ -120,7 +479,12 @@
               <Selector>RegionTracking</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Merge" />
+              <Combinator xsi:type="rx:Amb" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Merge" />
@@ -161,10 +525,7 @@
                     <Name>Regions</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>CameraFrame</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value.Image</Selector>
+                    <Name>CameraImage</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>Regions</Name>
@@ -172,85 +533,15 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Regions" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>Item1</Selector>
-                  </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:MaskPolygon">
-                      <cv:Regions>
-                        <cv:ArrayOfPoint>
-                          <cv:Point>
-                            <cv:X>62</cv:X>
-                            <cv:Y>412</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>139</cv:X>
-                            <cv:Y>287</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>302</cv:X>
-                            <cv:Y>285</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>400</cv:X>
-                            <cv:Y>140</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>563</cv:X>
-                            <cv:Y>137</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>639</cv:X>
-                            <cv:Y>184</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>848</cv:X>
-                            <cv:Y>194</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>855</cv:X>
-                            <cv:Y>50</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>915</cv:X>
-                            <cv:Y>155</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1081</cv:X>
-                            <cv:Y>165</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1167</cv:X>
-                            <cv:Y>320</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1325</cv:X>
-                            <cv:Y>327</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1367</cv:X>
-                            <cv:Y>408</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>707</cv:X>
-                            <cv:Y>1032</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>168</cv:X>
-                            <cv:Y>422</cv:Y>
-                          </cv:Point>
-                        </cv:ArrayOfPoint>
-                      </cv:Regions>
-                      <cv:MaskType>ToZero</cv:MaskType>
-                      <cv:FillValue>
-                        <cv:Val0>255</cv:Val0>
-                        <cv:Val1>0</cv:Val1>
-                        <cv:Val2>0</cv:Val2>
-                        <cv:Val3>0</cv:Val3>
-                      </cv:FillValue>
+                    <Combinator xsi:type="p2:MaskPolygon">
+                      <p2:MaskType>ToZero</p2:MaskType>
+                      <p2:FillValue>
+                        <p2:Val0>255</p2:Val0>
+                        <p2:Val1>0</p2:Val1>
+                        <p2:Val2>0</p2:Val2>
+                        <p2:Val3>0</p2:Val3>
+                      </p2:FillValue>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -262,17 +553,10 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="ThresholdValue" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>Item1</Selector>
-                  </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:Threshold">
-                      <cv:ThresholdValue>100</cv:ThresholdValue>
-                      <cv:MaxValue>255</cv:MaxValue>
-                      <cv:ThresholdType>BinaryInv</cv:ThresholdType>
+                    <Combinator xsi:type="p2:Threshold">
+                      <p2:MaxValue>255</p2:MaxValue>
+                      <p2:ThresholdType>BinaryInv</p2:ThresholdType>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -284,17 +568,14 @@
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="11" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="14" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="16" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source2" />
                   <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source2" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -302,6 +583,9 @@
               <Combinator xsi:type="rx:Zip" />
             </Expression>
             <Expression xsi:type="Add" />
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Iterations" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:MorphologicalOperator">
                 <cv:Size>
@@ -313,7 +597,7 @@
                   <cv:Y>-1</cv:Y>
                 </cv:Anchor>
                 <cv:Shape>Rectangle</cv:Shape>
-                <cv:Iterations>1</cv:Iterations>
+                <cv:Iterations>3</cv:Iterations>
                 <cv:Operation>Open</cv:Operation>
               </Combinator>
             </Expression>
@@ -325,7 +609,7 @@
                   <cv:X>0</cv:X>
                   <cv:Y>0</cv:Y>
                 </cv:Offset>
-                <cv:MinArea>10</cv:MinArea>
+                <cv:MinArea>20</cv:MinArea>
                 <cv:MaxArea xsi:nil="true" />
               </Combinator>
             </Expression>
@@ -334,6 +618,14 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:SortBinaryRegions" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:SelectTopComponent">
+                <p2:MinArea>100</p2:MinArea>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>CameraFrame</Name>
@@ -347,53 +639,54 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="harp:CreateTimestamped" />
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TrackingCameraSettings</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Key</Selector>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
-            </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="4" To="6" Label="Source1" />
+            <Edge From="5" To="6" Label="Source2" />
+            <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="8" To="11" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="13" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source2" />
-            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="25" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="29" Label="Source1" />
+            <Edge From="21" To="24" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="26" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source2" />
+            <Edge From="26" To="27" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source2" />
+            <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="34" Label="Source1" />
+            <Edge From="32" To="39" Label="Source3" />
+            <Edge From="33" To="34" Label="Source2" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="34" To="39" Label="Source2" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="42" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="41" To="42" Label="Source2" />
+            <Edge From="42" To="43" Label="Source1" />
+            <Edge From="43" To="44" Label="Source1" />
           </Edges>
         </Workflow>
-      </Expression>
-      <Expression xsi:type="rx:GroupBy">
-        <rx:KeySelector>Item2</rx:KeySelector>
-        <rx:ElementSelector>Item1</rx:ElementSelector>
       </Expression>
       <Expression xsi:type="rx:ReplaySubject">
         <Name>TrackingEvents</Name>

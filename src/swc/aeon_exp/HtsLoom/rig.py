@@ -1,7 +1,8 @@
 from enum import StrEnum
 from typing import Any, Literal, Dict, List, Optional, Union
 from typing_extensions import Annotated, TypeAliasType
-from swc.aeon.schema import BaseSchema
+from swc.aeon.io.reader import Video, Position, Harp
+from swc.aeon.schema import BaseSchema, Dataset, data_reader
 from swc.aeon.schema.video import SpinnakerCamera
 from swc.aeon.schema.foraging import UndergroundFeeder
 from swc.aeon.schema.environment import WeightScale as WeightScaleBase
@@ -86,16 +87,60 @@ class ZoneActivity(BaseSchema):
 
 class HeadTailTracking(BlobTracking):
     velocity_threshold : int = Field(default = 10, description = "Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject") # TODO: Update to generic (mm) vs camera (pixels) units
-    buffer_length : int = Field(default = 10, description = "The length of the buffer history, in frames, on which to compute velocity")
     Zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")
 
 Tracking = TypeAliasType ('Tracking', Annotated[Union[HeadTailTracking, BlobTracking], Field(discriminator="tracking_type")])
+
+class Kinematics(Harp):
+    """Head-tail kinematics data logged at HARP register 201.
+
+    Columns (all float32):
+        id                          : subject / blob index
+        centroid_x, centroid_y      : body centroid in image pixels
+        head_x, head_y              : head position
+        tail_x, tail_y              : tail position
+        velocity_x, velocity_y      : instantaneous velocity (pixels/frame)
+        heading                     : heading angle in radians
+        blob_centroid_x/y           : connected-component centroid
+        orientation                 : blob major-axis orientation (radians)
+        major_axis_length           : blob major axis (pixels)
+        minor_axis_length           : blob minor axis (pixels)
+        area                        : blob area (pixels²)
+    """
+
+    def __init__(self, pattern: str):
+        super().__init__(pattern, columns=(
+            "id",
+            "centroid_x", "centroid_y",
+            "head_x", "head_y",
+            "tail_x", "tail_y",
+            "velocity_x", "velocity_y",
+            "heading",
+            "blob_centroid_x", "blob_centroid_y",
+            "orientation", "major_axis_length", "minor_axis_length", "area",
+        ))
 
 class Camera(SpinnakerCamera):
     trigger: TriggerName = Field(default=TriggerName.TRIGGER0, description="The name of the trigger.")
     # tracking:  Annotated[Union[HeadTailTracking, Tracking], Field(discriminator="tracking_type")] | None = 
     tracking: Tracking | None =  Field(default=None, description="Tracking Parameters.") 
     zones: List[ZoneActivity] | None = Field(default=None, description="ZonesOfInterest")
+
+    @data_reader
+    def video(self, pattern) -> Video:
+        return Video(f"{pattern}_*")
+
+    @data_reader
+    def position(self, pattern) -> Position:
+        if self.tracking is None:
+            raise ValueError(f"No tracking is defined for camera {pattern}.")
+        return Position(f"{pattern}_200_*")
+
+    @data_reader
+    def kinematics(self, pattern) -> Position:
+        if not isinstance(self.tracking, HeadTailTracking):
+            raise ValueError(f"No head tail tracking is defined for camera {pattern}.")
+        return Kinematics(f"{pattern}_201_*")
 
 
 class LightCycle(BaseSchema):
@@ -105,6 +150,16 @@ class LightCycle(BaseSchema):
     config_file_name: str = Field(default="lightcycle.config", description="The name of the CSV file describing the light model, where each row represents one whole minute and the red, cold white and warm white, light levels set for that minute.")
 
 class Rig(BaseSchema):
+    def _join_pattern_prefix(self, pattern_prefix: str) -> str:
+        """Override the BaseSchema hook so Rig stays transparent.
+
+        Rig is a structural grouping container, so its name must not be
+        injected into the flat data-file patterns (e.g. CameraNorth_201_*,
+        not Rig/CameraNorth_201_*). We pass the child prefix through
+        unchanged instead of replacing it with the container name.
+        """
+        return pattern_prefix
+
     clock_synchronizer: HarpTimestampGeneratorGen3
     input_expander: HarpInputExpander
     camera_synchronizer: CameraController

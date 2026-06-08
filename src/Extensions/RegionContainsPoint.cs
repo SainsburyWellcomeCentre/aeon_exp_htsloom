@@ -36,18 +36,6 @@ using System.Runtime.InteropServices;
 
         public IObservable<Timestamped<bool>> Process(IObservable<Timestamped<Point2f>> source)
         {
-            // var points = Regions.SelectMany(region => region.SelectMany(point => new Point(point.X, point.Y))).ToArray();
-            // .SelectMany(region => region)
-            // .SelectMany(point => new[] { point.X, point.Y })
-            // .ToArray();
-            // Console.WriteLine("Here");
-            // var points = Regions.ToObservable() // Convert outer array to observable sequence
-            //     .Select(innerArray =>
-            //         innerArray.ToArray() // Clone inner array (shallow copy of elements)
-            //     )
-            //     .ToArray() // Convert back to array of arrays
-            //     .Wait();   // Wait for observable to complete and get result
-            // Console.WriteLine("Here2");
             var points = new Point[(Regions.Length)][];
             var index =0;
             foreach (var setOfPoints in Regions)
