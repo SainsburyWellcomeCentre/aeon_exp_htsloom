@@ -8,7 +8,11 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ScreenConfiguration.bonsai">
         <DisplayDevice>First</DisplayDevice>
         <Textures />
-        <BackGroundColor>0.21</BackGroundColor>
+        <LowerSeconds>60</LowerSeconds>
+        <UpperSeconds>90</UpperSeconds>
+        <BackGroundColorLowerValue>0.49</BackGroundColorLowerValue>
+        <DueTime>PT1S</DueTime>
+        <BackGroundColorHighValue>0.5</BackGroundColorHighValue>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoomActionsNetwork.bonsai" />
       <Expression xsi:type="SubscribeSubject">
