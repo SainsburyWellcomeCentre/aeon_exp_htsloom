@@ -27,15 +27,15 @@ looms:
       initialDelay: 0
       pulseDuration: 10
       interPulseInterval: 0.5
-      numberOfPulses: 3
+      numberOfPulses: 1
       location:
         x: 0
         y: 0
-      startSize: 0.1
-      endSize: 2
-      animationDuration: 0.17
-      timeOnSet: 0.25
-      loomingColor: 0
+      startSize: 50
+      endSize: 50
+      animationDuration: 0.016
+      timeOnSet: 0.016
+      loomingColor: 0.4
     Loom150:
       stopTriggers:
         - Key1Event
@@ -162,7 +162,7 @@ looms:
       loomingColor: 0
      Loom1:
         stopTriggers:
-          - Key1Event
+          - Key3Event
         startTriggers:
           - ZoneTrigger2
           - Key2Event
@@ -173,7 +173,7 @@ looms:
         location:
           x: 0
           y: 0
-        startSize: 0
+        startSize: 0.1
         endSize: 2
         loomingColor: 0.5
         timeOnSet: 1
