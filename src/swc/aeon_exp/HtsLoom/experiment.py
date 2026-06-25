@@ -4,6 +4,7 @@ from swc.aeon.schema import Experiment as ExperimentBase, BaseSchema
 
 from swc.aeon_exp.htsloom.rig import Rig
 from swc.aeon_exp.htsloom.task import Task
+from swc.aeon_exp.htsloom.controller import ForagingController
 
 
 class Experiment(ExperimentBase):
@@ -22,6 +23,7 @@ class Experiment(ExperimentBase):
 
 class HtsLoom(BaseSchema):
     experiment: Experiment|None = None
+    foraging_controller: ForagingController|None = None
 
 def main():
     schema = HtsLoom.model_json_schema(union_format="primitive_type_array")

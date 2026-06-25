@@ -490,57 +490,61 @@ namespace HtsLoom
     public enum EventName
     {
     
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="None")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="None")]
+        None = 0,
+    
         [System.Runtime.Serialization.EnumMemberAttribute(Value="StimulusEnded")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="StimulusEnded")]
-        StimulusEnded = 0,
+        StimulusEnded = 1,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key1Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key1Event")]
-        Key1Event = 1,
+        Key1Event = 2,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key2Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key2Event")]
-        Key2Event = 2,
+        Key2Event = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key3Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key3Event")]
-        Key3Event = 3,
+        Key3Event = 4,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key4Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key4Event")]
-        Key4Event = 4,
+        Key4Event = 5,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskStimStart")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskStimStart")]
-        TaskStimStart = 5,
+        TaskStimStart = 6,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskStimStop")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskStimStop")]
-        TaskStimStop = 6,
+        TaskStimStop = 7,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskReward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskReward")]
-        TaskReward = 7,
+        TaskReward = 8,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger1")]
-        ZoneTrigger1 = 8,
+        ZoneTrigger1 = 9,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger2")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger2")]
-        ZoneTrigger2 = 9,
+        ZoneTrigger2 = 10,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger3")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger3")]
-        ZoneTrigger3 = 10,
+        ZoneTrigger3 = 11,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger4")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger4")]
-        ZoneTrigger4 = 11,
+        ZoneTrigger4 = 12,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger5")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger5")]
-        ZoneTrigger5 = 12,
+        ZoneTrigger5 = 13,
     }
 
 
@@ -695,6 +699,364 @@ namespace HtsLoom
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class FeederABCMetaController
+    {
+    
+        private string _startState;
+    
+        private System.Collections.Generic.Dictionary<string, FeederABCMetaState> _metaStates;
+    
+        public FeederABCMetaController()
+        {
+            _metaStates = new System.Collections.Generic.Dictionary<string, FeederABCMetaState>();
+        }
+    
+        protected FeederABCMetaController(FeederABCMetaController other)
+        {
+            _startState = other._startState;
+            _metaStates = other._metaStates;
+        }
+    
+        /// <summary>
+        /// The name of the starting meta-state.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("startState", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startState")]
+        [System.ComponentModel.DescriptionAttribute("The name of the starting meta-state.")]
+        public string StartState
+        {
+            get
+            {
+                return _startState;
+            }
+            set
+            {
+                _startState = value;
+            }
+        }
+    
+        /// <summary>
+        /// The set of meta-states in this meta controller.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("metaStates", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metaStates")]
+        [System.ComponentModel.DescriptionAttribute("The set of meta-states in this meta controller.")]
+        public System.Collections.Generic.Dictionary<string, FeederABCMetaState> MetaStates
+        {
+            get
+            {
+                return _metaStates;
+            }
+            set
+            {
+                _metaStates = value;
+            }
+        }
+    
+        public System.IObservable<FeederABCMetaController> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FeederABCMetaController(this)));
+        }
+    
+        public System.IObservable<FeederABCMetaController> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new FeederABCMetaController(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("StartState = " + _startState + ", ");
+            stringBuilder.Append("MetaStates = " + _metaStates);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class FeederABCMetaState
+    {
+    
+        private string _stateFile;
+    
+        private System.Collections.Generic.List<FeederABCTransition> _transitions;
+    
+        public FeederABCMetaState()
+        {
+            _transitions = new System.Collections.Generic.List<FeederABCTransition>();
+        }
+    
+        protected FeederABCMetaState(FeederABCMetaState other)
+        {
+            _stateFile = other._stateFile;
+            _transitions = other._transitions;
+        }
+    
+        /// <summary>
+        /// The path to the YML or JSON file describing the foraging state controller to use in this meta-state.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("stateFile", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="stateFile")]
+        [System.ComponentModel.DescriptionAttribute("The path to the YML or JSON file describing the foraging state controller to use " +
+            "in this meta-state.")]
+        public string StateFile
+        {
+            get
+            {
+                return _stateFile;
+            }
+            set
+            {
+                _stateFile = value;
+            }
+        }
+    
+        /// <summary>
+        /// The set of transitions from this meta-state.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("transitions", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="transitions")]
+        [System.ComponentModel.DescriptionAttribute("The set of transitions from this meta-state.")]
+        public System.Collections.Generic.List<FeederABCTransition> Transitions
+        {
+            get
+            {
+                return _transitions;
+            }
+            set
+            {
+                _transitions = value;
+            }
+        }
+    
+        public System.IObservable<FeederABCMetaState> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FeederABCMetaState(this)));
+        }
+    
+        public System.IObservable<FeederABCMetaState> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new FeederABCMetaState(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("StateFile = " + _stateFile + ", ");
+            stringBuilder.Append("Transitions = " + _transitions);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class FeederABCTransition
+    {
+    
+        private string _targetState;
+    
+        private System.TimeSpan _activationInterval;
+    
+        private int _activationRewards;
+    
+        private EventName _activationEvent;
+    
+        private int _activationTransitions;
+    
+        public FeederABCTransition()
+        {
+            _activationRewards = 0;
+            _activationEvent = EventName.None;
+            _activationTransitions = 0;
+        }
+    
+        protected FeederABCTransition(FeederABCTransition other)
+        {
+            _targetState = other._targetState;
+            _activationInterval = other._activationInterval;
+            _activationRewards = other._activationRewards;
+            _activationEvent = other._activationEvent;
+            _activationTransitions = other._activationTransitions;
+        }
+    
+        /// <summary>
+        /// The name of the target meta-state.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("targetState", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="targetState")]
+        [System.ComponentModel.DescriptionAttribute("The name of the target meta-state.")]
+        public string TargetState
+        {
+            get
+            {
+                return _targetState;
+            }
+            set
+            {
+                _targetState = value;
+            }
+        }
+    
+        /// <summary>
+        /// The time from meta-state start until this transition is activated.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("activationInterval")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="activationInterval")]
+        [System.ComponentModel.DescriptionAttribute("The time from meta-state start until this transition is activated.")]
+        public System.TimeSpan ActivationInterval
+        {
+            get
+            {
+                return _activationInterval;
+            }
+            set
+            {
+                _activationInterval = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlIgnoreAttribute()]
+        [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.Xml.Serialization.XmlElementAttribute("ActivationInterval")]
+        public string ActivationIntervalXml
+        {
+            get
+            {
+                return System.Xml.XmlConvert.ToString(_activationInterval);
+            }
+            set
+            {
+                _activationInterval = System.Xml.XmlConvert.ToTimeSpan(value);
+            }
+        }
+    
+        /// <summary>
+        /// The minimum number of delivered rewards from meta-state start for this transition to be activated.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("activationRewards")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="activationRewards")]
+        [System.ComponentModel.DescriptionAttribute("The minimum number of delivered rewards from meta-state start for this transition" +
+            " to be activated.")]
+        public int ActivationRewards
+        {
+            get
+            {
+                return _activationRewards;
+            }
+            set
+            {
+                _activationRewards = value;
+            }
+        }
+    
+        /// <summary>
+        /// A manual event which must be triggered for this transition to be activated.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("activationEvent")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="activationEvent")]
+        [System.ComponentModel.DescriptionAttribute("A manual event which must be triggered for this transition to be activated.")]
+        public EventName ActivationEvent
+        {
+            get
+            {
+                return _activationEvent;
+            }
+            set
+            {
+                _activationEvent = value;
+            }
+        }
+    
+        /// <summary>
+        /// The minimum number of foraging state transitions from meta-state start for this transition to be activated.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("activationTransitions")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="activationTransitions")]
+        [System.ComponentModel.DescriptionAttribute("The minimum number of foraging state transitions from meta-state start for this t" +
+            "ransition to be activated.")]
+        public int ActivationTransitions
+        {
+            get
+            {
+                return _activationTransitions;
+            }
+            set
+            {
+                _activationTransitions = value;
+            }
+        }
+    
+        public System.IObservable<FeederABCTransition> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FeederABCTransition(this)));
+        }
+    
+        public System.IObservable<FeederABCTransition> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new FeederABCTransition(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("TargetState = " + _targetState + ", ");
+            stringBuilder.Append("ActivationInterval = " + _activationInterval + ", ");
+            stringBuilder.Append("ActivationRewards = " + _activationRewards + ", ");
+            stringBuilder.Append("ActivationEvent = " + _activationEvent + ", ");
+            stringBuilder.Append("ActivationTransitions = " + _activationTransitions);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum FeederName
     {
@@ -722,6 +1084,164 @@ namespace HtsLoom
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder6")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder6")]
         Feeder6 = 5,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class ForagingController
+    {
+    
+        private string _startState;
+    
+        private System.Collections.Generic.Dictionary<string, ForagingState> _states;
+    
+        public ForagingController()
+        {
+            _states = new System.Collections.Generic.Dictionary<string, ForagingState>();
+        }
+    
+        protected ForagingController(ForagingController other)
+        {
+            _startState = other._startState;
+            _states = other._states;
+        }
+    
+        /// <summary>
+        /// The name of the start state.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("startState", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="startState")]
+        [System.ComponentModel.DescriptionAttribute("The name of the start state.")]
+        public string StartState
+        {
+            get
+            {
+                return _startState;
+            }
+            set
+            {
+                _startState = value;
+            }
+        }
+    
+        /// <summary>
+        /// The set of all possible foraging states.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("states", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="states")]
+        [System.ComponentModel.DescriptionAttribute("The set of all possible foraging states.")]
+        public System.Collections.Generic.Dictionary<string, ForagingState> States
+        {
+            get
+            {
+                return _states;
+            }
+            set
+            {
+                _states = value;
+            }
+        }
+    
+        public System.IObservable<ForagingController> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ForagingController(this)));
+        }
+    
+        public System.IObservable<ForagingController> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ForagingController(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("StartState = " + _startState + ", ");
+            stringBuilder.Append("States = " + _states);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class ForagingState
+    {
+    
+        private System.Collections.Generic.Dictionary<FeederName, PatchState> _patchStates;
+    
+        public ForagingState()
+        {
+            _patchStates = new System.Collections.Generic.Dictionary<FeederName, PatchState>();
+        }
+    
+        protected ForagingState(ForagingState other)
+        {
+            _patchStates = other._patchStates;
+        }
+    
+        /// <summary>
+        /// Specifies the state of every foraging patch in the habitat.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("patchStates", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="patchStates")]
+        [System.ComponentModel.DescriptionAttribute("Specifies the state of every foraging patch in the habitat.")]
+        public System.Collections.Generic.Dictionary<FeederName, PatchState> PatchStates
+        {
+            get
+            {
+                return _patchStates;
+            }
+            set
+            {
+                _patchStates = value;
+            }
+        }
+    
+        public System.IObservable<ForagingState> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ForagingState(this)));
+        }
+    
+        public System.IObservable<ForagingState> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new ForagingState(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("PatchStates = " + _patchStates);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
     }
 
 
@@ -1429,6 +1949,354 @@ namespace HtsLoom
 
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum PatchBehavior
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Reward")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Reward")]
+        Reward = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Inactive")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Inactive")]
+        Inactive = 1,
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchLed
+    {
+    
+        private bool _active;
+    
+        private System.TimeSpan _offDelay;
+    
+        public PatchLed()
+        {
+            _active = false;
+        }
+    
+        protected PatchLed(PatchLed other)
+        {
+            _active = other._active;
+            _offDelay = other._offDelay;
+        }
+    
+        /// <summary>
+        /// Indicates whether the LED should turn ON whenever the wheel is active?
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("active")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="active")]
+        [System.ComponentModel.DescriptionAttribute("Indicates whether the LED should turn ON whenever the wheel is active?")]
+        public bool Active
+        {
+            get
+            {
+                return _active;
+            }
+            set
+            {
+                _active = value;
+            }
+        }
+    
+        /// <summary>
+        /// The time to turn off LED after reward.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("offDelay")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="offDelay")]
+        [System.ComponentModel.DescriptionAttribute("The time to turn off LED after reward.")]
+        public System.TimeSpan OffDelay
+        {
+            get
+            {
+                return _offDelay;
+            }
+            set
+            {
+                _offDelay = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlIgnoreAttribute()]
+        [System.ComponentModel.BrowsableAttribute(false)]
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.Xml.Serialization.XmlElementAttribute("OffDelay")]
+        public string OffDelayXml
+        {
+            get
+            {
+                return System.Xml.XmlConvert.ToString(_offDelay);
+            }
+            set
+            {
+                _offDelay = System.Xml.XmlConvert.ToTimeSpan(value);
+            }
+        }
+    
+        public System.IObservable<PatchLed> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchLed(this)));
+        }
+    
+        public System.IObservable<PatchLed> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchLed(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Active = " + _active + ", ");
+            stringBuilder.Append("OffDelay = " + _offDelay);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchRewardRule
+    {
+    
+        private double _inactivityTimeout;
+    
+        private double _distanceThreshold;
+    
+        private string _nextState;
+    
+        public PatchRewardRule()
+        {
+        }
+    
+        protected PatchRewardRule(PatchRewardRule other)
+        {
+            _inactivityTimeout = other._inactivityTimeout;
+            _distanceThreshold = other._distanceThreshold;
+            _nextState = other._nextState;
+        }
+    
+        /// <summary>
+        /// The amount of time, in seconds, after which the travelled distance will be reset if there is no motion.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("inactivityTimeout", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inactivityTimeout")]
+        [System.ComponentModel.DescriptionAttribute("The amount of time, in seconds, after which the travelled distance will be reset " +
+            "if there is no motion.")]
+        public double InactivityTimeout
+        {
+            get
+            {
+                return _inactivityTimeout;
+            }
+            set
+            {
+                _inactivityTimeout = value;
+            }
+        }
+    
+        /// <summary>
+        /// The distance which must be travelled on the wheel to receive the next reward.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("distanceThreshold", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="distanceThreshold")]
+        [System.ComponentModel.DescriptionAttribute("The distance which must be travelled on the wheel to receive the next reward.")]
+        public double DistanceThreshold
+        {
+            get
+            {
+                return _distanceThreshold;
+            }
+            set
+            {
+                _distanceThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// The state which will be loaded after the next reward is delivered.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("nextState", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="nextState")]
+        [System.ComponentModel.DescriptionAttribute("The state which will be loaded after the next reward is delivered.")]
+        public string NextState
+        {
+            get
+            {
+                return _nextState;
+            }
+            set
+            {
+                _nextState = value;
+            }
+        }
+    
+        public System.IObservable<PatchRewardRule> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchRewardRule(this)));
+        }
+    
+        public System.IObservable<PatchRewardRule> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchRewardRule(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("InactivityTimeout = " + _inactivityTimeout + ", ");
+            stringBuilder.Append("DistanceThreshold = " + _distanceThreshold + ", ");
+            stringBuilder.Append("NextState = " + _nextState);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    [Bonsai.CombinatorAttribute(MethodName="Generate")]
+    public partial class PatchState
+    {
+    
+        private PatchBehavior _behavior;
+    
+        private PatchRewardRule _rewardRule;
+    
+        private PatchLed _led;
+    
+        public PatchState()
+        {
+            _behavior = PatchBehavior.Reward;
+            _rewardRule = new PatchRewardRule();
+            _led = new PatchLed();
+        }
+    
+        protected PatchState(PatchState other)
+        {
+            _behavior = other._behavior;
+            _rewardRule = other._rewardRule;
+            _led = other._led;
+        }
+    
+        /// <summary>
+        /// The running state of the patch.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("behavior")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior")]
+        [System.ComponentModel.DescriptionAttribute("The running state of the patch.")]
+        public PatchBehavior Behavior
+        {
+            get
+            {
+                return _behavior;
+            }
+            set
+            {
+                _behavior = value;
+            }
+        }
+    
+        /// <summary>
+        /// Specifies the reward rule for the patch.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rewardRule", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardRule")]
+        [System.ComponentModel.DescriptionAttribute("Specifies the reward rule for the patch.")]
+        public PatchRewardRule RewardRule
+        {
+            get
+            {
+                return _rewardRule;
+            }
+            set
+            {
+                _rewardRule = value;
+            }
+        }
+    
+        /// <summary>
+        /// Specifies the LED rule for the patch.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("led", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="led")]
+        [System.ComponentModel.DescriptionAttribute("Specifies the LED rule for the patch.")]
+        public PatchLed Led
+        {
+            get
+            {
+                return _led;
+            }
+            set
+            {
+                _led = value;
+            }
+        }
+    
+        public System.IObservable<PatchState> Generate()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchState(this)));
+        }
+    
+        public System.IObservable<PatchState> Generate<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new PatchState(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("Behavior = " + _behavior + ", ");
+            stringBuilder.Append("RewardRule = " + _rewardRule + ", ");
+            stringBuilder.Append("Led = " + _led);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Point
@@ -1997,11 +2865,14 @@ namespace HtsLoom
     
         private System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> _looms;
     
+        private FeederABCMetaController _feederTask;
+    
         public Task()
         {
             _backgroundColor = new System.Collections.Generic.Dictionary<ScreenName, double>();
             _zoneTriggers = new System.Collections.Generic.List<ZoneTrigger>();
             _looms = new System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>>();
+            _feederTask = new FeederABCMetaController();
         }
     
         protected Task(Task other)
@@ -2009,6 +2880,7 @@ namespace HtsLoom
             _backgroundColor = other._backgroundColor;
             _zoneTriggers = other._zoneTriggers;
             _looms = other._looms;
+            _feederTask = other._feederTask;
         }
     
         /// <summary>
@@ -2068,6 +2940,25 @@ namespace HtsLoom
             }
         }
     
+        /// <summary>
+        /// The feeder ABC task
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("feederTask", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="feederTask")]
+        [System.ComponentModel.DescriptionAttribute("The feeder ABC task")]
+        public FeederABCMetaController FeederTask
+        {
+            get
+            {
+                return _feederTask;
+            }
+            set
+            {
+                _feederTask = value;
+            }
+        }
+    
         public System.IObservable<Task> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Task(this)));
@@ -2082,7 +2973,8 @@ namespace HtsLoom
         {
             stringBuilder.Append("BackgroundColor = " + _backgroundColor + ", ");
             stringBuilder.Append("ZoneTriggers = " + _zoneTriggers + ", ");
-            stringBuilder.Append("Looms = " + _looms);
+            stringBuilder.Append("Looms = " + _looms + ", ");
+            stringBuilder.Append("FeederTask = " + _feederTask);
             return true;
         }
     
@@ -2932,6 +3824,31 @@ namespace HtsLoom
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<FeederABCMetaController> source)
+        {
+            return Process<FeederABCMetaController>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<FeederABCMetaState> source)
+        {
+            return Process<FeederABCMetaState>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<FeederABCTransition> source)
+        {
+            return Process<FeederABCTransition>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ForagingController> source)
+        {
+            return Process<ForagingController>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ForagingState> source)
+        {
+            return Process<ForagingState>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpInputExpander> source)
         {
             return Process<HarpInputExpander>(source);
@@ -2955,6 +3872,21 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<LoomingPresentationParameters> source)
         {
             return Process<LoomingPresentationParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchLed> source)
+        {
+            return Process<PatchLed>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchRewardRule> source)
+        {
+            return Process<PatchRewardRule>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchState> source)
+        {
+            return Process<PatchState>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Point> source)
@@ -3026,11 +3958,19 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FeederABCMetaController>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FeederABCMetaState>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FeederABCTransition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingController>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingState>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpInputExpander>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoomingPresentationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchLed>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardRule>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchState>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RegionsTrackingParameters>))]
@@ -3227,6 +4167,31 @@ namespace HtsLoom
             return Process<Experiment>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<FeederABCMetaController> source)
+        {
+            return Process<FeederABCMetaController>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<FeederABCMetaState> source)
+        {
+            return Process<FeederABCMetaState>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<FeederABCTransition> source)
+        {
+            return Process<FeederABCTransition>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ForagingController> source)
+        {
+            return Process<ForagingController>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ForagingState> source)
+        {
+            return Process<ForagingState>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpInputExpander> source)
         {
             return Process<HarpInputExpander>(source);
@@ -3250,6 +4215,21 @@ namespace HtsLoom
         public System.IObservable<string> Process(System.IObservable<LoomingPresentationParameters> source)
         {
             return Process<LoomingPresentationParameters>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchLed> source)
+        {
+            return Process<PatchLed>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchRewardRule> source)
+        {
+            return Process<PatchRewardRule>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<PatchState> source)
+        {
+            return Process<PatchState>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Point> source)
@@ -3321,11 +4301,19 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraController>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerTrigger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Experiment>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FeederABCMetaController>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FeederABCMetaState>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<FeederABCTransition>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingController>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ForagingState>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpInputExpander>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpTimestampGeneratorGen3>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LightCycle>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoomingPresentationParameters>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchLed>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchRewardRule>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PatchState>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Polygon>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RegionsTrackingParameters>))]

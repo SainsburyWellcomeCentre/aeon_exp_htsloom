@@ -157,6 +157,7 @@
     },
     "EventName": {
       "enum": [
+        "None",
         "StimulusEnded",
         "Key1Event",
         "Key2Event",
@@ -208,6 +209,94 @@
       "title": "Experiment",
       "type": "object"
     },
+    "FeederABCMetaController": {
+      "properties": {
+        "startState": {
+          "description": "The name of the starting meta-state.",
+          "title": "StartState",
+          "type": "string"
+        },
+        "metaStates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/FeederABCMetaState"
+          },
+          "description": "The set of meta-states in this meta controller.",
+          "title": "MetaStates",
+          "type": "object"
+        }
+      },
+      "required": [
+        "startState",
+        "metaStates"
+      ],
+      "title": "FeederABCMetaController",
+      "type": "object"
+    },
+    "FeederABCMetaState": {
+      "properties": {
+        "stateFile": {
+          "description": "The path to the YML or JSON file describing the foraging state controller to use in this meta-state.",
+          "format": "path",
+          "title": "StateFile",
+          "type": [
+            "string"
+          ]
+        },
+        "transitions": {
+          "description": "The set of transitions from this meta-state.",
+          "items": {
+            "$ref": "#/$defs/FeederABCTransition"
+          },
+          "title": "Transitions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "stateFile",
+        "transitions"
+      ],
+      "title": "FeederABCMetaState",
+      "type": "object"
+    },
+    "FeederABCTransition": {
+      "properties": {
+        "targetState": {
+          "description": "The name of the target meta-state.",
+          "title": "TargetState",
+          "type": "string"
+        },
+        "activationInterval": {
+          "default": "PT0S",
+          "description": "The time from meta-state start until this transition is activated.",
+          "format": "duration",
+          "title": "ActivationInterval",
+          "type": "string"
+        },
+        "activationRewards": {
+          "default": 0,
+          "description": "The minimum number of delivered rewards from meta-state start for this transition to be activated.",
+          "title": "ActivationRewards",
+          "type": "integer"
+        },
+        "activationEvent": {
+          "$ref": "#/$defs/EventName",
+          "default": "None",
+          "description": "A manual event which must be triggered for this transition to be activated.",
+          "title": "ActivationEvent"
+        },
+        "activationTransitions": {
+          "default": 0,
+          "description": "The minimum number of foraging state transitions from meta-state start for this transition to be activated.",
+          "title": "ActivationTransitions",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "targetState"
+      ],
+      "title": "FeederABCTransition",
+      "type": "object"
+    },
     "FeederName": {
       "enum": [
         "Feeder1",
@@ -219,6 +308,49 @@
       ],
       "title": "FeederName",
       "type": "string"
+    },
+    "ForagingController": {
+      "properties": {
+        "startState": {
+          "description": "The name of the start state.",
+          "title": "StartState",
+          "type": "string"
+        },
+        "states": {
+          "additionalProperties": {
+            "$ref": "#/$defs/ForagingState"
+          },
+          "description": "The set of all possible foraging states.",
+          "title": "States",
+          "type": "object"
+        }
+      },
+      "required": [
+        "startState",
+        "states"
+      ],
+      "title": "ForagingController",
+      "type": "object"
+    },
+    "ForagingState": {
+      "properties": {
+        "patchStates": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PatchState"
+          },
+          "description": "Specifies the state of every foraging patch in the habitat.",
+          "propertyNames": {
+            "$ref": "#/$defs/FeederName"
+          },
+          "title": "PatchStates",
+          "type": "object"
+        }
+      },
+      "required": [
+        "patchStates"
+      ],
+      "title": "ForagingState",
+      "type": "object"
     },
     "HarpInputExpander": {
       "description": "Represents a Harp Input Expander device.",
@@ -425,6 +557,85 @@
       "title": "LoomingPresentationParameters",
       "type": "object"
     },
+    "PatchBehavior": {
+      "enum": [
+        "Reward",
+        "Inactive"
+      ],
+      "title": "PatchBehavior",
+      "type": "string"
+    },
+    "PatchLed": {
+      "properties": {
+        "active": {
+          "default": false,
+          "description": "Indicates whether the LED should turn ON whenever the wheel is active?",
+          "title": "Active",
+          "type": "boolean"
+        },
+        "offDelay": {
+          "default": "PT0S",
+          "description": "The time to turn off LED after reward.",
+          "format": "duration",
+          "title": "OffDelay",
+          "type": "string"
+        }
+      },
+      "title": "PatchLed",
+      "type": "object"
+    },
+    "PatchRewardRule": {
+      "properties": {
+        "inactivityTimeout": {
+          "description": "The amount of time, in seconds, after which the travelled distance will be reset if there is no motion.",
+          "title": "InactivityTimeout",
+          "type": "number"
+        },
+        "distanceThreshold": {
+          "description": "The distance which must be travelled on the wheel to receive the next reward.",
+          "title": "DistanceThreshold",
+          "type": "number"
+        },
+        "nextState": {
+          "description": "The state which will be loaded after the next reward is delivered.",
+          "title": "NextState",
+          "type": "string"
+        }
+      },
+      "required": [
+        "inactivityTimeout",
+        "distanceThreshold",
+        "nextState"
+      ],
+      "title": "PatchRewardRule",
+      "type": "object"
+    },
+    "PatchState": {
+      "properties": {
+        "behavior": {
+          "$ref": "#/$defs/PatchBehavior",
+          "default": "Reward",
+          "description": "The running state of the patch.",
+          "title": "Behavior"
+        },
+        "rewardRule": {
+          "$ref": "#/$defs/PatchRewardRule",
+          "description": "Specifies the reward rule for the patch.",
+          "title": "RewardRule"
+        },
+        "led": {
+          "$ref": "#/$defs/PatchLed",
+          "description": "Specifies the LED rule for the patch.",
+          "title": "Led"
+        }
+      },
+      "required": [
+        "rewardRule",
+        "led"
+      ],
+      "title": "PatchState",
+      "type": "object"
+    },
     "Point": {
       "properties": {
         "x": {
@@ -612,12 +823,18 @@
           },
           "title": "Looms",
           "type": "object"
+        },
+        "feederTask": {
+          "$ref": "#/$defs/FeederABCMetaController",
+          "description": "The feeder ABC task",
+          "title": "FeederTask"
         }
       },
       "required": [
         "backgroundColor",
         "zoneTriggers",
-        "looms"
+        "looms",
+        "feederTask"
       ],
       "title": "Task",
       "type": "object"
