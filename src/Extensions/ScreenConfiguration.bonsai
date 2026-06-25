@@ -221,7 +221,7 @@
               <Right>1.7</Right>
               <Bottom>-1</Bottom>
               <Top>1</Top>
-              <Value>ScreenEast</Value>
+              <Value>ScreenNorth</Value>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
               <X>0</X>
@@ -234,7 +234,7 @@
               <Right>1.7</Right>
               <Bottom>-1</Bottom>
               <Top>1</Top>
-              <Value>ScreenSouth</Value>
+              <Value>ScreenEast</Value>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
               <X>0.25</X>
@@ -247,7 +247,7 @@
               <Right>1.7</Right>
               <Bottom>-1</Bottom>
               <Top>1</Top>
-              <Value>ScreenWest</Value>
+              <Value>ScreenSouth</Value>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
               <X>0.5</X>
@@ -260,7 +260,7 @@
               <Right>1.7</Right>
               <Bottom>-1</Bottom>
               <Top>1</Top>
-              <Value>ScreenNorth</Value>
+              <Value>ScreenWest</Value>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.DrawViewport.bonsai">
               <X>0.75</X>
