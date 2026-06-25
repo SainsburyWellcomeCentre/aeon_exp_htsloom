@@ -1303,7 +1303,7 @@
       <Expression xsi:type="MulticastSubject">
         <Name>TaskLoom</Name>
       </Expression>
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\FeedersTasklogic.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\FeedersTaskLogic.bonsai" />
     </Nodes>
     <Edges>
       <Edge From="5" To="6" Label="Source1" />
