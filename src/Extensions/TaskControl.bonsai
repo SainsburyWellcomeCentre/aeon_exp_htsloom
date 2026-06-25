@@ -23,7 +23,7 @@
         <rx:Name>LogZoneLoomTrigger</rx:Name>
         <rx:BufferSize xsi:nil="true" />
       </Expression>
-      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(sys:String,p3:Keys)">
+      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:EventName,p3:Keys)">
         <rx:Name>LogKeyLoomTrigger</rx:Name>
         <rx:BufferSize xsi:nil="true" />
       </Expression>
@@ -1109,9 +1109,6 @@
                                       <Name>TriggerName</Name>
                                     </Expression>
                                     <Expression xsi:type="Combinator">
-                                      <Combinator xsi:type="p5:GetEnumKey" />
-                                    </Expression>
-                                    <Expression xsi:type="Combinator">
                                       <Combinator xsi:type="rx:WithLatestFrom" />
                                     </Expression>
                                     <Expression xsi:type="rx:Condition">
@@ -1141,12 +1138,11 @@
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
                                     <Edge From="1" To="2" Label="Source1" />
-                                    <Edge From="3" To="6" Label="Source1" />
-                                    <Edge From="4" To="5" Label="Source1" />
-                                    <Edge From="5" To="6" Label="Source2" />
+                                    <Edge From="3" To="5" Label="Source1" />
+                                    <Edge From="4" To="5" Label="Source2" />
+                                    <Edge From="5" To="6" Label="Source1" />
                                     <Edge From="6" To="7" Label="Source1" />
                                     <Edge From="7" To="8" Label="Source1" />
-                                    <Edge From="8" To="9" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -1307,6 +1303,7 @@
       <Expression xsi:type="MulticastSubject">
         <Name>TaskLoom</Name>
       </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\FeedersTasklogic.bonsai" />
     </Nodes>
     <Edges>
       <Edge From="5" To="6" Label="Source1" />
