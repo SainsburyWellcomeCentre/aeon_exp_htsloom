@@ -220,7 +220,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
-                <rx:Count>3</rx:Count>
+                <rx:Count>4</rx:Count>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -676,8 +676,7 @@ True as Value)</scr:Expression>
         </Workflow>
       </Expression>
       <Expression xsi:type="VisualizerMapping" />
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="rx:Defer">
+      <Expression xsi:type="rx:Defer">
           <Name>InStateFeeder</Name>
           <Workflow>
             <Nodes>
@@ -787,7 +786,7 @@ True as Value)</scr:Expression>
                     </Expression>
                     <Expression xsi:type="Index">
                       <Operand xsi:type="StringProperty">
-                        <Value>Rule2_A</Value>
+                      <Value>AllActive_State1</Value>
                       </Operand>
                     </Expression>
                     <Expression xsi:type="Combinator">
@@ -992,7 +991,7 @@ True as Value)</scr:Expression>
                     </Expression>
                     <Expression xsi:type="Combinator">
                       <Combinator xsi:type="rx:Take">
-                        <rx:Count>6</rx:Count>
+                      <rx:Count>4</rx:Count>
                       </Combinator>
                     </Expression>
                     <Expression xsi:type="Combinator">
@@ -1100,15 +1099,204 @@ EatenPellets: 0</gui:Text>
               </Expression>
               <Expression xsi:type="VisualizerMapping" />
               <Expression xsi:type="SubscribeSubject">
-                <Name>WheelDisplacement</Name>
+              <Name>WheelCount</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Delay">
+                <rx:DueTime>PT1S</rx:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:CreateObservable">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:AsyncSubject">
+                    <Name>Count</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>InStateWheelDeltaDisplacement</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Count</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Count" Selector="Item2" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>4</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:CreateObservable">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="rx:AsyncSubject">
+                          <Name>Displacement </Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Displacement </Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Value</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>State</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>PatchStates</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Displacement </Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Key</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="rx:Condition">
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item1.Key,Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="Equal" />
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1.Value.RewardRule.DistanceThreshold</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="14" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="11" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source2" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source2" />
+                        <Edge From="14" To="15" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="rx:SelectMany">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Merge" />
+                        </Expression>
+                        <Expression xsi:type="Disable">
+                          <Builder xsi:type="MemberSelector">
+                            <Selector>Value</Selector>
+                          </Builder>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:ToArray" />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>new(
+    it[0].item1 as Feeder1, 
+    it[1].item1 as Feeder2,
+    it[2].item1 as Feeder3, 
+    it[3].item1 as Feeder4)</scr:Expression>
               </Expression>
               <Expression xsi:type="Combinator">
                 <Combinator xsi:type="rx:SampleInterval">
                   <rx:Interval>PT0.02S</rx:Interval>
                 </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="3" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Switch" />
               </Expression>
               <Expression xsi:type="zg:RollingGraphBuilder">
-                <zg:ValueSelector>Item1,Item2</zg:ValueSelector>
+              <zg:ValueSelector>Feeder1,Feeder2,Feeder3,Feeder4</zg:ValueSelector>
                 <zg:SymbolType>None</zg:SymbolType>
                 <zg:LineWidth>1</zg:LineWidth>
                 <zg:CurveSettings />
@@ -1118,7 +1306,18 @@ EatenPellets: 0</gui:Text>
               </Expression>
               <Expression xsi:type="VisualizerMapping" />
               <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                <gui:Name>InState</gui:Name>
+              <gui:Name>FeedersDistance</gui:Name>
+              <gui:Enabled>true</gui:Enabled>
+              <gui:Visible>true</gui:Visible>
+              <gui:ColumnCount>1</gui:ColumnCount>
+              <gui:RowCount>1</gui:RowCount>
+              <gui:ColumnStyles />
+              <gui:RowStyles />
+              <gui:CellSpans />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="gui:TableLayoutPanelBuilder">
+              <gui:Name>FeedersInState</gui:Name>
                 <gui:Enabled>true</gui:Enabled>
                 <gui:Visible>true</gui:Visible>
                 <gui:ColumnCount>1</gui:ColumnCount>
@@ -1135,16 +1334,6 @@ EatenPellets: 0</gui:Text>
                   </gui:RowStyle>
                 </gui:RowStyles>
                 <gui:CellSpans />
-              </Expression>
-              <Expression xsi:type="Disable">
-                <Builder xsi:type="SubscribeSubject">
-                  <Name>EndState</Name>
-                </Builder>
-              </Expression>
-              <Expression xsi:type="Disable">
-                <Builder xsi:type="Combinator">
-                  <Combinator xsi:type="rx:TakeUntil" />
-                </Builder>
               </Expression>
               <Expression xsi:type="WorkflowOutput" />
             </Nodes>
@@ -1183,21 +1372,20 @@ EatenPellets: 0</gui:Text>
               <Edge From="33" To="34" Label="Source1" />
               <Edge From="34" To="35" Label="Source3" />
               <Edge From="35" To="36" Label="Source1" />
-              <Edge From="36" To="41" Label="Source1" />
+            <Edge From="36" To="45" Label="Source1" />
               <Edge From="37" To="38" Label="Source1" />
               <Edge From="38" To="39" Label="Source1" />
               <Edge From="39" To="40" Label="Source1" />
-              <Edge From="40" To="41" Label="Source2" />
-              <Edge From="41" To="43" Label="Source1" />
-              <Edge From="42" To="43" Label="Source2" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="43" Label="Source1" />
               <Edge From="43" To="44" Label="Source1" />
+            <Edge From="44" To="45" Label="Source2" />
+            <Edge From="45" To="46" Label="Source1" />
             </Edges>
           </Workflow>
-        </Builder>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="VisualizerMapping" />
-      </Expression>
+      <Expression xsi:type="VisualizerMapping" />
       <Expression xsi:type="Disable">
         <Builder xsi:type="rx:Defer">
           <Name>WeightMonitor</Name>
