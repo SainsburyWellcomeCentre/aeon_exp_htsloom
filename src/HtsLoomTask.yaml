@@ -331,4 +331,11 @@ feederTask:
   metaStates:
     State_1:
       stateFile: Rule1_AllActive.yaml
-      transitions: []
+      transitions:
+      - targetState: State_2
+        activationEvent: Key1Event
+    State_2:
+      stateFile: Rule1_AllActive.yaml
+      transitions:
+      - targetState: State_1
+        activationEvent: Key2Event
