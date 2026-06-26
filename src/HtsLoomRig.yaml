@@ -26,6 +26,7 @@ cameraSynchronizer:
     Trigger1: 
         frequency: 100
 cameras:
+    
     CameraTop:
         serialNumber: "23101736"
         binning: 1
@@ -317,10 +318,38 @@ cameras:
                         y: 483
            velocityThreshold: 10    
 
+    CameraPatch1: 
+        serialNumber: "23032823"
+        binning: 2
+        exposureTime: 3000
+        gain: 0
+        trigger: Trigger1
+
+    CameraPatch2: 
+        serialNumber: "23101737"
+        binning: 2
+        exposureTime: 3000
+        gain: 0
+        trigger: Trigger1
+
+    CameraPatch3: 
+        serialNumber: "23032811"
+        binning: 2
+        exposureTime: 3000
+        gain: 0
+        trigger: Trigger1
+
+    CameraPatch4: 
+        serialNumber: "21053805"
+        binning: 2
+        exposureTime: 3000
+        gain: 0
+        trigger: Trigger1
+        
 feeders:
 
     Feeder1:
-        portName: COM3
+        portName: COM20
         pelletDeliveryRetryCount: 2
         pelletDeliveryTimeout: 1
         wheelRadius: -4
@@ -332,7 +361,15 @@ feeders:
         wheelRadius: -4
 
     Feeder3:
+        portName: COM3
+        pelletDeliveryRetryCount: 2
+        pelletDeliveryTimeout: 1
+        wheelRadius: -4
+
+
+    Feeder4:
         portName: COM16
         pelletDeliveryRetryCount: 2
         pelletDeliveryTimeout: 1
         wheelRadius: -4
+    
