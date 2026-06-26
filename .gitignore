@@ -15,3 +15,7 @@ src/obj/
 src/bin/
 src/Aeon.log
 src/AEON-HtsLoom.log
+
+# Claude Code
+CLAUDE.md
+.claude/
