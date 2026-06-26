@@ -2859,8 +2859,6 @@ namespace HtsLoom
     public partial class Task
     {
     
-        private System.Collections.Generic.Dictionary<ScreenName, double> _backgroundColor;
-    
         private System.Collections.Generic.List<ZoneTrigger> _zoneTriggers;
     
         private System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> _looms;
@@ -2869,7 +2867,6 @@ namespace HtsLoom
     
         public Task()
         {
-            _backgroundColor = new System.Collections.Generic.Dictionary<ScreenName, double>();
             _zoneTriggers = new System.Collections.Generic.List<ZoneTrigger>();
             _looms = new System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>>();
             _feederTask = new FeederABCMetaController();
@@ -2877,29 +2874,9 @@ namespace HtsLoom
     
         protected Task(Task other)
         {
-            _backgroundColor = other._backgroundColor;
             _zoneTriggers = other._zoneTriggers;
             _looms = other._looms;
             _feederTask = other._feederTask;
-        }
-    
-        /// <summary>
-        /// The grayscale color of the background per screen  between 0 and 1
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("backgroundColor", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="backgroundColor")]
-        [System.ComponentModel.DescriptionAttribute("The grayscale color of the background per screen  between 0 and 1")]
-        public System.Collections.Generic.Dictionary<ScreenName, double> BackgroundColor
-        {
-            get
-            {
-                return _backgroundColor;
-            }
-            set
-            {
-                _backgroundColor = value;
-            }
         }
     
         /// <summary>
@@ -2971,7 +2948,6 @@ namespace HtsLoom
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("BackgroundColor = " + _backgroundColor + ", ");
             stringBuilder.Append("ZoneTriggers = " + _zoneTriggers + ", ");
             stringBuilder.Append("Looms = " + _looms + ", ");
             stringBuilder.Append("FeederTask = " + _feederTask);

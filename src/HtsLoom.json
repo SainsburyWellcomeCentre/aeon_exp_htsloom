@@ -791,17 +791,6 @@
     },
     "Task": {
       "properties": {
-        "backgroundColor": {
-          "additionalProperties": {
-            "type": "number"
-          },
-          "description": "The grayscale color of the background per screen  between 0 and 1",
-          "propertyNames": {
-            "$ref": "#/$defs/ScreenName"
-          },
-          "title": "BackgroundColor",
-          "type": "object"
-        },
         "zoneTriggers": {
           "description": "The zones that trigger events to be used by task control",
           "items": {
@@ -831,7 +820,6 @@
         }
       },
       "required": [
-        "backgroundColor",
         "zoneTriggers",
         "looms",
         "feederTask"

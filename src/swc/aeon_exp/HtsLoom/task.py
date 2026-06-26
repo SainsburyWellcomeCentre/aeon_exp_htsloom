@@ -135,7 +135,6 @@ class FeederABCMetaController(Dataset):
 
 
 class Task(BaseSchema):
-    background_color: Dict[ScreenName, float] = Field(description = "The grayscale color of the background per screen  between 0 and 1")
     zone_triggers : List[ZoneTrigger] = Field(description="The zones that trigger events to be used by task control")
     looms: Dict[ScreenName, Dict[str ,LoomingPresentationParameters]] = Field(description="Dictionary with screen Id as a key for a dict of loom regions")
     feeder_task: FeederABCMetaController = Field(description="The feeder ABC task")
