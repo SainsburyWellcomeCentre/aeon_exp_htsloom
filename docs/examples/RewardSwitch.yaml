@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=ForagingController.json
+#
+# Reward-switch ("win-switch") — once a feeder delivers a pellet it goes Inactive;
+# the others stay active, so the animal has to move to a different feeder.
+#
+# Pattern adapted from aeon_exp_foragingABC docs/example_RewardSwitch, originally
+# authored by Adrian Roggenbach <a.roggenbach@ucl.ac.uk>. Reformatted to the htsloom
+# ForagingController schema (4 feeders, one per screen). Semantics here: the most
+# recently rewarded feeder is the inactive one.
+#
+# NOTE: single GLOBAL current-state (see ../FeederTask.md) — this is a whole-rig
+# dynamic, not four independent animals.
+startState: All_Active
+states:
+  All_Active:
+    patchStates:
+      Feeder1: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive1 }, led: { active: false } }
+      Feeder2: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive2 }, led: { active: false } }
+      Feeder3: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive3 }, led: { active: false } }
+      Feeder4: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive4 }, led: { active: false } }
+  Inactive1:   # Feeder1 just rewarded -> now inactive; others active
+    patchStates:
+      Feeder1: { behavior: Inactive, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: All_Active }, led: { active: false } }
+      Feeder2: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive2 },  led: { active: false } }
+      Feeder3: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive3 },  led: { active: false } }
+      Feeder4: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive4 },  led: { active: false } }
+  Inactive2:
+    patchStates:
+      Feeder1: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive1 },  led: { active: false } }
+      Feeder2: { behavior: Inactive, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: All_Active }, led: { active: false } }
+      Feeder3: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive3 },  led: { active: false } }
+      Feeder4: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive4 },  led: { active: false } }
+  Inactive3:
+    patchStates:
+      Feeder1: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive1 },  led: { active: false } }
+      Feeder2: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive2 },  led: { active: false } }
+      Feeder3: { behavior: Inactive, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: All_Active }, led: { active: false } }
+      Feeder4: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive4 },  led: { active: false } }
+  Inactive4:
+    patchStates:
+      Feeder1: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive1 },  led: { active: false } }
+      Feeder2: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive2 },  led: { active: false } }
+      Feeder3: { behavior: Reward,   rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: Inactive3 },  led: { active: false } }
+      Feeder4: { behavior: Inactive, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0, nextState: All_Active }, led: { active: false } }
