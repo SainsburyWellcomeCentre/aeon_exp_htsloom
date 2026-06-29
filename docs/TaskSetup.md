@@ -33,9 +33,13 @@ Two sources raise events:
 And **looms listen**: each loom's `startTriggers`/`stopTriggers` are sets of those
 same event names. So the chain is:
 
-```
-animal in zone  ──zoneTrigger──▶  ZoneTrigger1  ──┐
-keypress        ───────────────▶  Key1Event     ──┼──▶ loom whose startTriggers contains it  ──▶ present
+```mermaid
+flowchart LR
+    Z["Animal in zone"] -- zoneTriggers --> E1(["ZoneTrigger1"])
+    K["Keypress"] -- InputKeys --> E2(["Key1Event"])
+    E1 --> L["Loom whose startTriggers<br/>contains the event"]
+    E2 --> L
+    L --> P(["Present loom"])
 ```
 
 Get the **event names to line up** across `zoneTriggers.trigger`, a loom's
