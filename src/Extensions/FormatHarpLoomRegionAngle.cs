@@ -22,14 +22,14 @@ public int Address { get; set; }
                     Address,
                     timestamp,
                     MessageType.Event,
-                    
+
                     //Blob Id
                     (float)loomZoneAngle.Item1,
                     //Zone Id
                     (float)loomZoneAngle.Item2,
                     //ZoneState
                     (float)loomZoneAngle.Item3);
-                    
+
             });
     }
 }

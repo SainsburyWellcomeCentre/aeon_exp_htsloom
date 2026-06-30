@@ -16,7 +16,7 @@ public class Threshold
     /// Gets or sets the value assigned to pixels determined to be above the threshold.
     /// </summary>
     [Description("The value assigned to pixels determined to be above the threshold.")]
-    public double MaxValue { get; set; } 
+    public double MaxValue { get; set; }
 
     /// <summary>
     /// Gets or sets the type of threshold to apply to individual pixels.
@@ -44,7 +44,7 @@ public class Threshold
             var output = new IplImage(input.Size, IplDepth.U8, input.Channels);
             CV.Threshold(input, output, value.Item2, MaxValue, ThresholdType);
             return output;
-            
+
         });
     }
 }

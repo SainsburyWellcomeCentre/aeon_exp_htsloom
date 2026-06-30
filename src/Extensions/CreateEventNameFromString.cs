@@ -12,7 +12,7 @@ using HtsLoom;
 public class CreateEventNameFromString
 {
     public string Name {get; set;}
-    
+
     EventName CreateEventNameEnum(string name)
     {
         return (EventName) Enum.Parse( typeof(EventName), name);

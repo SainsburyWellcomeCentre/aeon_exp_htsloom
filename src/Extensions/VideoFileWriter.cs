@@ -23,7 +23,7 @@ namespace HtsLoom.Extensions
         "taken from Item2 and Item3 of the input Tuple<IplImage, string, double>, so each subscription " +
         "opens its own file even when fanned out via SelectMany across parallel branches.")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-  
+
     public class VideoFileWriter : Bonsai.Vision.VideoWriter
     {
         // Inherited properties that are unused at runtime (their values come from the input tuple

@@ -10,10 +10,10 @@ using System.Reactive.Linq;
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class GetEnumKey
 {
-    public IObservable<string>Process<T>(IObservable<T> source) 
+    public IObservable<string>Process<T>(IObservable<T> source)
     {
         var type = typeof(T);
-        if (!type.IsEnum) 
+        if (!type.IsEnum)
         {
             throw new ArgumentException("Input must be an enumerated type");
         }

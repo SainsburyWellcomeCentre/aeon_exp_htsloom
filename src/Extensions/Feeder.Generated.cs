@@ -13,11 +13,11 @@ namespace Feeder
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum FeederCommand
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="DeliverPellet")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="DeliverPellet")]
         DeliverPellet = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ResetFeeder")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ResetFeeder")]
         ResetFeeder = 1,
@@ -29,19 +29,19 @@ namespace Feeder
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CreateFeederCommand
     {
-    
+
         private FeederCommand _command;
-    
+
         public CreateFeederCommand()
         {
             _command = FeederCommand.DeliverPellet;
         }
-    
+
         protected CreateFeederCommand(CreateFeederCommand other)
         {
             _command = other._command;
         }
-    
+
         /// <summary>
         /// The command to send to the feeder device.
         /// </summary>
@@ -59,23 +59,23 @@ namespace Feeder
                 _command = value;
             }
         }
-    
+
         public System.IObservable<CreateFeederCommand> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CreateFeederCommand(this)));
         }
-    
+
         public System.IObservable<CreateFeederCommand> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new CreateFeederCommand(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Command = " + _command);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -100,7 +100,7 @@ namespace Feeder
     [Bonsai.CombinatorAttribute()]
     public partial class SerializeToJson
     {
-    
+
         public Newtonsoft.Json.Formatting Formatting { get; set; }
 
         private System.IObservable<string> Process<T>(System.IObservable<T> source)
@@ -126,7 +126,7 @@ namespace Feeder
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CreateFeederCommand>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
-    
+
         public DeserializeFromJson()
         {
             Type = new Bonsai.Expressions.TypeMapping<CreateFeederCommand>();
@@ -161,7 +161,7 @@ namespace Feeder
     [Bonsai.CombinatorAttribute()]
     public partial class SerializeToYaml
     {
-    
+
         private System.IObservable<string> Process<T>(System.IObservable<T> source)
         {
             return System.Reactive.Linq.Observable.Defer(() =>
@@ -169,7 +169,7 @@ namespace Feeder
                 var serializer = new YamlDotNet.Serialization.SerializerBuilder()
                       .WithTypeConverter(new YamlDotNet.Serialization.Converters.DateTimeOffsetConverter())
                       .Build();
-                return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
+                return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value));
             });
         }
 
@@ -190,7 +190,7 @@ namespace Feeder
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CreateFeederCommand>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
-    
+
         public DeserializeFromYaml()
         {
             Type = new Bonsai.Expressions.TypeMapping<CreateFeederCommand>();
