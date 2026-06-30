@@ -2,6 +2,7 @@
 <WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
+                 xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -12,10 +13,9 @@
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="StringProperty">
-          <Value>Key1Event</Value>
-        </Combinator>
+      <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
+        <MemberName>Value</MemberName>
+        <Value>Key1Event</Value>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:WithLatestFrom" />
@@ -26,10 +26,9 @@
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="StringProperty">
-          <Value>Key2Event</Value>
-        </Combinator>
+      <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
+        <MemberName>Value</MemberName>
+        <Value>Key2Event</Value>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:WithLatestFrom" />
@@ -40,10 +39,9 @@
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="StringProperty">
-          <Value>Key3Event</Value>
-        </Combinator>
+      <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
+        <MemberName>Value</MemberName>
+        <Value>Key3Event</Value>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:WithLatestFrom" />
@@ -54,10 +52,9 @@
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="StringProperty">
-          <Value>Key4Event</Value>
-        </Combinator>
+      <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
+        <MemberName>Value</MemberName>
+        <Value>Key4Event</Value>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:WithLatestFrom" />

@@ -4,8 +4,8 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:p1="clr-namespace:System.Reactive.Linq;assembly=System.Reactive.Interfaces"
                  xmlns:p2="clr-namespace:HtsLoom;assembly=Extensions"
-                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:aeon-frg="clr-namespace:Aeon.Foraging;assembly=Aeon.Foraging"
                  xmlns:aeon="clr-namespace:Aeon.Acquisition;assembly=Aeon.Acquisition"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
@@ -13,20 +13,20 @@
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
-      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,sys:Double)">
-        <rx:Name>FeederTimeSinceLastVisit</rx:Name>
-        <rx:BufferSize xsi:nil="true" />
-      </Expression>
-      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,sys:Double)">
-        <rx:Name>FeederTimeSpentOnWheel</rx:Name>
-        <rx:BufferSize xsi:nil="true" />
-      </Expression>
-      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,sys:Int32)">
+      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,harp:Timestamped(sys:Int32))">
         <rx:Name>FeederTotalDeliveredPellets</rx:Name>
         <rx:BufferSize xsi:nil="true" />
       </Expression>
-      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,sys:Int32)">
+      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,harp:Timestamped(sys:Int32))">
         <rx:Name>FeederTotalMissedPellets</rx:Name>
+        <rx:BufferSize xsi:nil="true" />
+      </Expression>
+      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,harp:Timestamped(sys:Double))">
+        <rx:Name>FeederTimeSinceLastVisit</rx:Name>
+        <rx:BufferSize xsi:nil="true" />
+      </Expression>
+      <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,harp:Timestamped(sys:Double))">
+        <rx:Name>FeederTimeSpentOnWheel</rx:Name>
         <rx:BufferSize xsi:nil="true" />
       </Expression>
       <Expression xsi:type="rx:ReplaySubject" TypeArguments="p1:IGroupedObservable(p2:FeederName,harp:Timestamped(sys:Byte))">
@@ -61,7 +61,7 @@
             <Expression xsi:type="MulticastSubject">
               <Name>FeederPelletMissed</Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Double,p2:FeederName)">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(harp:Timestamped(sys:Double),p2:FeederName)">
               <rx:Name>TimeSpentOnWheel</rx:Name>
             </Expression>
             <Expression xsi:type="rx:GroupBy">
@@ -71,7 +71,7 @@
             <Expression xsi:type="MulticastSubject">
               <Name>FeederTimeSpentOnWheel</Name>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Double,p2:FeederName)">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(harp:Timestamped(sys:Double),p2:FeederName)">
               <rx:Name>TimeSinceLastVisit</rx:Name>
             </Expression>
             <Expression xsi:type="rx:GroupBy">
@@ -516,7 +516,7 @@
                     <Name>FeederId</Name>
                   </Expression>
                   <Expression xsi:type="aeon:CreateGroup">
-                    <Name>PresistentTotalMissedPellets</Name>
+                    <Name>PersistentTotalMissedPellets</Name>
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="WorkflowInput">
@@ -525,14 +525,27 @@
                         <Expression xsi:type="SubscribeSubject">
                           <Name>PelletMisssed</Name>
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\PressistentCounter.bonsai">
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\PersistentCounter.bonsai">
                           <FilePrefix>FeederPelletsMissed</FilePrefix>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Seconds</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="4" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -543,7 +556,7 @@
                     <Name>FeederId</Name>
                   </Expression>
                   <Expression xsi:type="aeon:CreateGroup">
-                    <Name>PresistentTotalDeliveredPellets</Name>
+                    <Name>PersistentTotalDeliveredPellets</Name>
                     <Workflow>
                       <Nodes>
                         <Expression xsi:type="WorkflowInput">
@@ -557,22 +570,35 @@
                             <Value>Experiment</Value>
                           </Builder>
                         </Expression>
-                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\PressistentCounter.bonsai">
-                          <FilePrefix>FeederPelletsDelivered</FilePrefix>
+                        <Expression xsi:type="IncludeWorkflow" Path="Extensions\PersistentCounter.bonsai">
+                          <FilePrefix>FeederPelletsMissed</FilePrefix>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Seconds</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="1" To="4" Label="Source1" />
                         <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="3" To="5" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>FeederTotalDeliveredPellets</Name>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Aeon.Foraging:TimeSpentOnWheel.bonsai">
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TimeSpentOnWheel.bonsai">
                     <Patch>PatchEvents</Patch>
                     <WheelPatch>WheelDisplacement</WheelPatch>
                     <Threshold>0.0003</Threshold>
@@ -599,8 +625,59 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:DistinctUntilChanged" />
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TimeSinceLastEvent.bonsai">
-                    <Name>PatchEvents</Name>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>TimeSinceLastEvent</Name>
+                    <Description>Measures the elapsed time since the occurrence of the last event value.</Description>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Name" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>PatchEvents</Name>
+                        </Expression>
+                        <Expression xsi:type="harp:Parse">
+                          <harp:Register xsi:type="harp:ParseMessagePayload">
+                            <harp:PayloadType>Timestamp</harp:PayloadType>
+                            <harp:IsArray>false</harp:IsArray>
+                          </harp:Register>
+                        </Expression>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Sample" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Subtract" />
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="harp:CreateTimestamped" />
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="4" Label="Source1" />
+                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="5" To="7" Label="Source1" />
+                        <Edge From="6" To="8" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>FeederId</Name>

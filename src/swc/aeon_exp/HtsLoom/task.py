@@ -1,9 +1,13 @@
 import math
+from datetime import timedelta
 from enum import StrEnum
+from pathlib import Path
 from typing import Dict, List
-from swc.aeon.schema import BaseSchema
+from swc.aeon.io.reader import Csv
+from swc.aeon.schema import BaseSchema, Dataset, data_reader
 from swc.aeon_exp.htsloom.rig import CameraName, Point
 from pydantic import Field
+from pydantic.json_schema import SkipJsonSchema
 
 class ScreenName(StrEnum):
     NORTH = "ScreenNorth"
@@ -12,6 +16,7 @@ class ScreenName(StrEnum):
     WEST = "ScreenWest"
 
 class EventName(StrEnum):
+    NONE = "None"
     STIMULUS_ENDED = "StimulusEnded"
     KEY_1_EVENT = "Key1Event"
     KEY_2_EVENT = "Key2Event"
@@ -61,7 +66,79 @@ class LoomingPresentationParameters(StimulusSettings):
     looming_color: float = Field(default = 0.5, description= "The grayscale value of the looming disc to be presented")
 
 
+class FeederABCTransition(BaseSchema):
+    target_state: str = Field(description="The name of the target meta-state.")
+    activation_interval: timedelta = Field(
+        default=timedelta(0),
+        description="The time from meta-state start until this transition is activated.",
+    )
+    activation_rewards: int = Field(
+        default=0,
+        description="The minimum number of delivered rewards from meta-state start for this transition to be activated.",
+    )
+    activation_event: EventName = Field(
+        default=EventName.NONE,
+        description="A manual event which must be triggered for this transition to be activated.",
+    )
+    activation_transitions: int = Field(
+        default=0,
+        description="The minimum number of foraging state transitions from meta-state start for this transition to be activated.",
+    )
+
+
+class FeederABCMetaState(BaseSchema):
+    state_file: Path = Field(
+        description="The path to the YML or JSON file describing the foraging state controller to use in this meta-state."
+    )
+    transitions: List[FeederABCTransition] = Field(description="The set of transitions from this meta-state.")
+
+
+class FeederABCStateLog(Dataset):
+    """Meta-state machine event log for the feeder ABC controller.
+
+    On disk: ``StateLog/StateLog_{MetaState,States}_Events_*.csv``.
+    """
+
+    @data_reader
+    def feeder_abc_metastate_events(self, pattern):
+        return Csv(
+            f"{pattern}_MetaState_Events_*",
+            columns=[
+                "target_state",
+                "activation_interval",
+                "activation_rewards",
+                "activation_transitions",
+                "activation_event",
+            ],
+        )
+
+    @data_reader
+    def state_events(self, pattern):
+        return Csv(
+            f"{pattern}_States_Events_*",
+            columns=["feeder_abc_meta_state", "feeder_abc_next_state"],
+        )
+
+
+class FeederABCMetaController(Dataset):
+    start_state: str = Field(description="The name of the starting meta-state.")
+    meta_states: Dict[str, FeederABCMetaState] = Field(description="The set of meta-states in this meta controller.")
+    state_log: SkipJsonSchema[FeederABCStateLog] = Field(default=FeederABCStateLog(), exclude=True)
+
+    def _join_pattern_prefix(self, pattern_prefix: str) -> str:
+        """Pass-through: the feeder meta-controller writes no data of its own.
+
+        The ``state_log`` child lives directly in a top-level ``StateLog/``
+        folder, so we preserve the accumulated prefix unchanged.
+        """
+        return pattern_prefix
+
+
 class Task(BaseSchema):
-    background_color: Dict[ScreenName, float] = Field(description = "The grayscale color of the background per screen  between 0 and 1")
     zone_triggers : List[ZoneTrigger] = Field(description="The zones that trigger events to be used by task control")
     looms: Dict[ScreenName, Dict[str ,LoomingPresentationParameters]] = Field(description="Dictionary with screen Id as a key for a dict of loom regions")
+    feeder_task: FeederABCMetaController = Field(description="The feeder ABC task")
+
+    def _join_pattern_prefix(self, pattern_prefix: str) -> str:
+        """Pass-through: task-level data lives at session root, not under ``Task/``."""
+        return pattern_prefix

@@ -326,8 +326,16 @@ looms:
             y: 0.5
         startSize: 1
         endSize: 0
-backgroundColor: 
-    ScreenNorth: 0 
-    ScreenSouth: 0
-    ScreenEast: 0
-    ScreenWest: 0
+feederTask:
+  startState: State_1
+  metaStates:
+    State_1:
+      stateFile: Rule1_AllActive.yaml
+      transitions:
+      - targetState: State_2
+        activationEvent: Key1Event
+    State_2:
+      stateFile: Rule1_AllActive.yaml
+      transitions:
+      - targetState: State_1
+        activationEvent: Key2Event

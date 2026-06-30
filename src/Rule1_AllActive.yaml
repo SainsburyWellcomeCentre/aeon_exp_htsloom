@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=ForagingController.json
+startState: AllActive_State1
+states:
+  AllActive_State1:
+    patchStates:
+      Feeder1:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State2
+        led:
+          active: false
+      Feeder2:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State2
+        led:
+          active: false
+      Feeder3:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State2
+        led:
+          active: false
+      Feeder4:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State2
+        led:
+          active: false
+  AllActive_State2:
+    patchStates:
+      Feeder1:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State1
+        led:
+          active: false
+      Feeder2:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State1
+        led:
+          active: false
+      Feeder3:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State1
+        led:
+          active: false
+      Feeder4:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: AllActive_State1
+        led:
+          active: false

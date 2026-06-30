@@ -13,14 +13,14 @@
         <Property Name="FilePrefix" />
       </Expression>
       <Expression xsi:type="rx:Defer">
-        <Name>PresistentCounter</Name>
+        <Name>PersistentCounter</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="FilePrefix" />
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoadState.bonsai">
-              <FilePrefix />
+              <FilePrefix>FeederPelletsMissed</FilePrefix>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>NotNull</Name>
@@ -60,7 +60,7 @@
               <Name>Counter</Name>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\SaveState.bonsai">
-              <FilePrefix />
+              <FilePrefix>FeederPelletsMissed</FilePrefix>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="WorkflowInput">
