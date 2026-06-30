@@ -2,9 +2,13 @@ root = true
 
 [*]
 indent_style = space
-end_of_line = crlf
+end_of_line = lf
 insert_final_newline = true
 charset = utf-8
+
+# Windows batch scripts require CRLF (matches .gitattributes *.cmd eol=crlf)
+[*.{cmd,bat}]
+end_of_line = crlf
 
 #--------------------------------------------------------------------------------------------------
 # XML, JSON, and web files

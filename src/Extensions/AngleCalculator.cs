@@ -14,7 +14,7 @@ public class AngleCalculator
 
     public IObservable<double> Process(IObservable<Tuple<Point2f, Point2f>> source)
     {
-        return source.Select(value => 
+        return source.Select(value =>
         {
             var subtract = value.Item2-value.Item1;
             var heading = Math.Atan2(-subtract.Y,subtract.X);

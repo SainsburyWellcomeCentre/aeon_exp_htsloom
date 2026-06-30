@@ -14,20 +14,20 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class BlobTracking : Tracking
     {
-    
+
         private System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> _regionTracking;
-    
+
         public BlobTracking()
         {
             _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
         }
-    
-        protected BlobTracking(BlobTracking other) : 
+
+        protected BlobTracking(BlobTracking other) :
                 base(other)
         {
             _regionTracking = other._regionTracking;
         }
-    
+
         /// <summary>
         /// The subject tracking in the arena.
         /// </summary>
@@ -46,17 +46,17 @@ namespace HtsLoom
                 _regionTracking = value;
             }
         }
-    
+
         public System.IObservable<BlobTracking> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BlobTracking(this)));
         }
-    
+
         public System.IObservable<BlobTracking> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new BlobTracking(this));
         }
-    
+
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             if (base.PrintMembers(stringBuilder))
@@ -74,21 +74,21 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Camera
     {
-    
+
         private string _serialNumber;
-    
+
         private double _exposureTime;
-    
+
         private double _gain;
-    
+
         private int _binning;
-    
+
         private TriggerName _trigger;
-    
+
         private Tracking _tracking;
-    
+
         private System.Collections.Generic.List<ZoneActivity> _zones;
-    
+
         public Camera()
         {
             _exposureTime = 1000D;
@@ -96,7 +96,7 @@ namespace HtsLoom
             _binning = 1;
             _trigger = TriggerName.Trigger0;
         }
-    
+
         protected Camera(Camera other)
         {
             _serialNumber = other._serialNumber;
@@ -107,7 +107,7 @@ namespace HtsLoom
             _tracking = other._tracking;
             _zones = other._zones;
         }
-    
+
         /// <summary>
         /// The serial number of the camera.
         /// </summary>
@@ -125,7 +125,7 @@ namespace HtsLoom
                 _serialNumber = value;
             }
         }
-    
+
         /// <summary>
         /// The exposure time of the sensor, in microseconds.
         /// </summary>
@@ -143,7 +143,7 @@ namespace HtsLoom
                 _exposureTime = value;
             }
         }
-    
+
         /// <summary>
         /// The camera gain.
         /// </summary>
@@ -161,7 +161,7 @@ namespace HtsLoom
                 _gain = value;
             }
         }
-    
+
         /// <summary>
         /// The camera binning configuration.
         /// </summary>
@@ -179,7 +179,7 @@ namespace HtsLoom
                 _binning = value;
             }
         }
-    
+
         /// <summary>
         /// The name of the trigger.
         /// </summary>
@@ -197,7 +197,7 @@ namespace HtsLoom
                 _trigger = value;
             }
         }
-    
+
         /// <summary>
         /// Tracking Parameters.
         /// </summary>
@@ -216,7 +216,7 @@ namespace HtsLoom
                 _tracking = value;
             }
         }
-    
+
         /// <summary>
         /// ZonesOfInterest
         /// </summary>
@@ -235,17 +235,17 @@ namespace HtsLoom
                 _zones = value;
             }
         }
-    
+
         public System.IObservable<Camera> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Camera(this)));
         }
-    
+
         public System.IObservable<Camera> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Camera(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("SerialNumber = " + _serialNumber + ", ");
@@ -257,7 +257,7 @@ namespace HtsLoom
             stringBuilder.Append("Zones = " + _zones);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -278,22 +278,22 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CameraController
     {
-    
+
         private string _portName;
-    
+
         private System.Collections.Generic.Dictionary<TriggerName, CameraControllerTrigger> _triggers;
-    
+
         public CameraController()
         {
             _triggers = new System.Collections.Generic.Dictionary<TriggerName, CameraControllerTrigger>();
         }
-    
+
         protected CameraController(CameraController other)
         {
             _portName = other._portName;
             _triggers = other._triggers;
         }
-    
+
         /// <summary>
         /// The name of the device serial port.
         /// </summary>
@@ -311,7 +311,7 @@ namespace HtsLoom
                 _portName = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("triggers", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="triggers")]
@@ -326,24 +326,24 @@ namespace HtsLoom
                 _triggers = value;
             }
         }
-    
+
         public System.IObservable<CameraController> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraController(this)));
         }
-    
+
         public System.IObservable<CameraController> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new CameraController(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("PortName = " + _portName + ", ");
             stringBuilder.Append("Triggers = " + _triggers);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -364,19 +364,19 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class CameraControllerTrigger
     {
-    
+
         private int _frequency;
-    
+
         public CameraControllerTrigger()
         {
             _frequency = 50;
         }
-    
+
         protected CameraControllerTrigger(CameraControllerTrigger other)
         {
             _frequency = other._frequency;
         }
-    
+
         /// <summary>
         /// The frequency of the camera TTL trigger.
         /// </summary>
@@ -394,23 +394,23 @@ namespace HtsLoom
                 _frequency = value;
             }
         }
-    
+
         public System.IObservable<CameraControllerTrigger> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new CameraControllerTrigger(this)));
         }
-    
+
         public System.IObservable<CameraControllerTrigger> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new CameraControllerTrigger(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Frequency = " + _frequency);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -430,55 +430,55 @@ namespace HtsLoom
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CameraName
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraNorth")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraNorth")]
         CameraNorth = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraSouth")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraSouth")]
         CameraSouth = 1,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraTop")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraTop")]
         CameraTop = 2,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraEast")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraEast")]
         CameraEast = 3,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraWest")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraWest")]
         CameraWest = 4,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraPatch1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraPatch1")]
         CameraPatch1 = 5,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraPatch2")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraPatch2")]
         CameraPatch2 = 6,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraPatch3")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraPatch3")]
         CameraPatch3 = 7,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraPatch4")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraPatch4")]
         CameraPatch4 = 8,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraPatch5")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraPatch5")]
         CameraPatch5 = 9,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraPatch6")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraPatch6")]
         CameraPatch6 = 10,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraLightMonitor")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraLightMonitor")]
         CameraLightMonitor = 11,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="CameraNest")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="CameraNest")]
         CameraNest = 12,
@@ -489,59 +489,59 @@ namespace HtsLoom
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum EventName
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="None")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="None")]
         None = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="StimulusEnded")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="StimulusEnded")]
         StimulusEnded = 1,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key1Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key1Event")]
         Key1Event = 2,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key2Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key2Event")]
         Key2Event = 3,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key3Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key3Event")]
         Key3Event = 4,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Key4Event")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Key4Event")]
         Key4Event = 5,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskStimStart")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskStimStart")]
         TaskStimStart = 6,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskStimStop")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskStimStop")]
         TaskStimStop = 7,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="TaskReward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="TaskReward")]
         TaskReward = 8,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger1")]
         ZoneTrigger1 = 9,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger2")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger2")]
         ZoneTrigger2 = 10,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger3")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger3")]
         ZoneTrigger3 = 11,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger4")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger4")]
         ZoneTrigger4 = 12,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ZoneTrigger5")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ZoneTrigger5")]
         ZoneTrigger5 = 13,
@@ -553,23 +553,23 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Experiment
     {
-    
+
         private string _workflow;
-    
+
         private string _commit;
-    
+
         private string _repositoryUrl;
-    
+
         private Rig _rig;
-    
+
         private Task _task;
-    
+
         public Experiment()
         {
             _rig = new Rig();
             _task = new Task();
         }
-    
+
         protected Experiment(Experiment other)
         {
             _workflow = other._workflow;
@@ -578,7 +578,7 @@ namespace HtsLoom
             _rig = other._rig;
             _task = other._task;
         }
-    
+
         /// <summary>
         /// Path to the workflow running the experiment.
         /// </summary>
@@ -596,7 +596,7 @@ namespace HtsLoom
                 _workflow = value;
             }
         }
-    
+
         /// <summary>
         /// Commit hash of the experiment repo.
         /// </summary>
@@ -614,7 +614,7 @@ namespace HtsLoom
                 _commit = value;
             }
         }
-    
+
         /// <summary>
         /// The URL of the git repository used to version experiment source code.
         /// </summary>
@@ -632,7 +632,7 @@ namespace HtsLoom
                 _repositoryUrl = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("rig", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rig")]
@@ -647,7 +647,7 @@ namespace HtsLoom
                 _rig = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("task", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="task")]
@@ -662,17 +662,17 @@ namespace HtsLoom
                 _task = value;
             }
         }
-    
+
         public System.IObservable<Experiment> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Experiment(this)));
         }
-    
+
         public System.IObservable<Experiment> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Experiment(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Workflow = " + _workflow + ", ");
@@ -682,7 +682,7 @@ namespace HtsLoom
             stringBuilder.Append("Task = " + _task);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -703,22 +703,22 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class FeederABCMetaController
     {
-    
+
         private string _startState;
-    
+
         private System.Collections.Generic.Dictionary<string, FeederABCMetaState> _metaStates;
-    
+
         public FeederABCMetaController()
         {
             _metaStates = new System.Collections.Generic.Dictionary<string, FeederABCMetaState>();
         }
-    
+
         protected FeederABCMetaController(FeederABCMetaController other)
         {
             _startState = other._startState;
             _metaStates = other._metaStates;
         }
-    
+
         /// <summary>
         /// The name of the starting meta-state.
         /// </summary>
@@ -736,7 +736,7 @@ namespace HtsLoom
                 _startState = value;
             }
         }
-    
+
         /// <summary>
         /// The set of meta-states in this meta controller.
         /// </summary>
@@ -755,24 +755,24 @@ namespace HtsLoom
                 _metaStates = value;
             }
         }
-    
+
         public System.IObservable<FeederABCMetaController> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FeederABCMetaController(this)));
         }
-    
+
         public System.IObservable<FeederABCMetaController> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new FeederABCMetaController(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("StartState = " + _startState + ", ");
             stringBuilder.Append("MetaStates = " + _metaStates);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -793,22 +793,22 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class FeederABCMetaState
     {
-    
+
         private string _stateFile;
-    
+
         private System.Collections.Generic.List<FeederABCTransition> _transitions;
-    
+
         public FeederABCMetaState()
         {
             _transitions = new System.Collections.Generic.List<FeederABCTransition>();
         }
-    
+
         protected FeederABCMetaState(FeederABCMetaState other)
         {
             _stateFile = other._stateFile;
             _transitions = other._transitions;
         }
-    
+
         /// <summary>
         /// The path to the YML or JSON file describing the foraging state controller to use in this meta-state.
         /// </summary>
@@ -827,7 +827,7 @@ namespace HtsLoom
                 _stateFile = value;
             }
         }
-    
+
         /// <summary>
         /// The set of transitions from this meta-state.
         /// </summary>
@@ -846,24 +846,24 @@ namespace HtsLoom
                 _transitions = value;
             }
         }
-    
+
         public System.IObservable<FeederABCMetaState> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FeederABCMetaState(this)));
         }
-    
+
         public System.IObservable<FeederABCMetaState> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new FeederABCMetaState(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("StateFile = " + _stateFile + ", ");
             stringBuilder.Append("Transitions = " + _transitions);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -884,24 +884,24 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class FeederABCTransition
     {
-    
+
         private string _targetState;
-    
+
         private System.TimeSpan _activationInterval;
-    
+
         private int _activationRewards;
-    
+
         private EventName _activationEvent;
-    
+
         private int _activationTransitions;
-    
+
         public FeederABCTransition()
         {
             _activationRewards = 0;
             _activationEvent = EventName.None;
             _activationTransitions = 0;
         }
-    
+
         protected FeederABCTransition(FeederABCTransition other)
         {
             _targetState = other._targetState;
@@ -910,7 +910,7 @@ namespace HtsLoom
             _activationEvent = other._activationEvent;
             _activationTransitions = other._activationTransitions;
         }
-    
+
         /// <summary>
         /// The name of the target meta-state.
         /// </summary>
@@ -928,7 +928,7 @@ namespace HtsLoom
                 _targetState = value;
             }
         }
-    
+
         /// <summary>
         /// The time from meta-state start until this transition is activated.
         /// </summary>
@@ -947,7 +947,7 @@ namespace HtsLoom
                 _activationInterval = value;
             }
         }
-    
+
         [Newtonsoft.Json.JsonIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlIgnoreAttribute()]
         [System.ComponentModel.BrowsableAttribute(false)]
@@ -964,7 +964,7 @@ namespace HtsLoom
                 _activationInterval = System.Xml.XmlConvert.ToTimeSpan(value);
             }
         }
-    
+
         /// <summary>
         /// The minimum number of delivered rewards from meta-state start for this transition to be activated.
         /// </summary>
@@ -983,7 +983,7 @@ namespace HtsLoom
                 _activationRewards = value;
             }
         }
-    
+
         /// <summary>
         /// A manual event which must be triggered for this transition to be activated.
         /// </summary>
@@ -1001,7 +1001,7 @@ namespace HtsLoom
                 _activationEvent = value;
             }
         }
-    
+
         /// <summary>
         /// The minimum number of foraging state transitions from meta-state start for this transition to be activated.
         /// </summary>
@@ -1020,17 +1020,17 @@ namespace HtsLoom
                 _activationTransitions = value;
             }
         }
-    
+
         public System.IObservable<FeederABCTransition> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new FeederABCTransition(this)));
         }
-    
+
         public System.IObservable<FeederABCTransition> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new FeederABCTransition(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("TargetState = " + _targetState + ", ");
@@ -1040,7 +1040,7 @@ namespace HtsLoom
             stringBuilder.Append("ActivationTransitions = " + _activationTransitions);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1060,27 +1060,27 @@ namespace HtsLoom
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum FeederName
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder1")]
         Feeder1 = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder2")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder2")]
         Feeder2 = 1,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder3")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder3")]
         Feeder3 = 2,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder4")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder4")]
         Feeder4 = 3,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder5")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder5")]
         Feeder5 = 4,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Feeder6")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Feeder6")]
         Feeder6 = 5,
@@ -1092,22 +1092,22 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ForagingController
     {
-    
+
         private string _startState;
-    
+
         private System.Collections.Generic.Dictionary<string, ForagingState> _states;
-    
+
         public ForagingController()
         {
             _states = new System.Collections.Generic.Dictionary<string, ForagingState>();
         }
-    
+
         protected ForagingController(ForagingController other)
         {
             _startState = other._startState;
             _states = other._states;
         }
-    
+
         /// <summary>
         /// The name of the start state.
         /// </summary>
@@ -1125,7 +1125,7 @@ namespace HtsLoom
                 _startState = value;
             }
         }
-    
+
         /// <summary>
         /// The set of all possible foraging states.
         /// </summary>
@@ -1144,24 +1144,24 @@ namespace HtsLoom
                 _states = value;
             }
         }
-    
+
         public System.IObservable<ForagingController> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ForagingController(this)));
         }
-    
+
         public System.IObservable<ForagingController> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ForagingController(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("StartState = " + _startState + ", ");
             stringBuilder.Append("States = " + _states);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1182,19 +1182,19 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ForagingState
     {
-    
+
         private System.Collections.Generic.Dictionary<FeederName, PatchState> _patchStates;
-    
+
         public ForagingState()
         {
             _patchStates = new System.Collections.Generic.Dictionary<FeederName, PatchState>();
         }
-    
+
         protected ForagingState(ForagingState other)
         {
             _patchStates = other._patchStates;
         }
-    
+
         /// <summary>
         /// Specifies the state of every foraging patch in the habitat.
         /// </summary>
@@ -1213,23 +1213,23 @@ namespace HtsLoom
                 _patchStates = value;
             }
         }
-    
+
         public System.IObservable<ForagingState> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ForagingState(this)));
         }
-    
+
         public System.IObservable<ForagingState> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ForagingState(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("PatchStates = " + _patchStates);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1254,18 +1254,18 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpInputExpander
     {
-    
+
         private string _portName;
-    
+
         public HarpInputExpander()
         {
         }
-    
+
         protected HarpInputExpander(HarpInputExpander other)
         {
             _portName = other._portName;
         }
-    
+
         /// <summary>
         /// The name of the device serial port.
         /// </summary>
@@ -1283,23 +1283,23 @@ namespace HtsLoom
                 _portName = value;
             }
         }
-    
+
         public System.IObservable<HarpInputExpander> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpInputExpander(this)));
         }
-    
+
         public System.IObservable<HarpInputExpander> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpInputExpander(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("PortName = " + _portName);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1324,18 +1324,18 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HarpTimestampGeneratorGen3
     {
-    
+
         private string _portName;
-    
+
         public HarpTimestampGeneratorGen3()
         {
         }
-    
+
         protected HarpTimestampGeneratorGen3(HarpTimestampGeneratorGen3 other)
         {
             _portName = other._portName;
         }
-    
+
         /// <summary>
         /// The name of the device serial port.
         /// </summary>
@@ -1353,23 +1353,23 @@ namespace HtsLoom
                 _portName = value;
             }
         }
-    
+
         public System.IObservable<HarpTimestampGeneratorGen3> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpTimestampGeneratorGen3(this)));
         }
-    
+
         public System.IObservable<HarpTimestampGeneratorGen3> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HarpTimestampGeneratorGen3(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("PortName = " + _portName);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1390,27 +1390,27 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class HeadTailTracking : Tracking
     {
-    
+
         private System.Collections.Generic.Dictionary<string, RegionsTrackingParameters> _regionTracking;
-    
+
         private int _velocityThreshold;
-    
+
         private System.Collections.Generic.List<ZoneActivity> _zones;
-    
+
         public HeadTailTracking()
         {
             _regionTracking = new System.Collections.Generic.Dictionary<string, RegionsTrackingParameters>();
             _velocityThreshold = 10;
         }
-    
-        protected HeadTailTracking(HeadTailTracking other) : 
+
+        protected HeadTailTracking(HeadTailTracking other) :
                 base(other)
         {
             _regionTracking = other._regionTracking;
             _velocityThreshold = other._velocityThreshold;
             _zones = other._zones;
         }
-    
+
         /// <summary>
         /// The subject tracking in the arena.
         /// </summary>
@@ -1429,7 +1429,7 @@ namespace HtsLoom
                 _regionTracking = value;
             }
         }
-    
+
         /// <summary>
         /// Velocity threshold, in pixels, used to infer direction of travel and therefore the head of the subject
         /// </summary>
@@ -1448,7 +1448,7 @@ namespace HtsLoom
                 _velocityThreshold = value;
             }
         }
-    
+
         /// <summary>
         /// ZonesOfInterest
         /// </summary>
@@ -1467,17 +1467,17 @@ namespace HtsLoom
                 _zones = value;
             }
         }
-    
+
         public System.IObservable<HeadTailTracking> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HeadTailTracking(this)));
         }
-    
+
         public System.IObservable<HeadTailTracking> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new HeadTailTracking(this));
         }
-    
+
         protected override bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             if (base.PrintMembers(stringBuilder))
@@ -1497,15 +1497,15 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LightCycle
     {
-    
+
         private string _commandSocket;
-    
+
         private string _eventSocket;
-    
+
         private string _roomName;
-    
+
         private string _configFileName;
-    
+
         public LightCycle()
         {
             _commandSocket = ">tcp://localhost:4304";
@@ -1513,7 +1513,7 @@ namespace HtsLoom
             _roomName = "Aeon3";
             _configFileName = "lightcycle.config";
         }
-    
+
         protected LightCycle(LightCycle other)
         {
             _commandSocket = other._commandSocket;
@@ -1521,7 +1521,7 @@ namespace HtsLoom
             _roomName = other._roomName;
             _configFileName = other._configFileName;
         }
-    
+
         /// <summary>
         /// Specifies the endpoint to send commands to the Light Server.
         /// </summary>
@@ -1539,7 +1539,7 @@ namespace HtsLoom
                 _commandSocket = value;
             }
         }
-    
+
         /// <summary>
         /// Specifies the endpoint to send commands to the Light Server.
         /// </summary>
@@ -1557,7 +1557,7 @@ namespace HtsLoom
                 _eventSocket = value;
             }
         }
-    
+
         /// <summary>
         /// The name of the room to monitor and control.
         /// </summary>
@@ -1575,7 +1575,7 @@ namespace HtsLoom
                 _roomName = value;
             }
         }
-    
+
         /// <summary>
         /// The name of the CSV file describing the light model, where each row represents one whole minute and the red, cold white and warm white, light levels set for that minute.
         /// </summary>
@@ -1595,17 +1595,17 @@ namespace HtsLoom
                 _configFileName = value;
             }
         }
-    
+
         public System.IObservable<LightCycle> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LightCycle(this)));
         }
-    
+
         public System.IObservable<LightCycle> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new LightCycle(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("CommandSocket = " + _commandSocket + ", ");
@@ -1614,7 +1614,7 @@ namespace HtsLoom
             stringBuilder.Append("ConfigFileName = " + _configFileName);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1635,31 +1635,31 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class LoomingPresentationParameters
     {
-    
+
         private System.Collections.Generic.List<EventName> _stopTriggers;
-    
+
         private System.Collections.Generic.List<EventName> _startTriggers;
-    
+
         private double _initialDelay;
-    
+
         private double _pulseDuration;
-    
+
         private double _interPulseInterval;
-    
+
         private int _numberOfPulses;
-    
+
         private ScreenPosition _location;
-    
+
         private double _startSize;
-    
+
         private double _endSize;
-    
+
         private double _animationDuration;
-    
+
         private double _timeOnSet;
-    
+
         private double _loomingColor;
-    
+
         public LoomingPresentationParameters()
         {
             _stopTriggers = new System.Collections.Generic.List<EventName>();
@@ -1670,7 +1670,7 @@ namespace HtsLoom
             _timeOnSet = 0D;
             _loomingColor = 0.5D;
         }
-    
+
         protected LoomingPresentationParameters(LoomingPresentationParameters other)
         {
             _stopTriggers = other._stopTriggers;
@@ -1686,7 +1686,7 @@ namespace HtsLoom
             _timeOnSet = other._timeOnSet;
             _loomingColor = other._loomingColor;
         }
-    
+
         /// <summary>
         /// The triggers that interrupt the loom presentation
         /// </summary>
@@ -1705,7 +1705,7 @@ namespace HtsLoom
                 _stopTriggers = value;
             }
         }
-    
+
         /// <summary>
         /// The triggers that stat the loom presentation
         /// </summary>
@@ -1724,7 +1724,7 @@ namespace HtsLoom
                 _startTriggers = value;
             }
         }
-    
+
         /// <summary>
         /// The delay before starting to present the stimulus
         /// </summary>
@@ -1742,7 +1742,7 @@ namespace HtsLoom
                 _initialDelay = value;
             }
         }
-    
+
         /// <summary>
         /// The time period that a stimulus is presented if it doesn't finishes by itself
         /// </summary>
@@ -1760,7 +1760,7 @@ namespace HtsLoom
                 _pulseDuration = value;
             }
         }
-    
+
         /// <summary>
         /// Period of time between pulses when running a set of pulses in sequence
         /// </summary>
@@ -1778,7 +1778,7 @@ namespace HtsLoom
                 _interPulseInterval = value;
             }
         }
-    
+
         /// <summary>
         /// The quantity of stimulus to be presented each time it starts
         /// </summary>
@@ -1796,7 +1796,7 @@ namespace HtsLoom
                 _numberOfPulses = value;
             }
         }
-    
+
         /// <summary>
         /// The screen coordinates of the loom
         /// </summary>
@@ -1815,7 +1815,7 @@ namespace HtsLoom
                 _location = value;
             }
         }
-    
+
         /// <summary>
         /// The initial size of the looming disc
         /// </summary>
@@ -1833,7 +1833,7 @@ namespace HtsLoom
                 _startSize = value;
             }
         }
-    
+
         /// <summary>
         /// The end size of the looming disc
         /// </summary>
@@ -1851,7 +1851,7 @@ namespace HtsLoom
                 _endSize = value;
             }
         }
-    
+
         /// <summary>
         /// The time period that each loom takes to reach full size
         /// </summary>
@@ -1869,7 +1869,7 @@ namespace HtsLoom
                 _animationDuration = value;
             }
         }
-    
+
         /// <summary>
         /// The period that looming disc remains static on set after reaching the end size
         /// </summary>
@@ -1887,7 +1887,7 @@ namespace HtsLoom
                 _timeOnSet = value;
             }
         }
-    
+
         /// <summary>
         /// The grayscale value of the looming disc to be presented
         /// </summary>
@@ -1905,17 +1905,17 @@ namespace HtsLoom
                 _loomingColor = value;
             }
         }
-    
+
         public System.IObservable<LoomingPresentationParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new LoomingPresentationParameters(this)));
         }
-    
+
         public System.IObservable<LoomingPresentationParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new LoomingPresentationParameters(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("StopTriggers = " + _stopTriggers + ", ");
@@ -1932,7 +1932,7 @@ namespace HtsLoom
             stringBuilder.Append("LoomingColor = " + _loomingColor);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -1952,11 +1952,11 @@ namespace HtsLoom
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum PatchBehavior
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Reward")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Reward")]
         Reward = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Inactive")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Inactive")]
         Inactive = 1,
@@ -1968,22 +1968,22 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchLed
     {
-    
+
         private bool _active;
-    
+
         private System.TimeSpan _offDelay;
-    
+
         public PatchLed()
         {
             _active = false;
         }
-    
+
         protected PatchLed(PatchLed other)
         {
             _active = other._active;
             _offDelay = other._offDelay;
         }
-    
+
         /// <summary>
         /// Indicates whether the LED should turn ON whenever the wheel is active?
         /// </summary>
@@ -2001,7 +2001,7 @@ namespace HtsLoom
                 _active = value;
             }
         }
-    
+
         /// <summary>
         /// The time to turn off LED after reward.
         /// </summary>
@@ -2020,7 +2020,7 @@ namespace HtsLoom
                 _offDelay = value;
             }
         }
-    
+
         [Newtonsoft.Json.JsonIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlIgnoreAttribute()]
         [System.ComponentModel.BrowsableAttribute(false)]
@@ -2037,24 +2037,24 @@ namespace HtsLoom
                 _offDelay = System.Xml.XmlConvert.ToTimeSpan(value);
             }
         }
-    
+
         public System.IObservable<PatchLed> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchLed(this)));
         }
-    
+
         public System.IObservable<PatchLed> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchLed(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Active = " + _active + ", ");
             stringBuilder.Append("OffDelay = " + _offDelay);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2075,24 +2075,24 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchRewardRule
     {
-    
+
         private double _inactivityTimeout;
-    
+
         private double _distanceThreshold;
-    
+
         private string _nextState;
-    
+
         public PatchRewardRule()
         {
         }
-    
+
         protected PatchRewardRule(PatchRewardRule other)
         {
             _inactivityTimeout = other._inactivityTimeout;
             _distanceThreshold = other._distanceThreshold;
             _nextState = other._nextState;
         }
-    
+
         /// <summary>
         /// The amount of time, in seconds, after which the travelled distance will be reset if there is no motion.
         /// </summary>
@@ -2111,7 +2111,7 @@ namespace HtsLoom
                 _inactivityTimeout = value;
             }
         }
-    
+
         /// <summary>
         /// The distance which must be travelled on the wheel to receive the next reward.
         /// </summary>
@@ -2129,7 +2129,7 @@ namespace HtsLoom
                 _distanceThreshold = value;
             }
         }
-    
+
         /// <summary>
         /// The state which will be loaded after the next reward is delivered.
         /// </summary>
@@ -2147,17 +2147,17 @@ namespace HtsLoom
                 _nextState = value;
             }
         }
-    
+
         public System.IObservable<PatchRewardRule> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchRewardRule(this)));
         }
-    
+
         public System.IObservable<PatchRewardRule> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchRewardRule(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("InactivityTimeout = " + _inactivityTimeout + ", ");
@@ -2165,7 +2165,7 @@ namespace HtsLoom
             stringBuilder.Append("NextState = " + _nextState);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2186,27 +2186,27 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class PatchState
     {
-    
+
         private PatchBehavior _behavior;
-    
+
         private PatchRewardRule _rewardRule;
-    
+
         private PatchLed _led;
-    
+
         public PatchState()
         {
             _behavior = PatchBehavior.Reward;
             _rewardRule = new PatchRewardRule();
             _led = new PatchLed();
         }
-    
+
         protected PatchState(PatchState other)
         {
             _behavior = other._behavior;
             _rewardRule = other._rewardRule;
             _led = other._led;
         }
-    
+
         /// <summary>
         /// The running state of the patch.
         /// </summary>
@@ -2224,7 +2224,7 @@ namespace HtsLoom
                 _behavior = value;
             }
         }
-    
+
         /// <summary>
         /// Specifies the reward rule for the patch.
         /// </summary>
@@ -2243,7 +2243,7 @@ namespace HtsLoom
                 _rewardRule = value;
             }
         }
-    
+
         /// <summary>
         /// Specifies the LED rule for the patch.
         /// </summary>
@@ -2262,17 +2262,17 @@ namespace HtsLoom
                 _led = value;
             }
         }
-    
+
         public System.IObservable<PatchState> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new PatchState(this)));
         }
-    
+
         public System.IObservable<PatchState> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new PatchState(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Behavior = " + _behavior + ", ");
@@ -2280,7 +2280,7 @@ namespace HtsLoom
             stringBuilder.Append("Led = " + _led);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2301,23 +2301,23 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Point
     {
-    
+
         private int _x;
-    
+
         private int _y;
-    
+
         public Point()
         {
             _x = 0;
             _y = 0;
         }
-    
+
         protected Point(Point other)
         {
             _x = other._x;
             _y = other._y;
         }
-    
+
         /// <summary>
         /// The X coordinate of the point
         /// </summary>
@@ -2335,7 +2335,7 @@ namespace HtsLoom
                 _x = value;
             }
         }
-    
+
         /// <summary>
         /// The Y coordinate of the point
         /// </summary>
@@ -2353,24 +2353,24 @@ namespace HtsLoom
                 _y = value;
             }
         }
-    
+
         public System.IObservable<Point> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Point(this)));
         }
-    
+
         public System.IObservable<Point> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Point(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("X = " + _x + ", ");
             stringBuilder.Append("Y = " + _y);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2395,19 +2395,19 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Polygon
     {
-    
+
         private System.Collections.Generic.List<Point> _points;
-    
+
         public Polygon()
         {
             _points = new System.Collections.Generic.List<Point>();
         }
-    
+
         protected Polygon(Polygon other)
         {
             _points = other._points;
         }
-    
+
         /// <summary>
         /// Points to make the polygon
         /// </summary>
@@ -2426,23 +2426,23 @@ namespace HtsLoom
                 _points = value;
             }
         }
-    
+
         public System.IObservable<Polygon> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Polygon(this)));
         }
-    
+
         public System.IObservable<Polygon> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Polygon(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Points = " + _points);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2463,23 +2463,23 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class RegionsTrackingParameters
     {
-    
+
         private int _threshold;
-    
+
         private System.Collections.Generic.List<Polygon> _regions;
-    
+
         public RegionsTrackingParameters()
         {
             _threshold = 100;
             _regions = new System.Collections.Generic.List<Polygon>();
         }
-    
+
         protected RegionsTrackingParameters(RegionsTrackingParameters other)
         {
             _threshold = other._threshold;
             _regions = other._regions;
         }
-    
+
         /// <summary>
         /// Threshold for the blob tracking.
         /// </summary>
@@ -2497,7 +2497,7 @@ namespace HtsLoom
                 _threshold = value;
             }
         }
-    
+
         /// <summary>
         /// Regions for the tracking.
         /// </summary>
@@ -2516,24 +2516,24 @@ namespace HtsLoom
                 _regions = value;
             }
         }
-    
+
         public System.IObservable<RegionsTrackingParameters> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new RegionsTrackingParameters(this)));
         }
-    
+
         public System.IObservable<RegionsTrackingParameters> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new RegionsTrackingParameters(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Threshold = " + _threshold + ", ");
             stringBuilder.Append("Regions = " + _regions);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2554,21 +2554,21 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Rig
     {
-    
+
         private HarpTimestampGeneratorGen3 _clockSynchronizer;
-    
+
         private HarpInputExpander _inputExpander;
-    
+
         private CameraController _cameraSynchronizer;
-    
+
         private System.Collections.Generic.Dictionary<CameraName, Camera> _cameras;
-    
+
         private System.Collections.Generic.Dictionary<FeederName, UndergroundFeeder> _feeders;
-    
+
         private System.Collections.Generic.Dictionary<string, WeightScale> _nests;
-    
+
         private LightCycle _lightCycle;
-    
+
         public Rig()
         {
             _clockSynchronizer = new HarpTimestampGeneratorGen3();
@@ -2578,7 +2578,7 @@ namespace HtsLoom
             _feeders = new System.Collections.Generic.Dictionary<FeederName, UndergroundFeeder>();
             _lightCycle = new LightCycle();
         }
-    
+
         protected Rig(Rig other)
         {
             _clockSynchronizer = other._clockSynchronizer;
@@ -2589,7 +2589,7 @@ namespace HtsLoom
             _nests = other._nests;
             _lightCycle = other._lightCycle;
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("clockSynchronizer", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
@@ -2604,7 +2604,7 @@ namespace HtsLoom
                 _clockSynchronizer = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("inputExpander", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="inputExpander")]
@@ -2619,7 +2619,7 @@ namespace HtsLoom
                 _inputExpander = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("cameraSynchronizer", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="cameraSynchronizer")]
@@ -2634,7 +2634,7 @@ namespace HtsLoom
                 _cameraSynchronizer = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("cameras", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="cameras")]
@@ -2649,7 +2649,7 @@ namespace HtsLoom
                 _cameras = value;
             }
         }
-    
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("feeders", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="feeders")]
@@ -2664,7 +2664,7 @@ namespace HtsLoom
                 _feeders = value;
             }
         }
-    
+
         /// <summary>
         /// Weight scale parameters.
         /// </summary>
@@ -2683,7 +2683,7 @@ namespace HtsLoom
                 _nests = value;
             }
         }
-    
+
         /// <summary>
         /// LightCycle components for the arena.
         /// </summary>
@@ -2702,17 +2702,17 @@ namespace HtsLoom
                 _lightCycle = value;
             }
         }
-    
+
         public System.IObservable<Rig> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Rig(this)));
         }
-    
+
         public System.IObservable<Rig> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Rig(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("ClockSynchronizer = " + _clockSynchronizer + ", ");
@@ -2724,7 +2724,7 @@ namespace HtsLoom
             stringBuilder.Append("LightCycle = " + _lightCycle);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2744,19 +2744,19 @@ namespace HtsLoom
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ScreenName
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenNorth")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenNorth")]
         ScreenNorth = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenSouth")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenSouth")]
         ScreenSouth = 1,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenEast")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenEast")]
         ScreenEast = 2,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="ScreenWest")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ScreenWest")]
         ScreenWest = 3,
@@ -2768,23 +2768,23 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ScreenPosition
     {
-    
+
         private double _x;
-    
+
         private double _y;
-    
+
         public ScreenPosition()
         {
             _x = 0.5D;
             _y = 0.5D;
         }
-    
+
         protected ScreenPosition(ScreenPosition other)
         {
             _x = other._x;
             _y = other._y;
         }
-    
+
         /// <summary>
         /// The X coordinate of the point
         /// </summary>
@@ -2802,7 +2802,7 @@ namespace HtsLoom
                 _x = value;
             }
         }
-    
+
         /// <summary>
         /// The Y coordinate of the point
         /// </summary>
@@ -2820,24 +2820,24 @@ namespace HtsLoom
                 _y = value;
             }
         }
-    
+
         public System.IObservable<ScreenPosition> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ScreenPosition(this)));
         }
-    
+
         public System.IObservable<ScreenPosition> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ScreenPosition(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("X = " + _x + ", ");
             stringBuilder.Append("Y = " + _y);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2858,27 +2858,27 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Task
     {
-    
+
         private System.Collections.Generic.List<ZoneTrigger> _zoneTriggers;
-    
+
         private System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>> _looms;
-    
+
         private FeederABCMetaController _feederTask;
-    
+
         public Task()
         {
             _zoneTriggers = new System.Collections.Generic.List<ZoneTrigger>();
             _looms = new System.Collections.Generic.Dictionary<ScreenName, System.Collections.Generic.Dictionary<string, LoomingPresentationParameters>>();
             _feederTask = new FeederABCMetaController();
         }
-    
+
         protected Task(Task other)
         {
             _zoneTriggers = other._zoneTriggers;
             _looms = other._looms;
             _feederTask = other._feederTask;
         }
-    
+
         /// <summary>
         /// The zones that trigger events to be used by task control
         /// </summary>
@@ -2897,7 +2897,7 @@ namespace HtsLoom
                 _zoneTriggers = value;
             }
         }
-    
+
         /// <summary>
         /// Dictionary with screen Id as a key for a dict of loom regions
         /// </summary>
@@ -2916,7 +2916,7 @@ namespace HtsLoom
                 _looms = value;
             }
         }
-    
+
         /// <summary>
         /// The feeder ABC task
         /// </summary>
@@ -2935,17 +2935,17 @@ namespace HtsLoom
                 _feederTask = value;
             }
         }
-    
+
         public System.IObservable<Task> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Task(this)));
         }
-    
+
         public System.IObservable<Task> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Task(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("ZoneTriggers = " + _zoneTriggers + ", ");
@@ -2953,7 +2953,7 @@ namespace HtsLoom
             stringBuilder.Append("FeederTask = " + _feederTask);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -2978,30 +2978,30 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class Tracking
     {
-    
+
         public Tracking()
         {
         }
-    
+
         protected Tracking(Tracking other)
         {
         }
-    
+
         public System.IObservable<Tracking> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Tracking(this)));
         }
-    
+
         public System.IObservable<Tracking> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new Tracking(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             return false;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -3021,11 +3021,11 @@ namespace HtsLoom
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum TriggerName
     {
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Trigger0")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Trigger0")]
         Trigger0 = 0,
-    
+
         [System.Runtime.Serialization.EnumMemberAttribute(Value="Trigger1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Trigger1")]
         Trigger1 = 1,
@@ -3042,22 +3042,22 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class UndergroundFeeder
     {
-    
+
         private string _portName;
-    
+
         private int _pelletDeliveryRetryCount;
-    
+
         private double _pelletDeliveryTimeout;
-    
+
         private double _wheelRadius;
-    
+
         public UndergroundFeeder()
         {
             _pelletDeliveryRetryCount = 2;
             _pelletDeliveryTimeout = 1D;
             _wheelRadius = -4D;
         }
-    
+
         protected UndergroundFeeder(UndergroundFeeder other)
         {
             _portName = other._portName;
@@ -3065,7 +3065,7 @@ namespace HtsLoom
             _pelletDeliveryTimeout = other._pelletDeliveryTimeout;
             _wheelRadius = other._wheelRadius;
         }
-    
+
         /// <summary>
         /// The name of the device serial port.
         /// </summary>
@@ -3083,7 +3083,7 @@ namespace HtsLoom
                 _portName = value;
             }
         }
-    
+
         /// <summary>
         /// The number of times to retry a failed pellet delivery.
         /// </summary>
@@ -3101,7 +3101,7 @@ namespace HtsLoom
                 _pelletDeliveryRetryCount = value;
             }
         }
-    
+
         /// <summary>
         /// The amount of time in seconds to wait for pellet detection before reporting a failure.
         /// </summary>
@@ -3120,7 +3120,7 @@ namespace HtsLoom
                 _pelletDeliveryTimeout = value;
             }
         }
-    
+
         /// <summary>
         /// The radius of the wheel, in centimeters.
         /// </summary>
@@ -3138,17 +3138,17 @@ namespace HtsLoom
                 _wheelRadius = value;
             }
         }
-    
+
         public System.IObservable<UndergroundFeeder> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new UndergroundFeeder(this)));
         }
-    
+
         public System.IObservable<UndergroundFeeder> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new UndergroundFeeder(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("PortName = " + _portName + ", ");
@@ -3157,7 +3157,7 @@ namespace HtsLoom
             stringBuilder.Append("WheelRadius = " + _wheelRadius);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -3178,26 +3178,26 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class WeightScale
     {
-    
+
         private string _portName;
-    
+
         private int _filterWindow;
-    
+
         private double _weightBaselineRefractoryPeriod;
-    
+
         public WeightScale()
         {
             _filterWindow = 40;
             _weightBaselineRefractoryPeriod = 5D;
         }
-    
+
         protected WeightScale(WeightScale other)
         {
             _portName = other._portName;
             _filterWindow = other._filterWindow;
             _weightBaselineRefractoryPeriod = other._weightBaselineRefractoryPeriod;
         }
-    
+
         /// <summary>
         /// The name of the device serial port.
         /// </summary>
@@ -3215,7 +3215,7 @@ namespace HtsLoom
                 _portName = value;
             }
         }
-    
+
         /// <summary>
         /// Sliding window size of the weight linear regression filter.
         /// </summary>
@@ -3233,7 +3233,7 @@ namespace HtsLoom
                 _filterWindow = value;
             }
         }
-    
+
         /// <summary>
         /// The time between consecutive weight baseline when subject in center of arena in seconds.
         /// </summary>
@@ -3252,17 +3252,17 @@ namespace HtsLoom
                 _weightBaselineRefractoryPeriod = value;
             }
         }
-    
+
         public System.IObservable<WeightScale> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new WeightScale(this)));
         }
-    
+
         public System.IObservable<WeightScale> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new WeightScale(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("PortName = " + _portName + ", ");
@@ -3270,7 +3270,7 @@ namespace HtsLoom
             stringBuilder.Append("WeightBaselineRefractoryPeriod = " + _weightBaselineRefractoryPeriod);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -3291,23 +3291,23 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ZoneActivity
     {
-    
+
         private Point _position;
-    
+
         private System.Collections.Generic.List<Polygon> _regions;
-    
+
         public ZoneActivity()
         {
             _position = new Point();
             _regions = new System.Collections.Generic.List<Polygon>();
         }
-    
+
         protected ZoneActivity(ZoneActivity other)
         {
             _position = other._position;
             _regions = other._regions;
         }
-    
+
         /// <summary>
         /// Zone position
         /// </summary>
@@ -3326,7 +3326,7 @@ namespace HtsLoom
                 _position = value;
             }
         }
-    
+
         /// <summary>
         /// Regions for the Activity.
         /// </summary>
@@ -3345,24 +3345,24 @@ namespace HtsLoom
                 _regions = value;
             }
         }
-    
+
         public System.IObservable<ZoneActivity> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZoneActivity(this)));
         }
-    
+
         public System.IObservable<ZoneActivity> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ZoneActivity(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Position = " + _position + ", ");
             stringBuilder.Append("Regions = " + _regions);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -3383,27 +3383,27 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute(MethodName="Generate")]
     public partial class ZoneTrigger
     {
-    
+
         private CameraName _camera;
-    
+
         private int _zoneId;
-    
+
         private double _triggerProbability;
-    
+
         private double _angleThreshold;
-    
+
         private double _refractoryPeriod;
-    
+
         private double _timeInRegion;
-    
+
         private System.Collections.Generic.List<EventName> _trigger;
-    
+
         public ZoneTrigger()
         {
             _camera = CameraName.CameraNorth;
             _trigger = new System.Collections.Generic.List<EventName>();
         }
-    
+
         protected ZoneTrigger(ZoneTrigger other)
         {
             _camera = other._camera;
@@ -3414,7 +3414,7 @@ namespace HtsLoom
             _timeInRegion = other._timeInRegion;
             _trigger = other._trigger;
         }
-    
+
         /// <summary>
         /// Camera to be used
         /// </summary>
@@ -3432,7 +3432,7 @@ namespace HtsLoom
                 _camera = value;
             }
         }
-    
+
         /// <summary>
         /// The index of the region to be used to trigger the loom
         /// </summary>
@@ -3450,7 +3450,7 @@ namespace HtsLoom
                 _zoneId = value;
             }
         }
-    
+
         /// <summary>
         /// Probability to present a loom if all conditions are achieved
         /// </summary>
@@ -3468,7 +3468,7 @@ namespace HtsLoom
                 _triggerProbability = value;
             }
         }
-    
+
         /// <summary>
         /// Angle threshold that subject needs to be facing looming region
         /// </summary>
@@ -3486,7 +3486,7 @@ namespace HtsLoom
                 _angleThreshold = value;
             }
         }
-    
+
         /// <summary>
         /// Minimum period of inactivity after a loom is presented in seconds
         /// </summary>
@@ -3504,7 +3504,7 @@ namespace HtsLoom
                 _refractoryPeriod = value;
             }
         }
-    
+
         /// <summary>
         /// Minimum Period subject needs to be in loom region for a loom to be triggered
         /// </summary>
@@ -3522,7 +3522,7 @@ namespace HtsLoom
                 _timeInRegion = value;
             }
         }
-    
+
         /// <summary>
         /// The triggers that will be set when all conditions are met
         /// </summary>
@@ -3541,17 +3541,17 @@ namespace HtsLoom
                 _trigger = value;
             }
         }
-    
+
         public System.IObservable<ZoneTrigger> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZoneTrigger(this)));
         }
-    
+
         public System.IObservable<ZoneTrigger> Generate<TSource>(System.IObservable<TSource> source)
         {
             return System.Reactive.Linq.Observable.Select(source, _ => new ZoneTrigger(this));
         }
-    
+
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Camera = " + _camera + ", ");
@@ -3563,7 +3563,7 @@ namespace HtsLoom
             stringBuilder.Append("Trigger = " + _trigger);
             return true;
         }
-    
+
         public override string ToString()
         {
             System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
@@ -3723,7 +3723,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HeadTailTracking>))]
     public partial class MatchTracking : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
-    
+
         public Bonsai.Expressions.TypeMapping Type { get; set; }
 
         public override System.Linq.Expressions.Expression Build(System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression> arguments)
@@ -3737,7 +3737,7 @@ namespace HtsLoom
                 System.Linq.Enumerable.Single(arguments));
         }
 
-    
+
         private static System.IObservable<TResult> Process<TResult>(System.IObservable<Tracking> source)
             where TResult : Tracking
         {
@@ -3766,7 +3766,7 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute()]
     public partial class SerializeToJson
     {
-    
+
         public Newtonsoft.Json.Formatting Formatting { get; set; }
 
         private System.IObservable<string> Process<T>(System.IObservable<T> source)
@@ -3960,7 +3960,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneTrigger>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
-    
+
         public DeserializeFromJson()
         {
             Type = new Bonsai.Expressions.TypeMapping<BlobTracking>();
@@ -3990,7 +3990,7 @@ namespace HtsLoom
     [System.AttributeUsageAttribute((System.AttributeTargets.Class | System.AttributeTargets.Interface))]
     public class YamlDiscriminatorAttribute : System.Attribute
     {
-    
+
         public YamlDiscriminatorAttribute(string discriminator)
         {
             Discriminator = discriminator;
@@ -4004,7 +4004,7 @@ namespace HtsLoom
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.7.2.0 (Newtonsoft.Json v13.0.0.0, YamlDotNet v16.0.0.0)")]
     public class YamlDiscriminatorTypeInspector : YamlDotNet.Serialization.TypeInspectors.ReflectionTypeInspector
     {
-    
+
         readonly YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor;
 
         public YamlDiscriminatorTypeInspector(YamlDotNet.Serialization.ITypeInspector innerTypeDescriptor)
@@ -4105,7 +4105,7 @@ namespace HtsLoom
     [Bonsai.CombinatorAttribute()]
     public partial class SerializeToYaml
     {
-    
+
         private System.IObservable<string> Process<T>(System.IObservable<T> source)
         {
             return System.Reactive.Linq.Observable.Defer(() =>
@@ -4114,7 +4114,7 @@ namespace HtsLoom
                     .WithTypeInspector(inspector => new YamlDiscriminatorTypeInspector(inspector))
                       .WithTypeConverter(new YamlDotNet.Serialization.Converters.DateTimeOffsetConverter())
                       .Build();
-                return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value)); 
+                return System.Reactive.Linq.Observable.Select(source, value => serializer.Serialize(value));
             });
         }
 
@@ -4303,7 +4303,7 @@ namespace HtsLoom
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZoneTrigger>))]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
-    
+
         public DeserializeFromYaml()
         {
             Type = new Bonsai.Expressions.TypeMapping<BlobTracking>();

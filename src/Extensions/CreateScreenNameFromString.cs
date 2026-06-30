@@ -12,7 +12,7 @@ using HtsLoom;
 public class CreateScreenNameFromString
 {
     public string Name {get; set;}
-    
+
     ScreenName CreateScreenNameEnum(string name)
     {
         return (ScreenName) Enum.Parse( typeof(ScreenName), name);

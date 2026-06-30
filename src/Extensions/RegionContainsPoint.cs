@@ -49,7 +49,7 @@ using System.Runtime.InteropServices;
                 }
                 index++;
             }
-                    
+
             return source.Select(x =>
             {
                 var containsPoint = Contains(points, x.Value);

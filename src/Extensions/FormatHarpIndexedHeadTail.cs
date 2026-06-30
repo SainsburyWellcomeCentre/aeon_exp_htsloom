@@ -23,10 +23,10 @@ public class FormatHarpIndexedHeadTail
                     Address,
                     timestamp,
                     MessageType.Event,
-                    
+
                     //Id
                     (float)tracking.Item1,
-                    
+
                     //HeadTail
                     tracking.Item2.Centroid.X,
                     tracking.Item2.Centroid.Y,
