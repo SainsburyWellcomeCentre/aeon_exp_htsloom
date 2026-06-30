@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=ForagingController.json
+#
+# Escalation ("gets harder") — every pellet (by any feeder) raises the wheel
+# distance required for the next one, for ALL feeders, up to a cap.
+#
+# Pattern adapted from aeon_exp_foragingABC docs/example_sequence_of_three,
+# originally authored by Adrian Roggenbach <a.roggenbach@ucl.ac.uk>. Reformatted
+# to the htsloom ForagingController schema (4 feeders, one per screen).
+#
+# NOTE: the state machine has a single GLOBAL current-state, so this escalates
+# for the whole rig together (see ../FeederTask.md, "one machine, shared by all
+# feeders"). Independent per-feeder escalation needs the per-feeder players.
+startState: Easy
+states:
+  Easy:        # 50 units per pellet
+    patchStates:
+      Feeder1: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0,  nextState: Medium }, led: { active: false } }
+      Feeder2: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0,  nextState: Medium }, led: { active: false } }
+      Feeder3: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0,  nextState: Medium }, led: { active: false } }
+      Feeder4: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 50.0,  nextState: Medium }, led: { active: false } }
+  Medium:      # 80 units per pellet
+    patchStates:
+      Feeder1: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 80.0,  nextState: Hard }, led: { active: false } }
+      Feeder2: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 80.0,  nextState: Hard }, led: { active: false } }
+      Feeder3: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 80.0,  nextState: Hard }, led: { active: false } }
+      Feeder4: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 80.0,  nextState: Hard }, led: { active: false } }
+  Hard:        # 120 units per pellet; stays here (cap)
+    patchStates:
+      Feeder1: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 120.0, nextState: Hard }, led: { active: false } }
+      Feeder2: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 120.0, nextState: Hard }, led: { active: false } }
+      Feeder3: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 120.0, nextState: Hard }, led: { active: false } }
+      Feeder4: { behavior: Reward, rewardRule: { inactivityTimeout: 0.0, distanceThreshold: 120.0, nextState: Hard }, led: { active: false } }
