@@ -1644,6 +1644,15 @@ EatenPellets: 0</gui:Text>
                       <rx:Count>4</rx:Count>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ToArray" />
+                  </Expression>
+                  <Expression xsi:type="rx:OrderBy">
+                    <rx:KeySelector>Key</rx:KeySelector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Workflow>
                       <Nodes>
@@ -1793,6 +1802,9 @@ EatenPellets: 0</gui:Text>
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
