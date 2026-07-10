@@ -327,15 +327,55 @@ looms:
         startSize: 1
         endSize: 0
 feederTask:
-  startState: State_1
-  metaStates:
-    State_1:
-      stateFile: Rule1_AllActive.yaml
-      transitions:
-      - targetState: State_2
-        activationEvent: Key1Event
-    State_2:
-      stateFile: Rule1_AllActive.yaml
-      transitions:
-      - targetState: State_1
-        activationEvent: Key2Event
+  ScreenNorth:
+    startState: State_1
+    metaStates:
+      State_1:
+        stateFile: ScreenNorth_Rule.yaml
+        transitions:
+        - targetState: State_2
+          activationEvent: Key1Event
+      State_2:
+        stateFile: ScreenNorth_Rule.yaml
+        transitions:
+        - targetState: State_1
+          activationEvent: Key1Event
+  ScreenEast:
+    startState: State_1
+    metaStates:
+      State_1:
+        stateFile: ScreenEast_Rule.yaml
+        transitions:
+        - targetState: State_2
+          activationEvent: Key2Event
+      State_2:
+        stateFile: ScreenEast_Rule.yaml
+        transitions:
+        - targetState: State_1
+          activationEvent: Key2Event
+  ScreenSouth:
+    startState: State_1
+    metaStates:
+      State_1:
+        stateFile: ScreenSouth_Rule.yaml
+        transitions:
+        - targetState: State_2
+          activationEvent: Key3Event
+      State_2:
+        stateFile: ScreenSouth_Rule.yaml
+        transitions:
+        - targetState: State_1
+          activationEvent: Key3Event
+  ScreenWest:
+    startState: State_1
+    metaStates:
+      State_1:
+        stateFile: ScreenWest_Rule.yaml
+        transitions:
+        - targetState: State_2
+          activationEvent: Key4Event
+      State_2:
+        stateFile: ScreenWest_Rule.yaml
+        transitions:
+        - targetState: State_1
+          activationEvent: Key4Event

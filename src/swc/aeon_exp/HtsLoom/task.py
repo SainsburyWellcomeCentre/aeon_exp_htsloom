@@ -22,6 +22,12 @@ class EventName(StrEnum):
     KEY_2_EVENT = "Key2Event"
     KEY_3_EVENT = "Key3Event"
     KEY_4_EVENT = "Key4Event"
+    KEY_5_EVENT = "Key5Event"
+    KEY_6_EVENT = "Key6Event"
+    KEY_7_EVENT = "Key7Event"
+    KEY_8_EVENT = "Key8Event"
+    KEY_9_EVENT = "Key9Event"
+    KEY_0_EVENT = "Key0Event"
     TASK_STIM_START = "TaskStimStart"
     TASK_STIM_STOP = "TaskStimStop"
     TASK_REWARD = "TaskReward"
@@ -137,7 +143,11 @@ class FeederABCMetaController(Dataset):
 class Task(BaseSchema):
     zone_triggers : List[ZoneTrigger] = Field(description="The zones that trigger events to be used by task control")
     looms: Dict[ScreenName, Dict[str ,LoomingPresentationParameters]] = Field(description="Dictionary with screen Id as a key for a dict of loom regions")
-    feeder_task: FeederABCMetaController = Field(description="The feeder ABC task")
+    feeder_task: Dict[str, FeederABCMetaController] = Field(
+        description="Feeder ABC meta-state players keyed by an arbitrary player/lane id "
+        "(e.g. a screen, coordinate, or subject). The feeders each player drives are "
+        "defined by the patchStates in its referenced state files, not by this key."
+    )
 
     def _join_pattern_prefix(self, pattern_prefix: str) -> str:
         """Pass-through: task-level data lives at session root, not under ``Task/``."""
