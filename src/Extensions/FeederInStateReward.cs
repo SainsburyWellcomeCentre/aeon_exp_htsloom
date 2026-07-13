@@ -15,6 +15,7 @@ using HtsLoom;
 /// </summary>
 public struct FeederInStateReward
 {
+    public string Player { get; set; }
     public FeederName Feeder { get; set; }
     public string MetaState { get; set; }
     public double Distance { get; set; }
@@ -25,29 +26,37 @@ public struct FeederInStateReward
 
 /// <summary>
 /// Maps a race-free per-feeder snapshot tuple
-/// ((((deliveredDelta, missedDelta), distance), feeder), metaState) into the
-/// named <see cref="FeederInStateReward"/> contract. Pure function of one
-/// atomic tuple per emission, so no shared mutable state across the Harp
-/// threads. EatenPellets = deliveredDelta - missedDelta; MissedPellets =
-/// missedDelta; Distance = meta-state-cumulative wheel displacement.
-/// DistanceThreshold is 0 for now.
+/// (((((deliveredDelta, missedDelta), distance), feeder), metaState), player)
+/// into the named <see cref="FeederInStateReward"/> contract. Pure function of
+/// one atomic tuple per emission, so no shared mutable state across the Harp
+/// threads. The Player field disambiguates lanes that share a feeder.
+/// EatenPellets = deliveredDelta - missedDelta; MissedPellets = missedDelta;
+/// Distance = meta-state-cumulative wheel displacement. DistanceThreshold = 0.
 /// </summary>
 [Combinator]
-[Description("Maps a per-feeder (((deliveredDelta, missedDelta), distance), feeder), metaState snapshot into a FeederInStateReward.")]
+[Description("Maps a ((((deliveredDelta, missedDelta), distance), feeder), metaState), player snapshot into a FeederInStateReward.")]
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class CreateFeederInStateReward
 {
     public IObservable<FeederInStateReward> Process(
-        IObservable<Tuple<Tuple<Tuple<Tuple<int, int>, double>, FeederName>, string>> source)
+        IObservable<Tuple<Tuple<Tuple<Tuple<Tuple<int, int>, double>, FeederName>, string>, string>> source)
     {
-        return source.Select(x => new FeederInStateReward
+        return source.Select(x =>
         {
-            Feeder = x.Item1.Item2,
-            MetaState = x.Item2,
-            Distance = x.Item1.Item1.Item2,
-            DistanceThreshold = 0,
-            EatenPellets = x.Item1.Item1.Item1.Item1 - x.Item1.Item1.Item1.Item2,
-            MissedPellets = x.Item1.Item1.Item1.Item2,
+            var reward = x.Item1;              // ((((dDelta, mDelta), distance), feeder), metaState)
+            var withFeeder = reward.Item1;     // (((dDelta, mDelta), distance), feeder)
+            var withDistance = withFeeder.Item1; // ((dDelta, mDelta), distance)
+            var deltas = withDistance.Item1;   // (dDelta, mDelta)
+            return new FeederInStateReward
+            {
+                Player = x.Item2,
+                Feeder = withFeeder.Item2,
+                MetaState = reward.Item2,
+                Distance = withDistance.Item2,
+                DistanceThreshold = 0,
+                EatenPellets = deltas.Item1 - deltas.Item2,
+                MissedPellets = deltas.Item2,
+            };
         });
     }
 }

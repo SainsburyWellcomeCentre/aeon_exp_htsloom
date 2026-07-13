@@ -254,7 +254,7 @@
         <Name>FeederInStateReward</Name>
       </Expression>
       <Expression xsi:type="rx:GroupBy">
-        <rx:KeySelector>Feeder</rx:KeySelector>
+        <rx:KeySelector>Player</rx:KeySelector>
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>LogPelletLane</Name>
@@ -293,7 +293,7 @@
               <Selector>Key</Selector>
             </Expression>
             <Expression xsi:type="Format">
-              <Format>FeederLog_{0}_Pellet_Events</Format>
+              <Format>StateLog_{0}_Reward_Events</Format>
               <Selector>it</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -308,8 +308,8 @@
             <Expression xsi:type="IncludeWorkflow" Path="Aeon.Acquisition:LogData.bonsai">
               <Heartbeats>Heartbeats</Heartbeats>
               <ClosingDuration>PT2S</ClosingDuration>
-              <LogName>FeederLog_Pellet_Events</LogName>
-              <Selector>Seconds,Value.MetaState,Value.Distance,Value.DistanceThreshold,Value.EatenPellets,Value.MissedPellets</Selector>
+              <LogName>StateLog_Reward_Events</LogName>
+              <Selector>Seconds,Value.Feeder,Value.MetaState,Value.Distance,Value.DistanceThreshold,Value.EatenPellets,Value.MissedPellets</Selector>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
