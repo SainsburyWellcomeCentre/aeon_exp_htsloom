@@ -1090,11 +1090,19 @@
                                             </Combinator>
                                           </Expression>
                                           <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Item1</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Item2</Selector>
+                                          </Expression>
                                         </Nodes>
                                         <Edges>
                                           <Edge From="0" To="1" Label="Source1" />
-                                          <Edge From="1" To="2" Label="Source1" />
-                                          <Edge From="3" To="6" Label="Source1" />
+                                          <Edge From="1" To="29" Label="Source1" />
+                                          <Edge From="29" To="2" Label="Source1" />
+                                          <Edge From="1" To="30" Label="Source1" />
+                                          <Edge From="30" To="6" Label="Source1" />
                                           <Edge From="4" To="5" Label="Source1" />
                                           <Edge From="5" To="6" Label="Source2" />
                                           <Edge From="6" To="7" Label="Source1" />
@@ -1125,9 +1133,17 @@
                                     <Expression xsi:type="MulticastSubject">
                                       <Name>CurrentState</Name>
                                     </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>States</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:WithLatestFrom" />
+                                    </Expression>
                                   </Nodes>
                                   <Edges>
-                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="0" To="7" Label="Source1" />
+                                    <Edge From="6" To="7" Label="Source2" />
+                                    <Edge From="7" To="1" Label="Source1" />
                                     <Edge From="1" To="3" Label="Source1" />
                                     <Edge From="2" To="3" Label="Source2" />
                                     <Edge From="3" To="4" Label="Source1" />
