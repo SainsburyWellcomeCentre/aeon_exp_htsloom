@@ -100,7 +100,6 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>CurrentMetaState</Name>
             </Expression>
-            <Expression xsi:type="ExternalizedMapping" />
             <Expression xsi:type="GroupWorkflow">
               <Name>ABCDStatePlayer</Name>
               <Workflow>
@@ -2302,11 +2301,10 @@
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="16" To="17" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
-            <Edge From="20" To="22" Label="Source1" />
-            <Edge From="21" To="22" Label="Source2" />
-            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="19" To="21" Label="Source1" />
+            <Edge From="20" To="21" Label="Source2" />
+            <Edge From="21" To="22" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
