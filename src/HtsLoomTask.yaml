@@ -336,7 +336,7 @@ feederTask:
         - targetState: State_2
           activationEvent: Key1Event
       State_2:
-        stateFile: ScreenNorth_Rule.yaml
+        stateFile: ScreenSouth_Rule.yaml
         transitions:
         - targetState: State_1
           activationEvent: Key1Event

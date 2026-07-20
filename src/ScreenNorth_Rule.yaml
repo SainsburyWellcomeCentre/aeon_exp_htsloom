@@ -11,6 +11,14 @@ states:
           nextState: ScreenNorth_State2
         led:
           active: false
+      Feeder2:
+        behavior: Reward
+        rewardRule:
+          inactivityTimeout: 0.0
+          distanceThreshold: 50.0
+          nextState: ScreenNorth_State2
+        led:
+          active: false
   ScreenNorth_State2:
     patchStates:
       Feeder1:
