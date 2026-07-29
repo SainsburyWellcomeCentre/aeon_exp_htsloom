@@ -1,13 +1,5 @@
 # yaml-language-server: $schema=HtsLoom.json#/$defs/Task
 zoneTriggers:
-  - camera: CameraEast
-    zoneId: 0
-    triggerProbability: 0.2
-    angleThreshold: 1.5
-    refractoryPeriod: 300
-    timeInRegion: 0.5
-    trigger:
-      - ZoneTrigger1
   - camera: CameraNorth
     zoneId: 0
     triggerProbability: 0.2
@@ -15,15 +7,68 @@ zoneTriggers:
     refractoryPeriod: 300
     timeInRegion: 0.5
     trigger:
+      - ZoneTrigger1
+  - camera: CameraEast
+    zoneId: 0
+    triggerProbability: 0.2
+    angleThreshold: 1.5
+    refractoryPeriod: 300
+    timeInRegion: 0.5
+    trigger:
       - ZoneTrigger2
+  - camera: CameraSouth
+    zoneId: 0
+    triggerProbability: 0.2
+    angleThreshold: 1.5
+    refractoryPeriod: 300
+    timeInRegion: 0.5
+    trigger:
+      - ZoneTrigger3
+  - camera: CameraWest
+    zoneId: 0
+    triggerProbability: 0.2
+    angleThreshold: 1.5
+    refractoryPeriod: 300
+    timeInRegion: 0.5
+    trigger:
+      - ZoneTrigger4
 looms:
-  ScreenEast:
-    Loom200:
-      stopTriggers:
-        - Key1Event
+  ScreenNorth:
+     Loom100:
       startTriggers:
-        - Key1Event
+        - Key5Event
         - ZoneTrigger1
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.340
+      timeOnSet: 0.25
+      loomingColor: 0
+     Loom150:
+      startTriggers:
+        - Key5Event
+        - ZoneTrigger1
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.206
+      timeOnSet: 0.25
+      loomingColor: 0
+     LoomBigLong:
+      startTriggers:
+        - Key9Event
       initialDelay: 0
       pulseDuration: 10
       interPulseInterval: 0.5
@@ -31,122 +76,16 @@ looms:
       location:
         x: 0
         y: 0
-      startSize: 50
-      endSize: 50
-      animationDuration: 0.016
-      timeOnSet: 0.016
-      loomingColor: 0.4
-    Loom150:
-      stopTriggers:
-        - Key1Event
-      startTriggers:
-        - Key1Event
-        - ZoneTrigger1
-      initialDelay: 0
-      pulseDuration: 10
-      interPulseInterval: 0.5
-      numberOfPulses: 3
-      location:
-        x: 0
-        y: 0
       startSize: 0.1
-      endSize: 2
-      animationDuration: 0.206
-      timeOnSet: 0.25
-      loomingColor: 0
-    Loom100:
-      stopTriggers:
-        - Key1Event
-      startTriggers:
-        - Key1Event
-        - ZoneTrigger1
-      initialDelay: 0
-      pulseDuration: 10
-      interPulseInterval: 0.5
-      numberOfPulses: 3
-      location:
-        x: 0
-        y: 0
-      startSize: 0.1
-      endSize: 2
+      endSize: 5
       animationDuration: 0.340
-      timeOnSet: 0.25
+      timeOnSet: 600
       loomingColor: 0
-    LoomBig200:
-      stopTriggers:
-        - Key1Event
-      startTriggers:
-        - Key1Event
-      initialDelay: 0
-      pulseDuration: 10
-      interPulseInterval: 0.5
-      numberOfPulses: 3
-      location:
-        x: 0
-        y: 0
-      startSize: 0.1
-      endSize: 4
-      animationDuration: 0.17
-      timeOnSet: 0.25
-      loomingColor: 0
-    LoomBig150:
-      stopTriggers:
-        - Key1Event
-      startTriggers:
-        - Key1Event
-      initialDelay: 0
-      pulseDuration: 10
-      interPulseInterval: 0.5
-      numberOfPulses: 3
-      location:
-        x: 0
-        y: 0
-      startSize: 0.1
-      endSize: 4
-      animationDuration: 0.206
-      timeOnSet: 0.25
-      loomingColor: 0
-    LoomBig100:
-      stopTriggers:
-        - Key1Event
-      startTriggers:
-        - Key1Event
-      initialDelay: 0
-      pulseDuration: 10
-      interPulseInterval: 0.5
-      numberOfPulses: 3
-      location:
-        x: 0
-        y: 0
-      startSize: 0.1
-      endSize: 4
-      animationDuration: 0.340
-      timeOnSet: 0.25
-      loomingColor: 0
-    LoomBigLong:
-      stopTriggers:
-        - Key1Event
-      startTriggers:
-        - Key1Event
-      initialDelay: 0
-      pulseDuration: 10
-      interPulseInterval: 0.5
-      numberOfPulses: 3
-      location:
-        x: 0
-        y: 0
-      startSize: 0.1
-      endSize: 4
-      animationDuration: 0.340
-      timeOnSet: 120
-      loomingColor: 0   
-      
-  ScreenNorth:
+
+  ScreenEast:
      Loom100:
-      stopTriggers:
-        - Key2Event
       startTriggers:
-        - Key2Event
+        - Key6Event
         - ZoneTrigger2
       initialDelay: 0
       pulseDuration: 10
@@ -160,172 +99,136 @@ looms:
       animationDuration: 0.340
       timeOnSet: 0.25
       loomingColor: 0
-     Loom1:
-        stopTriggers:
-          - Key3Event
-        startTriggers:
-          - ZoneTrigger2
-          - Key2Event
-        initialDelay: 01
-        interPulseInterval: 0
-        numberOfPulses: 05
-        animationDuration: 0.5
-        location:
-          x: 0
-          y: 0
-        startSize: 0.1
-        endSize: 2
-        loomingColor: 0.5
-        timeOnSet: 1
-     Loom2:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger1
-            - Key3Event
-        initialDelay: 0
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
-     FastLoom:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        animationDuration: 10
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
-     SuperLoom:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
-     Fast:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
+     Loom150:
+      startTriggers:
+        - Key6Event
+        - ZoneTrigger2
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.206
+      timeOnSet: 0.25
+      loomingColor: 0
+     LoomBigLong:
+      startTriggers:
+        - Key9Event
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 1
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 5
+      animationDuration: 0.340
+      timeOnSet: 600
+      loomingColor: 0
+
   ScreenSouth:
      Loom100:
-        stopTriggers:
-          - Key3Event
-        startTriggers:
-          - Key3Event
-          - ZoneTrigger2
-        initialDelay: 0
-        pulseDuration: 10
-        interPulseInterval: 0.5
-        numberOfPulses: 3
-        location:
-          x: 0
-          y: 0
-        startSize: 0.1
-        endSize: 2
-        animationDuration: 0.340
-        timeOnSet: 0.25
-        loomingColor: 0
-     South11:
-        stopTriggers:
-          - Key1Event
-        startTriggers:
-          - ZoneTrigger1
-          - Key1Event
-        initialDelay: 01
-        interPulseInterval: 01
-        numberOfPulses: 01
-        animationDuration: 5
-        loomingColor: 1
-        location:
-          x: 0
-          y: 0
-        startSize: 0
-        endSize: 1
-     South2:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
-     FastSouthLoom:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        animationDuration: 10
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
-     SouthSuperLoomSouth:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
-     SSSSSSFast:
-        stopTriggers:
-            - Key1Event
-        startTriggers:
-            - ZoneTrigger2
-            - Key3Event
-        initialDelay: 0
-        interPulseInterval: 0
-        numberOfPulses: 0
-        location:
-            x: 1.0
-            y: 0.5
-        startSize: 1
-        endSize: 0
+      startTriggers:
+        - Key7Event
+        - ZoneTrigger3
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.340
+      timeOnSet: 0.25
+      loomingColor: 0
+     Loom150:
+      startTriggers:
+        - Key7Event
+        - ZoneTrigger3
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.206
+      timeOnSet: 0.25
+      loomingColor: 0
+     LoomBigLong:
+      startTriggers:
+        - Key9Event
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 1
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 5
+      animationDuration: 0.340
+      timeOnSet: 600
+      loomingColor: 0
+
+  ScreenWest:
+     Loom100:
+      startTriggers:
+        - Key8Event
+        - ZoneTrigger4
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.340
+      timeOnSet: 0.25
+      loomingColor: 0
+     Loom150:
+      startTriggers:
+        - Key8Event
+        - ZoneTrigger4
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 3
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 2
+      animationDuration: 0.206
+      timeOnSet: 0.25
+      loomingColor: 0
+     LoomBigLong:
+      startTriggers:
+        - Key9Event
+      initialDelay: 0
+      pulseDuration: 10
+      interPulseInterval: 0.5
+      numberOfPulses: 1
+      location:
+        x: 0
+        y: 0
+      startSize: 0.1
+      endSize: 5
+      animationDuration: 0.340
+      timeOnSet: 600
+      loomingColor: 0
+
 feederTask:
   ScreenNorth:
     startState: State_1
@@ -336,7 +239,7 @@ feederTask:
         - targetState: State_2
           activationEvent: Key1Event
       State_2:
-        stateFile: ScreenSouth_Rule.yaml
+        stateFile: ScreenNorth_Rule_100.yaml
         transitions:
         - targetState: State_1
           activationEvent: Key1Event
