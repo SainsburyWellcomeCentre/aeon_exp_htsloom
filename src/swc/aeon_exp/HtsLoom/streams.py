@@ -54,6 +54,21 @@ class LoomAngleState(Stream):
             "blob_id", "zone_id", "angle"
         ]))
 
+class Lag(Stream):
+    """Per-frame camera acquisition lag, in seconds.
+
+    Logged by the looming-screen cameras to a *sibling* ``Camera<Dir>_Lag`` folder
+    (e.g. ``CameraNorth_Lag/CameraNorth_Lag_*.csv``), not inside the camera's own
+    folder — so it is registered as its own Device rather than a stream of the camera.
+
+    Columns:
+        lag : acquisition-to-logging latency for each frame (seconds)
+    """
+
+    def __init__(self, pattern):
+        super().__init__(_reader.Csv(f"{pattern}_*", columns=["lag"]))
+
+
 class BeamBreak(Stream):
 
     def __init__(self, pattern):
@@ -91,6 +106,11 @@ htsloom = DotMap([
     Device("CameraSouth",        TrackingCamera),
     Device("CameraEast",         TrackingCamera),
     Device("CameraWest",         TrackingCamera),
+    # Per-frame acquisition lag for the looming-screen cameras (sibling *_Lag folders)
+    Device("CameraNorth_Lag",    Lag),
+    Device("CameraSouth_Lag",    Lag),
+    Device("CameraEast_Lag",     Lag),
+    Device("CameraWest_Lag",     Lag),
     # Nest and patch cameras (video only)
     Device("CameraNest",         _stream.Video),
     Device("CameraLightMonitor", _stream.Video),
