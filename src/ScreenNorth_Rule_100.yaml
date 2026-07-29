@@ -1,23 +1,23 @@
 # yaml-language-server: $schema=ForagingController.json
-startState: ScreenNorth_State1
+startState: ScreenNorth_StateN1
 states:
-  ScreenNorth_State1:
+  ScreenNorth_StateN1:
     patchStates:
       Feeder1:
         behavior: Reward
         rewardRule:
           inactivityTimeout: 0.0
-          distanceThreshold: 50.0
+          distanceThreshold: 100.0
           nextState: ScreenNorth_State2
         led:
           active: false
-  ScreenNorth_State2:
+  ScreenNorth_StateN2:
     patchStates:
       Feeder1:
         behavior: Reward
         rewardRule:
           inactivityTimeout: 0.0
-          distanceThreshold: 50.0
+          distanceThreshold: 100.0
           nextState: ScreenNorth_State1
         led:
           active: false
