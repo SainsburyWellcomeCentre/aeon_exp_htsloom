@@ -50,7 +50,7 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>FrameEvents</Name>
       </Expression>
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideo.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai" />
       <Expression xsi:type="SubscribeSubject">
         <Name>SynchronizerEvents</Name>
       </Expression>
