@@ -8,7 +8,7 @@ states:
         rewardRule:
           inactivityTimeout: 0.0
           distanceThreshold: 100.0
-          nextState: ScreenNorth_State2
+          nextState: ScreenNorth_StateN2
         led:
           active: false
   ScreenNorth_StateN2:
@@ -18,6 +18,6 @@ states:
         rewardRule:
           inactivityTimeout: 0.0
           distanceThreshold: 100.0
-          nextState: ScreenNorth_State1
+          nextState: ScreenNorth_StateN1
         led:
           active: false
