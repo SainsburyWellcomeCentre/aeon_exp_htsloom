@@ -3,8 +3,9 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:aeon="clr-namespace:Aeon.Acquisition;assembly=Aeon.Acquisition"
+                 xmlns:p1="clr-namespace:HtsLoom.Extensions;assembly=Extensions"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
-                 xmlns:ffmpeg="clr-namespace:Bonsai.FFmpeg;assembly=Bonsai.FFmpeg"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -156,12 +157,6 @@ And a framerate</Description>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Merge" />
                   </Expression>
-                  <Expression xsi:type="rx:PublishSubject">
-                    <Name>Image</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Image</Name>
-                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>FileName</Name>
                   </Expression>
@@ -170,21 +165,15 @@ And a framerate</Description>
                       <Value>.csv</Value>
                     </Operand>
                   </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="FileName" />
-                    </PropertyMappings>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
                   </Expression>
-                  <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>D:\Phields\Tests\phields-swc/dev-gui-c0bdeda\2026-05-27T101732Z\Center\Center_1904-02-02T17-00-00.csv</io:FileName>
+                  <Expression xsi:type="p1:CsvFileWriter">
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
                     <io:IncludeHeader>true</io:IncludeHeader>
                     <io:Selector>Seconds,Value.ChunkData.FrameID,Value.ChunkData.Timestamp</io:Selector>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Image</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Value.Image</Selector>
@@ -197,29 +186,23 @@ And a framerate</Description>
                       <Value>.avi</Value>
                     </Operand>
                   </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="FileName" Selector="it" />
-                    </PropertyMappings>
-                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>source</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Item2.Item2</Selector>
                   </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="FrameRate" />
-                    </PropertyMappings>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>Double(it)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="ffmpeg:VideoWriter">
-                      <ffmpeg:FileName>D:\Phields\Tests\phields-swc/dev-gui-c0bdeda\2026-05-27T101732Z\Center\Center_1904-02-02T17-00-00.avi</ffmpeg:FileName>
-                      <ffmpeg:Suffix>None</ffmpeg:Suffix>
-                      <ffmpeg:Overwrite>false</ffmpeg:Overwrite>
-                      <ffmpeg:FrameRate>50</ffmpeg:FrameRate>
-                      <ffmpeg:OutputArguments>-vf format=nv12 -c:v h264_nvenc</ffmpeg:OutputArguments>
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:VideoFFmpegFileWriter">
+                      <p1:Suffix>None</p1:Suffix>
+                      <p1:Overwrite>false</p1:Overwrite>
+                      <p1:OutputArguments>-vf format=nv12 -c:v h264_nvenc</p1:OutputArguments>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -231,20 +214,19 @@ And a framerate</Description>
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="10" To="14" Label="Source1" />
+                  <Edge From="8" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source2" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="23" Label="Source1" />
+                  <Edge From="13" To="19" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="19" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="23" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source3" />
+                  <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source3" />
-                  <Edge From="23" To="24" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
