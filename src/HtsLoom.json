@@ -163,6 +163,12 @@
         "Key2Event",
         "Key3Event",
         "Key4Event",
+        "Key5Event",
+        "Key6Event",
+        "Key7Event",
+        "Key8Event",
+        "Key9Event",
+        "Key0Event",
         "TaskStimStart",
         "TaskStimStop",
         "TaskReward",
@@ -814,9 +820,12 @@
           "type": "object"
         },
         "feederTask": {
-          "$ref": "#/$defs/FeederABCMetaController",
-          "description": "The feeder ABC task",
-          "title": "FeederTask"
+          "additionalProperties": {
+            "$ref": "#/$defs/FeederABCMetaController"
+          },
+          "description": "Feeder ABC meta-state players keyed by an arbitrary player/lane id (e.g. a screen, coordinate, or subject). The feeders each player drives are defined by the patchStates in its referenced state files, not by this key.",
+          "title": "FeederTask",
+          "type": "object"
         }
       },
       "required": [

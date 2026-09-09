@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+<WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -21,7 +21,9 @@
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\SubjectAndEnvironmentState.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Tracking.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\WheelFeederDispenser.bonsai" />
-      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoomClient.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\LoomClient.bonsai">
+        <ConnectionString>&gt;tcp://172.24.158.114:4242</ConnectionString>
+      </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\MovementBehaviorTracking.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\InputKeys.bonsai" />
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\Heatmap.bonsai" />

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+<WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:aeon="clr-namespace:Aeon.Acquisition;assembly=Aeon.Acquisition"
@@ -283,11 +283,16 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="aeon-video:SpinnakerCapture">
                       <spk:Index xsi:nil="true" />
-                      <spk:SerialNumber>23100956</spk:SerialNumber>
+                      <spk:SerialNumber>21053805</spk:SerialNumber>
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
                       <aeon-video:ExposureTime>3000</aeon-video:ExposureTime>
-                      <aeon-video:Gain>6</aeon-video:Gain>
-                      <aeon-video:Binning>1</aeon-video:Binning>
+                      <aeon-video:Gain>0</aeon-video:Gain>
+                      <aeon-video:Binning>2</aeon-video:Binning>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ObserveOn">
+                      <rx:Scheduler>TaskPoolScheduler</rx:Scheduler>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -312,6 +317,7 @@
                   <Edge From="16" To="17" Label="Source1" />
                   <Edge From="17" To="18" Label="Source3" />
                   <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
