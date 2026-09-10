@@ -7,7 +7,7 @@ states:
         behavior: Reward
         rewardRule:
           inactivityTimeout: 0.0
-          distanceThreshold: 50.0
+          distanceThreshold: 100.0
           nextState: ScreenWest_State2
         led:
           active: false
@@ -17,7 +17,7 @@ states:
         behavior: Reward
         rewardRule:
           inactivityTimeout: 0.0
-          distanceThreshold: 50.0
+          distanceThreshold: 100.0
           nextState: ScreenWest_State1
         led:
           active: false
