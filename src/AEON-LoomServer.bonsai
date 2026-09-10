@@ -46,7 +46,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1.65</LocationX>
+        <LocationX>1.65</LocationX>
         <LocationY>-0.95</LocationY>
         <PhotodiodeColor>1</PhotodiodeColor>
       </Expression>
@@ -78,7 +78,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1.65</LocationX>
+        <LocationX>1.65</LocationX>
         <LocationY>-0.95</LocationY>
         <PhotodiodeColor>1</PhotodiodeColor>
       </Expression>
@@ -110,7 +110,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1.65</LocationX>
+        <LocationX>1.65</LocationX>
         <LocationY>-0.95</LocationY>
         <PhotodiodeColor>1</PhotodiodeColor>
       </Expression>
@@ -142,7 +142,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="Extensions\ExecuteLoom.bonsai">
-        <LocationX>-1.65</LocationX>
+        <LocationX>1.65</LocationX>
         <LocationY>-0.95</LocationY>
         <PhotodiodeColor>1</PhotodiodeColor>
       </Expression>
