@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.9.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:p1="clr-namespace:HtsLoom;assembly=Extensions"
@@ -9,8 +9,8 @@
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D1</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>LButton ShiftKey ControlKey Space Prior PageUp D0 D1 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -22,8 +22,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D2</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>RButton ShiftKey Menu Space Next PageDown D0 D2 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -35,8 +35,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D3</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>LButton RButton Cancel ShiftKey ControlKey Menu Pause Space Prior PageUp Next PageDown End D0 D1 D2 D3 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -48,8 +48,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D4</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>MButton ShiftKey Capital CapsLock Space Home D0 D4 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -61,8 +61,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D5</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>LButton MButton XButton1 ShiftKey ControlKey Capital CapsLock KanaMode HanguelMode HangulMode Space Prior PageUp Home Left D0 D1 D4 D5 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -74,8 +74,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D6</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>RButton MButton XButton2 ShiftKey Menu Capital CapsLock Space Next PageDown Home Up D0 D2 D4 D6 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -87,8 +87,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D7</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>LButton RButton Cancel MButton XButton1 XButton2 ShiftKey ControlKey Menu Pause Capital CapsLock KanaMode HanguelMode HangulMode JunjaMode Space Prior PageUp Next PageDown End Home Left Up Right D0 D1 D2 D3 D4 D5 D6 D7 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -100,8 +100,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D8</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>Back ShiftKey FinalMode Space Down D0 D8 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -113,8 +113,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D9</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>LButton Back Tab ShiftKey ControlKey FinalMode HanjaMode KanjiMode Space Prior PageUp Down Select D0 D1 D8 D9 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
@@ -126,8 +126,8 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>D0</wie:Filter>
-          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+          <wie:Filter>ShiftKey Space D0 Alt</wie:Filter>
+          <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="WorkflowProperty(p1:EventName),p1:EventName">
