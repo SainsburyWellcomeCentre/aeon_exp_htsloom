@@ -7,6 +7,7 @@ __pycache__/
 # C#
 *.vs
 *.tmp
+*.exe
 
 # Bonsai
 **/.bonsai/*
