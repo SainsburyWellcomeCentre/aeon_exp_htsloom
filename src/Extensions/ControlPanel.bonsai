@@ -1696,6 +1696,9 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Switch" />
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ListToArray" />
+            </Expression>
             <Expression xsi:type="zg:RollingGraphBuilder">
               <zg:IndexSelector />
               <zg:ValueSelector>Item1</zg:ValueSelector>
@@ -1778,15 +1781,16 @@
             <Edge From="33" To="34" Label="Source1" />
             <Edge From="34" To="35" Label="Source2" />
             <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="44" Label="Source1" />
+            <Edge From="36" To="45" Label="Source1" />
             <Edge From="37" To="38" Label="Source1" />
             <Edge From="38" To="39" Label="Source1" />
             <Edge From="39" To="40" Label="Source1" />
             <Edge From="40" To="41" Label="Source1" />
             <Edge From="41" To="42" Label="Source1" />
             <Edge From="42" To="43" Label="Source1" />
-            <Edge From="43" To="44" Label="Source2" />
-            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="43" To="44" Label="Source1" />
+            <Edge From="44" To="45" Label="Source2" />
+            <Edge From="45" To="46" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
