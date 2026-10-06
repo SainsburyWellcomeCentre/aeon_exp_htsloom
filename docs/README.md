@@ -1,51 +1,55 @@
 # Documentation
 
-How the htsloom internals work and how to configure an experiment. These docs cover
-**concepts and how the pieces fit together** — *field-level* details live in the
-schemas: open any YAML in `../src/` and hover a key in VS Code (the
-`# yaml-language-server: $schema=` header wires up validation + autocomplete).
+These docs explain how htsloom works and how to configure an experiment. They cover the
+concepts and how the parts fit together. Field-level details are in the schemas: open any
+YAML file in `../src/` and hover a key in VS Code. The `# yaml-language-server: $schema=`
+header at the top of each file gives you validation and autocomplete.
 
 ## Setting up an experiment
 
-There are **two config files** — *hardware* and *protocol*:
+An experiment uses two config files: one for the hardware and one for the protocol.
 
-1. **[RigSetup.md](RigSetup.md)** — the **hardware** (`HtsLoomRig.yaml`): the Harp
-   synchronisation chain, cameras + tracking/zones, feeders (COM ports, wheel radius),
-   nests, light cycle. Edit when hardware changes.
-2. **[TaskSetup.md](TaskSetup.md)** — the **protocol** (`HtsLoomTask.yaml`): how animal
-   position/keys raise events (`zoneTriggers`), what looms those events present per
-   screen, and the feeder reward task. Edit to change the experiment.
-   - **[FeederTask.md](FeederTask.md)** — a focused guide to the **`feederTask` section
-     of that same `HtsLoomTask.yaml`** (not a separate file): the feeder reward state
-     machine — two-level meta-controller → rule design, and how to shape behaviour
-     (hold-steady / win-switch / escalation).
+1. **[RigSetup.md](RigSetup.md)** describes the hardware file, `HtsLoomRig.yaml`: the Harp
+   synchronisation chain, the cameras with their tracking and zones, the feeders (COM ports,
+   wheel radius), the nests and the light cycle. Edit this file when the hardware changes.
+2. **[TaskSetup.md](TaskSetup.md)** describes the protocol file, `HtsLoomTask.yaml`: how
+   animal position and key presses raise events (`zoneTriggers`), which looms those events
+   show on each screen, and the feeder reward task. Edit this file to change the experiment.
+   - **[FeederTask.md](FeederTask.md)** is a focused guide to the `feederTask` section of
+     `HtsLoomTask.yaml`. It is not a separate file. It explains the feeder reward state
+     machine: the two-level meta-controller, how to design rules, and how to shape
+     behaviour (hold steady, win-switch, escalation).
 
-The through-line across both files is the shared **event bus** (`EventName`s like
-`ZoneTrigger1`, `Key1Event`): zones and keys raise events; looms and the feeder task
-react to them.
+Both files share one event bus. Events have names such as `ZoneTrigger1` and `Key1Event`.
+Zones and keys raise events; looms and the feeder task react to them.
 
 ## Examples
 
-- **[examples/](examples/)** — ready-to-copy feeder rule files (`Escalation.yaml`,
-  `RewardSwitch.yaml`) with diagrams. Patterns adapted from `aeon_exp_foragingABC`
-  (Adrian Roggenbach) and reformatted to the htsloom schema; see the folder's README
-  for attribution.
+- **[examples/](examples/)** has feeder rule files you can copy (`Escalation.yaml`,
+  `RewardSwitch.yaml`), with diagrams. The patterns come from `aeon_exp_foragingABC`
+  (Adrian Roggenbach), reformatted to the htsloom schema. See that folder's README for
+  attribution.
 
 ## Deeper dives
 
-- **[ABCDStatePlayer.md](ABCDStatePlayer.md)** — technical reconstruction of the
-  underlying Bonsai state-player (subjects, the `Defer`/replay loop, metastate-vs-rule
-  file structure). Read this when you need to understand or **modify the workflow
-  itself**, not just configure it.
+- **[ABCDStatePlayer.md](ABCDStatePlayer.md)** is a technical description of the Bonsai
+  state player itself: its subjects, the `Defer`/replay loop, and how meta-states and rule
+  files are structured. Read it when you need to change the workflow, not just configure it.
+
+## Diagnostics
+
+- **[../diagnostics/README.md](../diagnostics/README.md)** explains how to capture rig
+  crashes: how Windows writes a full-memory `.dmp` file when `Bonsai.exe` crashes, how to
+  set that up on the rig, how to run the memory sampler, and what to collect for a
+  post-mortem.
 
 ## See also
 
-- **Config files** in `../src/`: `HtsLoomRig.yaml` (hardware), `HtsLoomTask.yaml`
-  (task + `feederTask` meta-controller), `Rule*.yaml` (feeder rules). Each has a
-  `$schema` header for live editor validation.
-- **Reference repos** (same patterns, more examples):
-  `aeon_exp_foragingABC` (improved state-player + worked rule/meta examples under its
-  own `docs/`) and `phields_exp_prototype0` (how the player integrates into a
-  loom-style task).
+- **Config files** in `../src/`: `HtsLoomRig.yaml` (hardware), `HtsLoomTask.yaml` (task,
+  including the `feederTask` meta-controller) and `Rule*.yaml` (feeder rules). Each has a
+  `$schema` header so the editor validates it as you type.
+- **Reference repos** that use the same patterns and have more examples:
+  `aeon_exp_foragingABC` (the improved state player, with worked rule and meta examples in
+  its own `docs/`) and `phields_exp_prototype0` (how the player fits into a loom-style task).
 
-> Keep this index updated when you add or move a doc.
+> Keep this index up to date when you add or move a doc.
