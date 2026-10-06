@@ -186,14 +186,40 @@ Kept here so the next person does not investigate a solved problem again.
   corruption, not a leak. Fixed by moving downstream work off the Spinnaker acquisition
   thread (`rx:ObserveOn` after `SpinnakerCapture` in `Cameras.bonsai`), so frames no
   longer back up in the driver.
-- **September 2026, three crashes with one identical signature (issue #56).** A different
-  fault: a jump to address 0 from inside `System.Reactive.Producer.SubscribeRaw`, while the
-  runtime was building a delegate. The CPU context showed `RIP = 0` and `RAX = 0`, with the
-  same return-address chain in all three dumps. The encoder threads were idle, the heap was
-  healthy and camera lag was flat. The cause of the exposure was found in the control panel:
-  the per-lane distance display subscribed a new inner workflow for every wheel sample, about
-  500 times per second on a Harp serial thread. The control panel now subscribes once per
-  state instead.
+- **September 2026, three crashes with one identical signature (issue #56). Still open.**
+  A different fault: a jump to address 0 from inside
+  `System.Reactive.Producer.SubscribeRaw`, while the runtime built a delegate. The CPU
+  context showed `RIP = 0` and `RAX = 0`, with the same return-address chain in all three
+  dumps. The encoder threads were idle, the heap was healthy and the camera lag was flat.
+  One cause of the exposure was in the control panel. The per-lane distance display
+  subscribed a new inner workflow for every wheel sample, about 500 times per second on a
+  Harp serial thread. PR #60 changed the control panel to subscribe once per state.
+- **5 October 2026, the same fault after PR #60.** Dump `Bonsai.exe.17312.dmp` shows the
+  same caller, `Producer.SubscribeRaw + 0x201`, at the same offset as the three September
+  dumps. The dump contains `PackTimestampedList` and `ListToArray`, so the rig ran the new
+  code. **The control panel was one site, not the only one.** The stack shows two nested
+  subscriptions, triggered by a value from a `ReplaySubject`.
+- **2 October 2026, a separate stop-time crash.** Dump `Bonsai.exe.10780.dmp` is not the
+  same fault. `System.IO.Ports.SerialStream.Finalize()` threw
+  `ObjectDisposedException: Safe handle has been closed`. Four other threads threw
+  `ObjectDisposedException` in `ReplaySubject.OnNext`. Only 4 threads held Rx frames, and
+  the normal number is about 80. The workflow was stopping. Bonsai disposed the subjects
+  while the Harp devices still sent data. An exception from a finalizer always kills the
+  process. This is a known defect in the .NET Framework `SerialPort` class. It needs a
+  clean stop order for the Harp devices.
 - The header comment in `BonsaiCrashDiag.ps1` still lists the first July guesses (an Aeon
   package version mismatch). The first dump ruled that out: every `Aeon.*` module on the rig
   is the same version, 0.7.0.
+
+## Changes to the rig that affect a comparison
+
+Record every change that makes an old dump and a new dump different. Two changes happened
+in the same period.
+
+| Date | Change | Effect on the record |
+|---|---|---|
+| September 2026 | PR #60 changed the control panel and the tracking pipeline | The 5 October dump is the first dump with that code. |
+| 5 and 6 October 2026 | The operator flashed the Harp firmware on every device the experiment uses. The target is core 1.15. See issue #61. | Every dump from 27 July to 5 October 2026 comes from the old firmware. A run after 6 October is not comparable with them. |
+
+Keep the two changes apart. Do not read a quiet run after 6 October as proof that one of
+them worked.
