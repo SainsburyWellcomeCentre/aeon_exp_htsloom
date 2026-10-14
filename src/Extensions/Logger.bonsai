@@ -129,7 +129,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -162,7 +162,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -195,7 +195,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -228,7 +228,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -261,7 +261,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -294,7 +294,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -327,7 +327,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -360,7 +360,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
@@ -393,7 +393,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="Extensions\LogGroupVideoFFmpeg.bonsai">
-              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset veryfast -crf 18</OutputArguments>
+              <OutputArguments>-vf format=yuv420p -c:v libx264 -preset fast -crf 16</OutputArguments>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>FrameEvents</Name>
