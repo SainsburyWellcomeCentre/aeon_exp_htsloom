@@ -8,16 +8,6 @@ using OpenCV.Net;
 
 namespace HtsLoom.Extensions
 {
-    // OPTION 1 — inherits from Bonsai.Dsp.MatrixWriter.
-    //
-    // Pros: gets every MatrixWriter / StreamSink property (Layout, Path, Suffix, Overwrite) for
-    //       free; inherited <dsp:...> property elements in the .bonsai XML stay unchanged when
-    //       migrating from dsp:MatrixWriter. MatrixWriter exposes public Process overloads for
-    //       Mat / byte[] / TElement[] / TElement, so no expression-builder reflection is needed —
-    //       we just add Tuple-shaped overloads beside them and Bonsai picks the right one by input.
-    // Cons: the inherited Process(IObservable<...>) overloads still exist; if you accidentally
-    //       wire a non-Tuple stream into this node Bonsai will use the inherited overload and
-    //       fall back to the static Path property.
     [Description(
         "Writes each array-like object in the sequence to a raw binary output stream. The path is " +
         "taken from Item2 of the input Tuple<T, string>, so each subscription opens its own stream " +

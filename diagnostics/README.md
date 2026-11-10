@@ -220,6 +220,14 @@ in the same period.
 |---|---|---|
 | September 2026 | PR #60 changed the control panel and the tracking pipeline | The 5 October dump is the first dump with that code. |
 | 5 and 6 October 2026 | The operator flashed the Harp firmware on every device the experiment uses. The target is core 1.15. See issue #61. | Every dump from 27 July to 5 October 2026 comes from the old firmware. A run after 6 October is not comparable with them. |
+| 14 October 2026 | Every camera moved from the OpenCV `cv:VideoWriter` to its own external `ffmpeg` process. Branch `aa-dev/ffmpeg-all-cameras`. | OpenCV no longer runs inside Bonsai. The crash followed anyway, and on 14 and 15 October an `ffmpeg` process crashed instead. |
+| **16 October 2026** | **BIOS F12b to F20. CPU microcode `0x11D` to `0x137`. Intel Default Settings set to Performance. Memory moved from about DDR5-4000 to DDR5-4800, still JEDEC.** | The processor ran three years without any Intel mitigation for the Vmin shift defect. **Nothing before this date is comparable with anything after it.** |
+| 16 October 2026 | Windows scheduling set to Background services, power plan High performance, minimum processor state 100%. Bonsai set to `AboveNormal` priority, permanently. | Fixes a camera lag that grew while Bonsai was not the foreground window. Unrelated to the crashes. |
+| 16 October 2026 | `ControlPanel.bonsai` throttled to 20 Hz. Nine `rx:SampleInterval` nodes on the image displays, the heatmap, the tracking events and the four rolling graphs. | The visualizers used to update at the camera rate on the single user interface thread. Camera lag before the change: 0.018 s median. |
+| 16 October 2026 | Memory sampling at 5 s and HWiNFO64 sensor logging at 5 s started during runs. | Every run from this date carries a record of queue depth and of the voltage, power and clocks. Earlier runs do not. |
 
-Keep the two changes apart. Do not read a quiet run after 6 October as proof that one of
-them worked.
+Keep these changes apart. Do not read a quiet run after any one of them as proof that it
+worked.
+
+`HardwareChecksReport.md` in this folder holds the full hardware record: fourteen application
+crashes, three kernel bugchecks, ten unexpected shutdowns, and what each test closed.
